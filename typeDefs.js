@@ -12,11 +12,11 @@ module.exports = gql`
   }
 
   type User {
-    id: String!
+    _id: String!
     email: String!
-    password: String!
-    roles: [String!]!
-    votes: [UserMatchVote]!
+    password: String
+    roles: [String]
+    votes: [UserMatchVote]
   }
 
   type PlayerPlayedMatch {
@@ -24,7 +24,7 @@ module.exports = gql`
   }
 
   type Player {
-    id: String!
+    _id: String!
     firstName: String!
     lastName: String!
     played: [PlayerPlayedMatch]!
@@ -41,7 +41,7 @@ module.exports = gql`
   }
 
   type Match {
-    id: String!
+    _id: String!
     date: String!
     opponent: String!
     location: String!
@@ -52,5 +52,7 @@ module.exports = gql`
     hello: String
   }
 
-  type Mutation {}
+  type Mutation {
+    register(email: String!, password: String!): User
+  }
 `
