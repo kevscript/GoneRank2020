@@ -1,7 +1,6 @@
 const { Schema, model } = require('mongoose')
 
 const matchSchema = new Schema({
-  id: { type: String, required: true },
   date: { type: String, required: true },
   opponent: { type: String, required: true },
   location: { type: String, required: true },
