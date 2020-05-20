@@ -1,4 +1,6 @@
+require('dotenv').config()
 const bcrypt = require('bcryptjs')
+const jwt = require('jsonwebtoken')
 const { ApolloError } = require('apollo-server-express')
 const User = require ('../models/user')
 
@@ -28,6 +30,29 @@ module.exports = {
         }
 
       } catch (err) { throw new ApolloError(err) }
+    },
+    login: async (_, { email, password }) => {
+      try {
+        // retrieve the user associated to the email
+        const user = await User.findOne({ email: email })
+        if (!user) { throw new ApolloError('Incorrect email or password.') }
+        // compare the password to the hashed password on the user object
+        const isEqualPassword = await bcrypt.compare(password, user.password)
+        if (!isEqualPassword) { throw new ApolloError('Incorrect password or email.') }
+        // create a JWT token for authentication
+        const token = jwt.sign({ 
+          userId: user.id, 
+          email: user.email,
+          roles: user.roles
+        }, process.env.JWT_SECRET_KEY, { expiresIn: '1h' })
+        // return authentication data
+        return {
+          userId: user.id,
+          token: token,
+          tokenExpiration: 1,
+          roles: user.roles
+        }
+      } catch(err) { throw new ApolloError(err) }
     }
   }
 }

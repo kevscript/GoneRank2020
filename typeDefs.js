@@ -48,11 +48,19 @@ module.exports = gql`
     lineup: [MatchLineupPlayer]!
   }
 
+  type AuthData {
+    userId: String!
+    token: String!
+    tokenExpiration: Int
+    roles: [String]
+  }
+
   type Query {
     hello: String
   }
 
   type Mutation {
     register(email: String!, password: String!): User
+    login(email: String!, password: String!): AuthData
   }
 `
