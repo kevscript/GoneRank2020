@@ -6,6 +6,7 @@ const bodyParser = require('body-parser')
 const cors = require('cors')
 const resolvers = require('./resolvers')
 const typeDefs = require('./typeDefs')
+const isAuth = require('./middlewares/isAuth')
 
 const PORT = process.env.PORT || 4004
 const URI = process.env.MONGO_URI
@@ -19,6 +20,9 @@ const server = new ApolloServer({
 const app = express()
 app.use(cors())
 app.use(bodyParser.json())
+
+// use isAuth middleware
+app.use(isAuth)
 
 server.applyMiddleware({ app, path: '/graphql' })
 
