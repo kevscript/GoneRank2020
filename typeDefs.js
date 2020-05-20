@@ -21,7 +21,6 @@ module.exports = gql`
 
   type PlayerPlayedMatch {
     matchId: String!
-    average: Float!
   }
 
   type Player {
