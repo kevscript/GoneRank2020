@@ -56,6 +56,11 @@ module.exports = gql`
     roles: [String]
   }
 
+  input UserVoteInput {
+    playerId: String!
+    rating: Float!
+  }
+
   type Query {
     players: [Player]
     player(id: String!): Player
@@ -70,5 +75,6 @@ module.exports = gql`
     removePlayer(id: String!): Player
     createMatch(date: String!, opponent: String!, location: String!, playerIds: [String!]!): Match
     removeMatch(id: String!): Match
+    addUserVotes(matchId: String, userId: String!, userVotes: [UserVoteInput!]!): Match
   }
 `
