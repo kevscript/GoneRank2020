@@ -1,8 +1,11 @@
-import React from 'react'
+import React, { useState } from 'react'
 import { BrowserRouter, Route, Switch, Redirect } from 'react-router-dom'
 import PrivateRoute from './routes/PrivateRoute'
 import AdminRoute from './routes/AdminRoute'
 import GlobalStyle from './styles/global'
+import HomePage from './pages/HomePage'
+import AuthPage from './pages/AuthPage'
+import AdminPage from './pages/AdminPage'
 
 const App = () => {
   const [user, setUser] = useState({ id: null, token: null, roles: [] })
