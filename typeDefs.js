@@ -69,5 +69,6 @@ module.exports = gql`
     addPlayer(firstName: String!, lastName: String!): Player
     removePlayer(id: String!): Player
     createMatch(date: String!, opponent: String!, location: String!, playerIds: [String!]!): Match
+    removeMatch(id: String!): Match
   }
 `
