@@ -27,7 +27,7 @@ module.exports = gql`
     _id: String!
     firstName: String!
     lastName: String!
-    played: [PlayerPlayedMatch]!
+    matchesPlayed: [PlayerPlayedMatch]!
   }
 
   type MatchPlayerRating {
@@ -57,10 +57,14 @@ module.exports = gql`
 
   type Query {
     hello: String
+    players: [Player]
+    player(id: String!): Player
   }
 
   type Mutation {
     register(email: String!, password: String!): User
     login(email: String!, password: String!): AuthData
+    addPlayer(firstName: String!, lastName: String!): Player
+    removePlayer(id: String!): Player
   }
 `

@@ -1,5 +1,6 @@
 const { ApolloError } = require('apollo-server-express')
 const { Query: userQuery, Mutation: userMutation , ...userFieldResolvers } = require('./user')
+const { Query: playerQuery, Mutation: playerMutation, ...playerFieldResolvers } = require('./player')
 
 module.exports = {
   Query: {
@@ -11,10 +12,13 @@ module.exports = {
           ? "Hello, I'm an authenticated User"
           : "Hello, I'm authenticated but I have no roles"
     },
-    ...userQuery
+    ...userQuery,
+    ...playerQuery
   },
   Mutation: {
-    ...userMutation
+    ...userMutation,
+    ...playerMutation
   },
-  ...userFieldResolvers
+  ...userFieldResolvers,
+  ...playerFieldResolvers
 }
