@@ -74,7 +74,7 @@ const LoginForm = ({ setIsLogin, handleUser }) => {
 
   const [loginUser] = useMutation(LOGIN_USER, {
     onCompleted: (res) =>
-      handleUser(res.login.userId, res.login.token, res.login.status),
+      handleUser(res.login.userId, res.login.token, res.login.roles),
     onError: (err) => console.log(err),
   })
 
