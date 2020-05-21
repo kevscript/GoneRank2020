@@ -3,7 +3,23 @@ const Match = require('../models/match')
 const { generateMatch } = require('../utils/generateMatch')
 
 module.exports = {
-  Query: {},
+  Query: {
+    matches: async (_, __, req) => {
+      if (!req.isAuth) { throw new ApolloError('Unauthorized Request') }
+      try {
+        const matches = await Match.find()
+        return matches
+      } catch (err) { throw new ApolloError(err) }
+    },
+    match: async (_, { id }, req) => {
+      if (!req.isAuth) { throw new ApolloError('Unauthorized Request') }
+      try {
+        const match = await Match.findOne({ id: id })
+        if (!match) { throw new ApolloError(`Match with id ${id} doesn't exist in the DB.`)}
+        return match
+      } catch (err) { throw new ApolloError(err) }
+    }
+  },
   Mutation: {
     createMatch: async (_, { date, opponent, location, playerIds }, req) => {
       if (!req.isAuth || !req.userRoles.includes('ADMIN')) {

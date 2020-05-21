@@ -59,6 +59,8 @@ module.exports = gql`
   type Query {
     players: [Player]
     player(id: String!): Player
+    matches: [Match]
+    match(id: String!): Match
   }
 
   type Mutation {

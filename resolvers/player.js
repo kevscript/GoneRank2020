@@ -14,7 +14,7 @@ module.exports = {
       if (!req.isAuth) { throw new ApolloError('Unauthorized Request') }
       try {
         const player = await Player.findOne({ _id: id })
-        if (!player) { throw new UserInputError(`Player with id ${id} doesn't exist in the DB.`)}
+        if (!player) { throw new ApolloError(`Player with id ${id} doesn't exist in the DB.`)}
         return player
       } catch (err) { throw new ApolloError(err) }
     }
