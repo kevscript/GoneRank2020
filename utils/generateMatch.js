@@ -1,3 +1,4 @@
+const { ApolloError } = require('apollo-server-express')
 const Player = require ('../models/player')
 const Match = require ('../models/match')
 
@@ -17,7 +18,7 @@ const processId = async (playerId, newMatchId) => {
       // returns an object that represents an initialized element of the new match lineup
       return { playerId: player.id, ratings: [] }
     }
-  } catch (err) { console.log(err) }
+  } catch (err) { throw new ApolloError(err) }
 }
 
 // this function returns the new Match object on match creation
@@ -33,7 +34,7 @@ const generateMatch = async (date, opponent, location, playerIds) => {
   }
 
   // process each player ID and await their results
-  const lineupArray = await Promise.all(playerIds.map(id => processId(id, newMatch.id))).then(data => data)
+  const lineupArray = await Promise.all(playerIds.map(id => processId(id, newMatch.id))).then(data => data).filter(p => p !== null)
   newMatch.lineup = [...lineupArray]
 
   const match = await new Match(newMatch).save()
