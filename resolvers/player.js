@@ -1,5 +1,5 @@
-const Player = require('../models/player')
 const { ApolloError, UserInputError } = require('apollo-server-express')
+const Player = require('../models/player')
 
 module.exports = {
   Query: {

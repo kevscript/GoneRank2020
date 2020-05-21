@@ -1,6 +1,7 @@
 const { Schema, model } = require('mongoose')
 
 const matchSchema = new Schema({
+  id: { type: String, required: true },
   date: { type: String, required: true },
   opponent: { type: String, required: true },
   location: { type: String, required: true },
@@ -10,7 +11,8 @@ const matchSchema = new Schema({
       userId: { type: String, required: true },
       rating: { type: Number, required: true },
     }]
-  }]
+  }],
+  active: { type: Boolean, required: true }
 })
 
 module.exports = model('Match', matchSchema)

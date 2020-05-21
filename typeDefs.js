@@ -41,11 +41,12 @@ module.exports = gql`
   }
 
   type Match {
-    _id: String!
+    id: String!
     date: String!
     opponent: String!
     location: String!
     lineup: [MatchLineupPlayer]!
+    active: Boolean!
   }
 
   type AuthData {
@@ -56,7 +57,6 @@ module.exports = gql`
   }
 
   type Query {
-    hello: String
     players: [Player]
     player(id: String!): Player
   }
@@ -66,5 +66,6 @@ module.exports = gql`
     login(email: String!, password: String!): AuthData
     addPlayer(firstName: String!, lastName: String!): Player
     removePlayer(id: String!): Player
+    createMatch(date: String!, opponent: String!, location: String!, playerIds: [String!]!): Match
   }
 `
