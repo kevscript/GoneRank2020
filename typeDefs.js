@@ -75,6 +75,7 @@ module.exports = gql`
     removePlayer(id: String!): Player
     createMatch(date: String!, opponent: String!, location: String!, playerIds: [String!]!): Match
     removeMatch(id: String!): Match
-    addUserVotes(matchId: String, userId: String!, userVotes: [UserVoteInput!]!): Match
+    addUserVotes(matchId: String!, userId: String!, userVotes: [UserVoteInput!]!): Match
+    removeUserVotes(matchId: String!, userId: String!): Match
   }
 `

@@ -74,9 +74,9 @@ module.exports = {
         throw new ApolloError('Unauthorized Request')
       }
       // make sure the user ids are the same in request and variables
-      // can only manipulate his own data
-      if (userId !== req.userId) {
-        throw new ApolloError('Unauthorized Request - different User')
+      // can only manipulate his own data if not an ADMIN
+      if (userId !== req.userId && !req.userRoles.includes('ADMIN')) {
+        throw new ApolloError('Unauthorized Request by User')
       }
       // check if User with this id exists in the DB
       const user = await User.findOne({ _id: req.userId })
@@ -102,5 +102,34 @@ module.exports = {
       match.save()
       return match
     },
+    removeUserVotes: async (_, { matchId, userId }, req) => {
+      if (!req.isAuth) {
+        throw new ApolloError('Unauthorized Request')
+      }
+      // make sure the user ids are the same in request and variables
+      // can only manipulate his own data if not an ADMIN
+      if (userId !== req.userId && !req.userRoles.includes('ADMIN')) {
+        throw new ApolloError('Unauthorized Request by User')
+      }
+      // check if User with this id exists in the DB
+      const user = await User.findOne({ _id: req.userId })
+      if (!user) { 
+        throw new ApolloError(`No User with id ${userId} found in DB.`)
+      }
+      // check if Match with this id exists in the DB.
+      const match = await Match.findOne({ id: matchId })
+      if (!match) {
+        throw new ApolloError(`No match found with id ${matchId} in the DB.`)
+      }
+      // push a new object to the votes array of the User with his votes data
+      user.votes = user.votes.filter(vote => vote.matchId !== matchId)
+      user.save()
+      // filter each ratings array in lineup from this user's votes
+      match.lineup.map(member => {
+        member.ratings = member.ratings.filter(x => x.userId !== userId)
+      })
+      match.save()
+      return match
+    }
   },
 }
