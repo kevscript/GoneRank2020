@@ -9,8 +9,10 @@ import AdminPage from './pages/AdminPage'
 
 const App = () => {
   const [user, setUser] = useState({ id: null, token: null, roles: [] })
-  const handleUser = (id, token, roles) =>
+  const handleUser = (id, token, roles) => {
     setUser({ id: id, token: token, roles: roles })
+    localStorage.setItem('token', token)
+  }
 
   return (
     <div>
