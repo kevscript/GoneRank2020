@@ -69,33 +69,38 @@ module.exports = {
       }
     },
     addUserVotes: async (_, { matchId, userId, userVotes }, req) => {
+      // check if request is made by an authorized User
       if (!req.isAuth) {
         throw new ApolloError('Unauthorized Request')
       }
-      try {
-        const matchExists = await Match.findOne({ id: matchId })
-        if (matchExists) {
-          const votesPromises = userVotes.map((vote) => {
-            return Match.findOneAndUpdate(
-              { id: matchId, 'lineup.playerId': vote.playerId },
-              {
-                $push: {
-                  'lineup.$.ratings': { userId: userId, rating: vote.rating },
-                },
-              }
-            )
-          })
-          await Promise.all(votesPromises)
-          const user = await User.findOne({ _id: req.userId })
-          if (user) {
-            user.votes = [...user.votes, { matchId: matchId, ratings: userVotes }]
-            user.save()
-          }
-          const match = await Match.findOne({ id: matchId })
-          return match
+      // make sure the user ids are the same in request and variables
+      // can only manipulate his own data
+      if (userId !== req.userId) {
+        throw new ApolloError('Unauthorized Request - different User')
+      }
+      // check if User with this id exists in the DB
+      const user = await User.findOne({ _id: req.userId })
+      if (!user) { 
+        throw new ApolloError(`No User with id ${userId} found in DB.`)
+      }
+      // check if Match with this id exists in the DB.
+      const match = await Match.findOne({ id: matchId })
+      if (!match) {
+        throw new ApolloError(`No match found with id ${matchId} in the DB.`)
+      }
+      // push a new object to the votes array of the User with his votes data
+      user.votes = [...user.votes, { matchId: matchId, ratings: userVotes }]
+      user.save()
+
+      // push each vote to its corresponding lineup member
+      userVotes.map(vote => {
+        const player = match.lineup.find(p => p.playerId === vote.playerId)
+        if (player) {
+          player.ratings = [...player.ratings, { userId: userId, rating: vote.rating }]
         }
-      } catch (err) { throw new ApolloError(err) }
-      
+      })
+      match.save()
+      return match
     },
   },
 }
