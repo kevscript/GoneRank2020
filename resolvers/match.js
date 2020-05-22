@@ -62,4 +62,14 @@ module.exports = {
       return match
     }
   },
+  MatchLineupPlayer: {
+    average: (lineupPlayer) => {
+      if (lineupPlayer.ratings.length > 0) {
+        const sum = lineupPlayer.ratings.reduce((acc, current) => acc + current.rating, 0)
+        return parseFloat((sum / lineupPlayer.ratings.length).toFixed(2))
+      } else {
+        return NaN
+      }
+    }
+  }
 }

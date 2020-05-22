@@ -28,6 +28,7 @@ module.exports = gql`
     firstName: String!
     lastName: String!
     matchesPlayed: [PlayerPlayedMatch]!
+    globalAverage: Float
   }
 
   type MatchPlayerRating {
@@ -38,6 +39,7 @@ module.exports = gql`
   type MatchLineupPlayer {
     playerId: String!
     ratings: [MatchPlayerRating]!
+    average: Float
   }
 
   type Match {

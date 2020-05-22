@@ -1,5 +1,6 @@
 const { ApolloError, UserInputError } = require('apollo-server-express')
 const Player = require('../models/player')
+const Match = require('../models/match')
 
 module.exports = {
   Query: {
@@ -42,6 +43,26 @@ module.exports = {
         if (!player) { throw new UserInputError(`Player with id ${id} doesn't exist.`)}
         return player
       } catch (err) { throw new ApolloError(err) }
+    }
+  },
+  Player: {
+    globalAverage: async (player) => {
+      if (player.matchesPlayed.length < 1) {
+        return 0
+      } else {
+        const matchPromises = player.matchesPlayed.map(m => Match.findOne({ id: m.matchId }))
+        const matches = await Promise.all(matchPromises)
+        const averages = matches.map(m => {
+          const him = m.lineup.find(p => p.playerId === player.id)
+          if (him.ratings.length > 0) {
+            const sum = him.ratings.reduce((acc, curr) => acc + curr.rating, 0)
+            return parseFloat((sum / him.ratings.length))
+          } else { return NaN }
+        })
+        const filteredAvgs = averages.filter(avg => Number.isNaN(avg) === false)
+        const globalAvg = filteredAvgs.reduce((acc, curr) => acc + curr, 0) / filteredAvgs.length
+        return parseFloat(globalAvg.toFixed(2))
+      }
     }
   }
 }
