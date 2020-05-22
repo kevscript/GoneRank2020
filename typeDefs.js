@@ -27,7 +27,7 @@ module.exports = gql`
     _id: String!
     firstName: String!
     lastName: String!
-    matchesPlayed: [PlayerPlayedMatch]!
+    matchesPlayed: [PlayerPlayedMatch]
     globalAverage: Float
   }
 
