@@ -34,8 +34,8 @@ const generateMatch = async (date, opponent, location, playerIds) => {
   }
 
   // process each player ID and await their results
-  const lineupArray = await Promise.all(playerIds.map(id => processId(id, newMatch.id))).then(data => data).filter(p => p !== null)
-  newMatch.lineup = [...lineupArray]
+  const lineupArray = await Promise.all(playerIds.map(id => processId(id, newMatch.id))).then(data => data)
+  newMatch.lineup = [...lineupArray.filter(Boolean)]
 
   const match = await new Match(newMatch).save()
   return match
