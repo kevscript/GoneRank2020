@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import { BrowserRouter, Route, Switch, Redirect } from 'react-router-dom'
 import PrivateRoute from './routes/PrivateRoute'
 import AdminRoute from './routes/AdminRoute'
@@ -12,7 +12,16 @@ const App = () => {
   const handleUser = (id, token, roles) => {
     setUser({ id: id, token: token, roles: roles })
     localStorage.setItem('token', token)
+    localStorage.setItem('userId', id)
+    localStorage.setItem('userRoles', JSON.stringify(roles))
   }
+
+  useEffect(() => {
+    const id = localStorage.getItem('userId')
+    const token = localStorage.getItem('token')
+    const roles = JSON.parse(localStorage.getItem('userRoles'))
+    setUser({ id, token, roles })
+  }, [])
 
   return (
     <div>
