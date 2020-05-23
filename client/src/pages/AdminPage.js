@@ -1,6 +1,6 @@
 import React from 'react'
 import styled from 'styled-components'
-import { Route, Switch, Link } from 'react-router-dom'
+import { Switch, Link } from 'react-router-dom'
 import AdminRoute from '../routes/AdminRoute'
 import PlayersPage from './PlayersPage'
 import MatchesPage from './MatchesPage'
