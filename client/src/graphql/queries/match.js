@@ -14,6 +14,11 @@ export const GET_MATCHES = gql`
           rating
         }
         average
+        infos {
+          firstName
+          lastName
+          globalAverage
+        }
       }
       active
     }
@@ -34,6 +39,11 @@ export const GET_MATCH = gql`
           rating
         }
         average
+        infos {
+          firstName
+          lastName
+          globalAverage
+        }
       }
       active
     }
