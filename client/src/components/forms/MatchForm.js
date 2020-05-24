@@ -78,7 +78,7 @@ const PlayersList = styled.div`
   max-width: 100%;
 `
 
-const MatchForm = () => {
+const MatchForm = ({ handleMatchCreation }) => {
   const { register, control, handleSubmit, errors } = useForm()
   const { loading, error, data: { players } = {} } = useQuery(GET_PLAYERS)
 
@@ -95,7 +95,10 @@ const MatchForm = () => {
             <Input
               type="text"
               name="opponent"
-              ref={register({ required: 'You must specify an opponent' })}
+              ref={register({
+                required: 'You must specify an opponent',
+                validate: (val) => val.trim() !== '',
+              })}
             />
           </Label>
         </FormItem>
@@ -136,12 +139,12 @@ const MatchForm = () => {
             {players.map((p) => (
               <PlayerItem key={p._id}>
                 <Checker
-                  name="players"
+                  name="playerIds"
                   type="checkbox"
                   value={p._id}
                   ref={register({
                     required: 'You must select players',
-                    validate: (value) => value.length > 3,
+                    validate: (value) => value.length > 2,
                   })}
                 />
                 <span>
@@ -154,10 +157,7 @@ const MatchForm = () => {
 
         <Divider />
 
-        <FormButton
-          type="submit"
-          onClick={handleSubmit((data) => console.log(data))}
-        >
+        <FormButton type="submit" onClick={handleSubmit(handleMatchCreation)}>
           Submit
         </FormButton>
       </Form>

@@ -1,8 +1,8 @@
 import React from 'react'
 import styled from 'styled-components'
 import { Switch, Link } from 'react-router-dom'
-import { useQuery } from '@apollo/react-hooks'
-import { GET_MATCHES } from '../graphql/queries/match'
+import { useQuery, useMutation } from '@apollo/react-hooks'
+import { GET_MATCHES, CREATE_MATCH } from '../graphql/queries/match'
 import { sortMatchesByDate } from '../utils/sortMatchesByDate'
 import AdminRoute from '../routes/AdminRoute'
 import MatchForm from '../components/forms/MatchForm'
@@ -73,6 +73,31 @@ const Action = styled(Link)`
 const MatchesPage = ({ user }) => {
   const { loading, error, data: { matches } = {} } = useQuery(GET_MATCHES)
 
+  const [createMatch] = useMutation(CREATE_MATCH, {
+    update: (cache, { data: { createMatch } }) => {
+      try {
+        const { matches } = cache.readQuery({ query: GET_MATCHES })
+        cache.writeQuery({
+          query: GET_MATCHES,
+          data: { matches: [...matches, createMatch] },
+        })
+      } catch (err) {
+        console.log(error)
+      }
+    },
+  })
+
+  const handleMatchCreation = (data) => {
+    createMatch({
+      variables: {
+        date: data.date.toLocaleDateString(),
+        opponent: data.opponent,
+        location: data.location,
+        playerIds: data.playerIds,
+      },
+    })
+  }
+
   if (loading) return <h1>Loading...</h1>
   if (error) return <p>{error.message}</p>
 
@@ -106,7 +131,9 @@ const MatchesPage = ({ user }) => {
           <AdminRoute
             path="/admin/matches/new"
             user={user}
-            component={MatchForm}
+            component={(props) => (
+              <MatchForm handleMatchCreation={handleMatchCreation} {...props} />
+            )}
           />
         </Switch>
       </ContentContainer>
