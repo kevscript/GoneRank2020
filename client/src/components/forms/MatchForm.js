@@ -1,7 +1,9 @@
 import React from 'react'
 import styled from 'styled-components'
 import DatePicker from 'react-datepicker'
+import { useQuery } from '@apollo/react-hooks'
 import { useForm, Controller } from 'react-hook-form'
+import { GET_PLAYERS } from '../../graphql/queries/player'
 import 'react-datepicker/dist/react-datepicker.css'
 import '../../styles/datepicker.css'
 
@@ -12,12 +14,17 @@ const Form = styled.form`
   margin: 25px 0;
 `
 
-const FormItem = styled.div``
+const FormItem = styled.div`
+  margin: 15px 0 0 0;
+`
 
-const Label = styled.label``
+const Label = styled.label`
+  display: flex;
+  flex-direction: column;
+`
 
 const LabelText = styled.span`
-  margin-right: 5px;
+  margin-bottom: 5px;
 `
 
 const FormButton = styled.button`
@@ -28,20 +35,55 @@ const FormButton = styled.button`
 const Input = styled.input`
   padding: 5px;
   width: 300px;
-  max-width: 80%;
+  max-width: 100%;
 `
 
 const Select = styled.select`
   padding: 5px;
+  width: 300px;
+  max-width: 100%;
+`
+
+const Checker = styled.input`
+  margin-right: 10px;
+  opacity: 1;
+  &:checked + span {
+    color: red;
+    font-weight: 700;
+  }
 `
 
 const Divider = styled.div`
   width: 100%;
-  height: 10px;
+  height: 25px;
+`
+
+const PlayerItem = styled.label`
+  display: flex;
+  align-items: center;
+  margin: 10px 10px 0 0;
+  padding: 5px;
+  cursor: pointer;
+  border: 1px solid rgba(0, 0, 0, 0.1);
+
+  &:hover {
+    border: 1px solid rgba(0, 0, 0, 0.3);
+  }
+`
+
+const PlayersList = styled.div`
+  display: flex;
+  flex-wrap: wrap;
+  width: 500px;
+  max-width: 100%;
 `
 
 const MatchForm = () => {
   const { register, control, handleSubmit, errors } = useForm()
+  const { loading, error, data: { players } = {} } = useQuery(GET_PLAYERS)
+
+  if (loading) return <h1>Loading...</h1>
+  if (error) return <p>{error.message}</p>
 
   return (
     <div>
@@ -58,8 +100,6 @@ const MatchForm = () => {
           </Label>
         </FormItem>
 
-        <Divider />
-
         <FormItem>
           <Label htmlFor="location">
             <LabelText>Location:</LabelText>
@@ -74,8 +114,6 @@ const MatchForm = () => {
           </Label>
         </FormItem>
 
-        <Divider />
-
         <FormItem>
           <Label htmlFor="date">
             <LabelText>Date:</LabelText>
@@ -88,6 +126,30 @@ const MatchForm = () => {
               rules={{ required: true }}
             />
           </Label>
+        </FormItem>
+
+        <Divider />
+
+        <FormItem>
+          <span>Lineup:</span>
+          <PlayersList>
+            {players.map((p) => (
+              <PlayerItem key={p._id}>
+                <Checker
+                  name="players"
+                  type="checkbox"
+                  value={p._id}
+                  ref={register({
+                    required: 'You must select players',
+                    validate: (value) => value.length > 3,
+                  })}
+                />
+                <span>
+                  {p.firstName} {p.lastName}
+                </span>
+              </PlayerItem>
+            ))}
+          </PlayersList>
         </FormItem>
 
         <Divider />
