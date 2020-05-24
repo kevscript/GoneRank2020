@@ -40,6 +40,7 @@ module.exports = gql`
     playerId: String!
     ratings: [MatchPlayerRating]!
     average: Float
+    infos: Player
   }
 
   type Match {

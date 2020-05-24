@@ -70,6 +70,14 @@ module.exports = {
       } else {
         return NaN
       }
+    },
+    infos: async (lineupPlayer) => {
+      try {
+        const player = await Player.findOne({ _id: lineupPlayer.playerId })
+        if (player) {
+          return player
+        }
+      } catch (err) { throw new ApolloError(err) }
     }
   }
 }
