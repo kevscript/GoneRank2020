@@ -6,6 +6,7 @@ import { GET_MATCHES } from '../graphql/queries/match'
 import { sortMatchesByDate } from '../utils/sortMatchesByDate'
 import AdminRoute from '../routes/AdminRoute'
 import MatchForm from '../components/forms/MatchForm'
+import MatchInfos from '../components/MatchInfos'
 
 const Container = styled.div`
   display: flex;
@@ -68,13 +69,6 @@ const Action = styled(Link)`
   color: #f4f4f4;
   font-weight: 600;
 `
-const MatchIdPage = () => {
-  return <h1>Match id Page</h1>
-}
-
-const MatchCreatePage = () => {
-  return <h1>Match Create Page</h1>
-}
 
 const MatchesPage = ({ user }) => {
   const { loading, error, data: { matches } = {} } = useQuery(GET_MATCHES)
@@ -107,7 +101,7 @@ const MatchesPage = ({ user }) => {
           <AdminRoute
             path="/admin/matches/id/:id"
             user={user}
-            component={MatchIdPage}
+            component={MatchInfos}
           />
           <AdminRoute
             path="/admin/matches/new"
