@@ -57,11 +57,15 @@ const PlayersPage = () => {
   const [addPlayer] = useMutation(ADD_PLAYER, {
     onCompleted: () => reset(),
     update: (cache, { data: { addPlayer } }) => {
-      const { players } = cache.readQuery({ query: GET_PLAYERS })
-      cache.writeQuery({
-        query: GET_PLAYERS,
-        data: { players: [...players, addPlayer] },
-      })
+      try {
+        const { players } = cache.readQuery({ query: GET_PLAYERS })
+        cache.writeQuery({
+          query: GET_PLAYERS,
+          data: { players: [...players, addPlayer] },
+        })
+      } catch (err) {
+        console.log(err)
+      }
     },
   })
 
