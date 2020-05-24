@@ -5,6 +5,7 @@ import { useQuery } from '@apollo/react-hooks'
 import { GET_MATCHES } from '../graphql/queries/match'
 import { sortMatchesByDate } from '../utils/sortMatchesByDate'
 import AdminRoute from '../routes/AdminRoute'
+import MatchForm from '../components/forms/MatchForm'
 
 const Container = styled.div`
   display: flex;
@@ -21,6 +22,7 @@ const ListContainer = styled.div`
 const ContentContainer = styled.div`
   flex: 1;
   min-height: calc(100vh - 80px);
+  padding: 2rem;
 `
 
 const MatchesList = styled.ul`
@@ -110,7 +112,7 @@ const MatchesPage = ({ user }) => {
           <AdminRoute
             path="/admin/matches/new"
             user={user}
-            component={MatchCreatePage}
+            component={MatchForm}
           />
         </Switch>
       </ContentContainer>

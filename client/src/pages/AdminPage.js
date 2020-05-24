@@ -34,7 +34,7 @@ const AdminPage = ({ user }) => {
     <Container>
       <Header>
         <HeaderLink to="/admin/players">Players</HeaderLink>
-        <HeaderLink to="/admin/matches">Matches</HeaderLink>
+        <HeaderLink to="/admin/matches/new">Matches</HeaderLink>
       </Header>
       <Switch>
         <AdminRoute path="/admin/players" user={user} component={PlayersPage} />
