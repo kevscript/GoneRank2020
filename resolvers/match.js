@@ -74,9 +74,10 @@ module.exports = {
     infos: async (lineupPlayer) => {
       try {
         const player = await Player.findOne({ _id: lineupPlayer.playerId })
-        if (player) {
-          return player
+        if (!player) {
+          throw new ApolloError(`Couldn't find a player with id ${lineupPlayer.playerId} in the DB.`)
         }
+        return player
       } catch (err) { throw new ApolloError(err) }
     }
   }
