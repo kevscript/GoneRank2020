@@ -33,6 +33,7 @@ const AdminPage = ({ user }) => {
   return (
     <Container>
       <Header>
+        <HeaderLink to="/">Home</HeaderLink>
         <HeaderLink to="/admin/players">Players</HeaderLink>
         <HeaderLink to="/admin/matches/new">Matches</HeaderLink>
       </Header>
