@@ -18,6 +18,10 @@ const FormItem = styled.div`
   margin: 15px 0 0 0;
 `
 
+const FormError = styled.span`
+  color: red;
+`
+
 const Label = styled.label`
   display: flex;
   flex-direction: column;
@@ -101,6 +105,7 @@ const MatchForm = ({ handleMatchCreation }) => {
               })}
             />
           </Label>
+          {errors.opponent && <FormError>{errors.opponent.message}</FormError>}
         </FormItem>
 
         <FormItem>
@@ -108,13 +113,14 @@ const MatchForm = ({ handleMatchCreation }) => {
             <LabelText>Location:</LabelText>
             <Select
               name="location"
-              ref={register({ required: 'You must specify an opponent' })}
+              ref={register({ required: 'Location is required' })}
             >
               <option value="home">Home</option>
               <option value="away">Away</option>
               <option value="other">Other</option>
             </Select>
           </Label>
+          {errors.location && <FormError>{errors.location.message}</FormError>}
         </FormItem>
 
         <FormItem>
@@ -126,9 +132,10 @@ const MatchForm = ({ handleMatchCreation }) => {
               valueName="selected"
               onChange={([selected]) => selected}
               control={control}
-              rules={{ required: true }}
+              rules={{ required: 'Date is required' }}
             />
           </Label>
+          {errors.date && <FormError>{errors.date.message}</FormError>}
         </FormItem>
 
         <Divider />
@@ -143,7 +150,7 @@ const MatchForm = ({ handleMatchCreation }) => {
                   type="checkbox"
                   value={p._id}
                   ref={register({
-                    required: 'You must select players',
+                    required: 'You need at least 3 players',
                     validate: (value) => value.length > 2,
                   })}
                 />
@@ -153,6 +160,9 @@ const MatchForm = ({ handleMatchCreation }) => {
               </PlayerItem>
             ))}
           </PlayersList>
+          {errors.playerIds && (
+            <FormError>{errors.playerIds.message}</FormError>
+          )}
         </FormItem>
 
         <Divider />
