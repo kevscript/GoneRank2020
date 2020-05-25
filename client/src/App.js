@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react'
+import styled from 'styled-components'
 import { BrowserRouter, Route, Switch, Redirect } from 'react-router-dom'
 import PrivateRoute from './routes/PrivateRoute'
 import AdminRoute from './routes/AdminRoute'
@@ -28,11 +29,12 @@ const App = () => {
       <GlobalStyle />
       <BrowserRouter>
         <Switch>
-          <PrivateRoute exact path="/" user={user} component={HomePage} />
+          <Redirect exact from="/" to="/home" />
+          <PrivateRoute path="/home" user={user} component={HomePage} />
           <AdminRoute path="/admin" user={user} component={AdminPage} />
           <Route path="/authentication">
             {user.token && user.id ? (
-              <Redirect to="/" />
+              <Redirect to="/home" />
             ) : (
               <AuthPage handleUser={handleUser} />
             )}

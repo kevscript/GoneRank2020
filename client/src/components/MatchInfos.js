@@ -142,7 +142,7 @@ const MatchInfos = () => {
         ))}
       </div>
       <SelectContainer>
-        <Select name="addplayer" onChange={(e) => handleSelector(e)}>
+        <Select name="addPlayer" onChange={(e) => handleSelector(e)}>
           <option value={null}></option>
           {players &&
             players
