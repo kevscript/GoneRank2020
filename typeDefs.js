@@ -76,6 +76,8 @@ module.exports = gql`
     login(email: String!, password: String!): AuthData
     addPlayer(firstName: String!, lastName: String!): Player
     removePlayer(id: String!): Player
+    removePlayerFromMatch(matchId: String!, playerId: String!): Player
+    addPlayerToMatch(matchId: String!, playerId: String!): Player
     createMatch(date: String!, opponent: String!, location: String!, playerIds: [String!]!): Match
     removeMatch(id: String!): Match
     addUserVotes(matchId: String!, userId: String!, userVotes: [UserVoteInput!]!): Match
