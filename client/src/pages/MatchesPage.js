@@ -124,7 +124,7 @@ const MatchesPage = ({ user }) => {
       <ContentContainer>
         <Switch>
           <AdminRoute
-            path="/admin/matches/id/:id"
+            path="/admin/matches/id/:matchId"
             user={user}
             component={MatchInfos}
           />
