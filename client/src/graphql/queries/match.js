@@ -17,7 +17,6 @@ export const GET_MATCHES = gql`
         infos {
           firstName
           lastName
-          globalAverage
         }
       }
       active
@@ -42,7 +41,6 @@ export const GET_MATCH = gql`
         infos {
           firstName
           lastName
-          globalAverage
         }
       }
       active
@@ -77,10 +75,29 @@ export const CREATE_MATCH = gql`
         infos {
           firstName
           lastName
-          globalAverage
         }
       }
       active
+    }
+  }
+`
+
+export const REMOVE_PLAYER_FROM_MATCH = gql`
+  mutation RemovePlayerFromMatch($matchId: String!, $playerId: String!) {
+    removePlayerFromMatch(matchId: $matchId, playerId: $playerId) {
+      _id
+      firstName
+      lastName
+    }
+  }
+`
+
+export const ADD_PLAYER_TO_MATCH = gql`
+  mutation AddPlayerToMatch($matchId: String!, $playerId: String!) {
+    addPlayerToMatch(matchId: $matchId, playerId: $playerId) {
+      _id
+      firstName
+      lastName
     }
   }
 `
