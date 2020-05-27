@@ -6,11 +6,7 @@ const PrivateRoute = ({ component: Component, user, ...rest }) => {
     <Route
       {...rest}
       render={(props) =>
-        user.id ? (
-          <Component user={user} {...props} />
-        ) : (
-          <Redirect to="/authentication" />
-        )
+        user.id ? <Component user={user} {...props} /> : <Redirect to="/" />
       }
     />
   )
