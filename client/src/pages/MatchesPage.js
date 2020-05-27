@@ -31,6 +31,8 @@ const MatchesList = styled.ul`
 `
 
 const MatchItem = styled(Link)`
+  text-decoration: none;
+  color: inherit;
   cursor: pointer;
   display: flex;
   justify-content: space-between;
@@ -65,7 +67,7 @@ const Action = styled(Link)`
   cursor: pointer;
   width: 100%;
   height: 100%;
-  background: red;
+  background: rgba(0, 58, 128, 1);
   color: #f4f4f4;
   font-weight: 600;
 `
