@@ -11,14 +11,25 @@ const GlobalStyle = createGlobalStyle`
     color: #222;
   }
   body {
-    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Open Sans", "Oxygen",
+    font-family: "Roboto", -apple-system, BlinkMacSystemFont, "Segoe UI", "Open Sans", "Oxygen",
       "Ubuntu", "Cantarell", "Fira Sans", "Droid Sans", "Helvetica Neue",
       sans-serif;
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
   }
-  span, p, h1, h2, h3 {
-    font-family: sans-serif;
+  h1, h2, h3, label {
+    font-family: "Playfair Display", -apple-system, BlinkMacSystemFont, "Segoe UI", "Open Sans", "Oxygen",
+      "Ubuntu", "Cantarell", "Fira Sans", "Droid Sans", "Helvetica Neue",
+      sans-serif;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
+  span, p, button {
+    font-family: "Roboto", -apple-system, BlinkMacSystemFont, "Segoe UI", "Open Sans", "Oxygen",
+      "Ubuntu", "Cantarell", "Fira Sans", "Droid Sans", "Helvetica Neue",
+      sans-serif;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
   }
   
   code {

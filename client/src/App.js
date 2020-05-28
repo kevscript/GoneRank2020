@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react'
 import { BrowserRouter, Route, Switch, Redirect, Link } from 'react-router-dom'
 import PrivateRoute from './routes/PrivateRoute'
+import GlobalStyle from './styles/global'
 import HomePage from './pages/HomePage'
 import MatchsPage from './pages/MatchsPage'
 import MatchPage from './pages/MatchPage'
@@ -25,6 +26,7 @@ const App = () => {
 
   return (
     <div>
+      <GlobalStyle />
       <BrowserRouter>
         <Switch>
           <PrivateRoute exact path="/" user={user} component={HomePage} />
