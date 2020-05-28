@@ -10,12 +10,12 @@ import AuthPage from './pages/AuthPage'
 const App = () => {
   const [user, setUser] = useState({ id: null, token: null, roles: [] })
 
-  // useEffect(() => {
-  //   const id = localStorage.getItem('userId')
-  //   const token = localStorage.getItem('token')
-  //   const roles = JSON.parse(localStorage.getItem('userRoles'))
-  //   setUser({ id, token, roles })
-  // }, [])
+  useEffect(() => {
+    const id = localStorage.getItem('userId')
+    const token = localStorage.getItem('token')
+    const roles = JSON.parse(localStorage.getItem('userRoles'))
+    setUser({ id, token, roles })
+  }, [])
 
   const handleUser = ({ id, token, roles }) => {
     setUser({ id: id, token: token, roles: roles })
@@ -29,18 +29,12 @@ const App = () => {
       <GlobalStyle />
       <BrowserRouter>
         <Switch>
-          <PrivateRoute exact path="/" user={user} component={HomePage} />
+          <PrivateRoute path="/" user={user} component={HomePage} />
           {!user.id && !user.token && (
             <Route path="/authentication">
               <AuthPage user={user} handleUser={handleUser} />
             </Route>
           )}
-          <PrivateRoute path="/matchs" user={user} component={MatchsPage} />
-          <PrivateRoute
-            path="/match/id/:matchId"
-            user={user}
-            component={MatchPage}
-          />
           <Route render={() => <Redirect to={{ pathname: '/' }} />} />
         </Switch>
         {/* <div>
