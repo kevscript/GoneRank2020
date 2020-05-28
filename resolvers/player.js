@@ -85,7 +85,7 @@ module.exports = {
           }
         })
         const filteredAvgs = averages.filter(
-          (avg) => Number.isNaN(avg) === false
+          (avg) => (Number.isNaN(avg) === false) && (avg !== 0) 
         )
         if (filteredAvgs.length === 0) {
           return 0
