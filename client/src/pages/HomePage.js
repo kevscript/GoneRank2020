@@ -1,6 +1,6 @@
 import React from 'react'
 import styled from 'styled-components'
-import { Link, Switch } from 'react-router-dom'
+import { Link, Switch, Redirect } from 'react-router-dom'
 import PrivateRoute from '../routes/PrivateRoute'
 import RankingPage from './RankingPage'
 import MatchsPage from './MatchsPage'
@@ -43,15 +43,25 @@ const HomePage = ({ user }) => {
     <Container>
       <Header>
         <div>
-          <MenuLink to="/">Ranking</MenuLink>
-          <MenuLink to="/matchs">Matchs</MenuLink>
+          <MenuLink to="/home/ranking">Ranking</MenuLink>
+          <MenuLink to="/home/matchs">Matchs</MenuLink>
         </div>
         <LogoutButton>Logout</LogoutButton>
       </Header>
       <div>
         <Switch>
-          <PrivateRoute exact path="/" user={user} component={RankingPage} />
-          <PrivateRoute path="/matchs" user={user} component={MatchsPage} />
+          <Redirect exact from="/home" to="/home/ranking" />
+          <PrivateRoute
+            exact
+            path="/home/ranking"
+            user={user}
+            component={RankingPage}
+          />
+          <PrivateRoute
+            path="/home/matchs"
+            user={user}
+            component={MatchsPage}
+          />
         </Switch>
       </div>
     </Container>

@@ -29,7 +29,8 @@ const App = () => {
       <GlobalStyle />
       <BrowserRouter>
         <Switch>
-          <PrivateRoute path="/" user={user} component={HomePage} />
+          <Redirect exact from="/" to="/home" />
+          <PrivateRoute path="/home" user={user} component={HomePage} />
           {!user.id && !user.token && (
             <Route path="/authentication">
               <AuthPage user={user} handleUser={handleUser} />
