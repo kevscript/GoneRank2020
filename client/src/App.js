@@ -11,17 +11,36 @@ const App = () => {
   const [user, setUser] = useState({ id: null, token: null, roles: [] })
 
   useEffect(() => {
-    const id = localStorage.getItem('userId')
-    const token = localStorage.getItem('token')
-    const roles = JSON.parse(localStorage.getItem('userRoles'))
-    setUser({ id, token, roles })
+    const hour = 1000 * 60 * 60 // token expiration is set to 1 hour on backend
+    const now = new Date().getTime()
+    const expireTime = localStorage.getItem('expireTime')
+    if (expireTime == null) {
+      console.log('no expiration time set')
+      return
+    }
+
+    if (now - expireTime > hour) {
+      console.log('token has expired')
+      localStorage.clear()
+      return
+    } else {
+      console.log('token is still valid')
+      const user = JSON.parse(localStorage.getItem('user'))
+      setUser({ id: user.id, token: user.token, roles: user.roles })
+    }
   }, [])
 
   const handleUser = ({ id, token, roles }) => {
     setUser({ id: id, token: token, roles: roles })
-    localStorage.setItem('token', token)
-    localStorage.setItem('userId', id)
-    localStorage.setItem('userRoles', JSON.stringify(roles))
+    const user = { id, token, roles }
+    localStorage.setItem('user', JSON.stringify(user))
+    const newExpireTime = new Date().getTime()
+    localStorage.setItem('expireTime', newExpireTime)
+  }
+
+  const handleLogout = () => {
+    localStorage.clear()
+    setUser({ id: null, token: null, roles: [] })
   }
 
   return (
@@ -30,7 +49,12 @@ const App = () => {
       <BrowserRouter>
         <Switch>
           <Redirect exact from="/" to="/home" />
-          <PrivateRoute path="/home" user={user} component={HomePage} />
+          <PrivateRoute
+            path="/home"
+            user={user}
+            handleLogout={handleLogout}
+            component={HomePage}
+          />
           {!user.id && !user.token && (
             <Route path="/authentication">
               <AuthPage user={user} handleUser={handleUser} />
@@ -38,12 +62,6 @@ const App = () => {
           )}
           <Route render={() => <Redirect to={{ pathname: '/' }} />} />
         </Switch>
-        {/* <div>
-          <Link to="/">Home</Link>
-          <Link to="/authentication">Login</Link>
-          <Link to="/matchs">Matchs</Link>
-          <Link to="/match/:matchId">Match</Link>
-        </div> */}
       </BrowserRouter>
     </div>
   )

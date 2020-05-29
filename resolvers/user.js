@@ -55,13 +55,13 @@ module.exports = {
             roles: user.roles,
           },
           process.env.JWT_SECRET_KEY,
-          { expiresIn: '6h' }
+          { expiresIn: '1h' }
         )
         // return authentication data
         return {
           userId: user.id,
           token: token,
-          tokenExpiration: 6,
+          tokenExpiration: 1,
           roles: user.roles,
         }
       } catch (err) {

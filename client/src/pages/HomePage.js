@@ -32,13 +32,15 @@ const MenuLink = styled(Link)`
 `
 
 const LogoutButton = styled.button`
+  cursor: pointer;
   color: #f5f5f5;
   border: 1px solid #f5f5f5;
   background: transparent;
   padding: 0.5rem 1rem;
+  outline: 0;
 `
 
-const HomePage = ({ user }) => {
+const HomePage = ({ user, handleLogout }) => {
   return (
     <Container>
       <Header>
@@ -46,7 +48,7 @@ const HomePage = ({ user }) => {
           <MenuLink to="/home/ranking">Ranking</MenuLink>
           <MenuLink to="/home/matchs">Matchs</MenuLink>
         </div>
-        <LogoutButton>Logout</LogoutButton>
+        <LogoutButton onClick={handleLogout}>Logout</LogoutButton>
       </Header>
       <div>
         <Switch>

@@ -8,12 +8,15 @@ import * as serviceWorker from './serviceWorker'
 const client = new ApolloClient({
   uri: '/graphql',
   request: (operation) => {
-    const token = localStorage.getItem('token')
-    operation.setContext({
-      headers: {
-        authorization: token ? `Bearer ${token}` : '',
-      },
-    })
+    const user = JSON.parse(localStorage.getItem('user'))
+    if (user) {
+      const token = user.token
+      operation.setContext({
+        headers: {
+          authorization: token ? `Bearer ${token}` : '',
+        },
+      })
+    }
   },
 })
 
