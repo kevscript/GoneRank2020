@@ -3,8 +3,6 @@ import { BrowserRouter, Route, Switch, Redirect, Link } from 'react-router-dom'
 import PrivateRoute from './routes/PrivateRoute'
 import GlobalStyle from './styles/global'
 import HomePage from './pages/HomePage'
-import MatchsPage from './pages/MatchsPage'
-import MatchPage from './pages/MatchPage'
 import AuthPage from './pages/AuthPage'
 
 const App = () => {

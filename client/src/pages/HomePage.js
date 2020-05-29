@@ -4,6 +4,7 @@ import { Link, Switch, Redirect } from 'react-router-dom'
 import PrivateRoute from '../routes/PrivateRoute'
 import RankingPage from './RankingPage'
 import MatchsPage from './MatchsPage'
+import MatchPage from './MatchPage'
 
 const Container = styled.div`
   width: 100%;
@@ -63,6 +64,11 @@ const HomePage = ({ user, handleLogout }) => {
             path="/home/matchs"
             user={user}
             component={MatchsPage}
+          />
+          <PrivateRoute
+            path="/home/matches/id/:matchId"
+            user={user}
+            component={MatchPage}
           />
         </Switch>
       </div>
