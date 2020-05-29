@@ -35,6 +35,7 @@ const PlayerInfo = styled.div`
 const PlayerRanking = styled.div`
   display: flex;
   justify-content: center;
+  font-size: 10px;
   align-items: center;
   width: 40px;
   height: 100%;
@@ -48,6 +49,7 @@ const PlayerName = styled.span`
 
 const PlayerAverage = styled.span`
   color: #14387f;
+  font-weight: 600;
 `
 
 const RankingPage = () => {
@@ -64,13 +66,15 @@ const RankingPage = () => {
         {players &&
           sortByAvg(players).map((player, i) => (
             <PlayerItem key={player._id}>
-              <PlayerRanking>{i + 1}</PlayerRanking>
+              <PlayerRanking>
+                {player.globalAverage === 0 ? '-' : i + 1}
+              </PlayerRanking>
               <PlayerInfo>
                 <PlayerName>
                   {player.firstName} {player.lastName}
                 </PlayerName>
                 <PlayerAverage>
-                  {player.globalAverage === 0 ? 'N' : player.globalAverage}
+                  {player.globalAverage === 0 ? '-' : player.globalAverage}
                 </PlayerAverage>
               </PlayerInfo>
             </PlayerItem>
