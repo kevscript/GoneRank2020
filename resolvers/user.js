@@ -80,8 +80,14 @@ module.exports = {
       }
       // check if User with this id exists in the DB
       const user = await User.findOne({ _id: req.userId })
+
       if (!user) { 
         throw new ApolloError(`No User with id ${userId} found in DB.`)
+      }
+      // check if User already voted for this match
+      const alreadyVoted = user.votes.find(v => v.matchId === matchId)
+      if (alreadyVoted) {
+        throw new ApolloError(`This User already voted for this match.`)
       }
       // check if Match with this id exists in the DB.
       const match = await Match.findOne({ id: matchId })
