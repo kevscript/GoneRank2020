@@ -58,18 +58,22 @@ const MatchOpponent = styled.span`
 const MatchRating = styled.span`
   color: #14387f;
   font-weight: 600;
+  text-align: center;
 `
 
 const MatchsPage = ({ user }) => {
   const { loading, error, data: { matches } = {} } = useQuery(GET_MATCHES, {
     onCompleted: (res) => console.log(res),
   })
+
+  if (loading) return <h1>Loading....</h1>
+  if (error) return <p>{error.message}</p>
   return (
     <Container>
       <MatchsList>
         {matches &&
           sortMatchesByDate(matches).map((match) => (
-            <MatchItem to={`/home/matches/id/${match.id}`} key={match.id}>
+            <MatchItem to={`/home/matchs/id/${match.id}`} key={match.id}>
               <MatchInfo>
                 <MatchLocation>
                   {match.location === 'home' ? 'H' : 'A'}

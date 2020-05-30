@@ -61,12 +61,13 @@ const HomePage = ({ user, handleLogout }) => {
             component={RankingPage}
           />
           <PrivateRoute
+            exact
             path="/home/matchs"
             user={user}
             component={MatchsPage}
           />
           <PrivateRoute
-            path="/home/matches/id/:matchId"
+            path="/home/matchs/id/:matchId"
             user={user}
             component={MatchPage}
           />
