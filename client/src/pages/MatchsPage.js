@@ -55,10 +55,15 @@ const MatchOpponent = styled.span`
   color: #14387f;
 `
 
-const MatchRating = styled.span`
-  color: #14387f;
+const MatchRating = styled.div`
+  background: #14387f;
+  width: 60px;
+  height: 100%;
+  color: #fff;
   font-weight: 600;
-  text-align: center;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 `
 
 const MatchsPage = ({ user }) => {

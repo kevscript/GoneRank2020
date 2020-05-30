@@ -48,8 +48,18 @@ const PlayerName = styled.span`
 `
 
 const PlayerAverage = styled.span`
-  color: #14387f;
+  color: #f5f5f5;
   font-weight: 600;
+  text-align: center;
+`
+
+const PlayerRatingContainer = styled.div`
+  width: 60px;
+  height: 100%;
+  background: #14387f;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 `
 
 const RankingPage = () => {
@@ -73,9 +83,11 @@ const RankingPage = () => {
                 <PlayerName>
                   {player.firstName} {player.lastName}
                 </PlayerName>
-                <PlayerAverage>
-                  {player.globalAverage === 0 ? '-' : player.globalAverage}
-                </PlayerAverage>
+                <PlayerRatingContainer>
+                  <PlayerAverage>
+                    {player.globalAverage === 0 ? '-' : player.globalAverage}
+                  </PlayerAverage>
+                </PlayerRatingContainer>
               </PlayerInfo>
             </PlayerItem>
           ))}
