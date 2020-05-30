@@ -1,8 +1,10 @@
-import React from 'react'
+import React, { useState } from 'react'
 import styled from 'styled-components'
 import { useParams } from 'react-router-dom'
-import { useQuery } from '@apollo/react-hooks'
+import { useQuery, useMutation } from '@apollo/react-hooks'
 import { GET_MATCH } from '../graphql/queries/match'
+import { ADD_USER_VOTES } from '../graphql/queries/votes'
+import RatingInput from '../components/RatingInput'
 
 const Container = styled.div`
   width: 100%;
@@ -18,6 +20,7 @@ const MatchItem = styled.div`
   display: flex;
   height: 50px;
   background: #f5f5f5;
+  border-bottom: 1px solid #14387f;
 `
 
 const MatchInfo = styled.div`
@@ -37,31 +40,110 @@ const MatchData = styled.div`
   height: 100%;
   align-items: center;
   justify-content: space-between;
-  padding: 0 1rem;
+  padding-left: 1rem;
+  font-weight: 600;
 `
 
 const MatchLocation = styled.div`
   font-size: 10px;
 `
+
 const MatchDate = styled.span`
   font-size: 10px;
 `
+
 const MatchOpponent = styled.span`
   color: #14387f;
 `
 
-const MatchRating = styled.span`
+const MatchRating = styled.div`
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100px;
+  height: 100%;
   color: #14387f;
-  font-size: 10px;
+  background: #fff;
+  border-left: 1px solid #14387f;
+`
+
+const PlayersList = styled.div`
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+`
+
+const PlayerItem = styled.div`
+  width: 100%;
+  height: 40px;
+  display: flex;
+  border-bottom: 1px solid #14387f;
+`
+
+const PlayerMain = styled.div`
+  width: 100%;
+  display: flex;
+  align-items: center;
+  padding: 0 1rem;
+  background: #f5f5f5;
+`
+
+const PlayerName = styled.span`
+  color: #14387f;
+`
+
+const PlayerRating = styled.div`
+  width: 100px;
+  border-left: 1px solid #14387f;
+`
+
+const SubmitButton = styled.button`
+  width: 90%;
+  margin: 1rem auto;
+  padding: 1rem 0;
+  color: #14387f;
+  font-weight: 600;
+  text-transform: uppercase;
+  border: 1px solid #14387f;
 `
 
 const MatchPage = () => {
+  const [userVotes, setUserVotes] = useState({})
   const { matchId } = useParams()
   const { loading, error, data: { match } = {} } = useQuery(GET_MATCH, {
     skip: !matchId,
     variables: { id: matchId },
-    onCompleted: (res) => console.log(res),
+    onCompleted: (res) => {
+      const votes = res.match.lineup.map((player, i) => {
+        return [
+          player.playerId,
+          {
+            name: `${player.infos.firstName} ${player.infos.lastName}`,
+            rating: 5,
+            average: player.average,
+          },
+        ]
+      })
+
+      const initVotes = Object.fromEntries(votes)
+      setUserVotes(initVotes)
+    },
   })
+
+  const [addUserVotes] = useMutation(ADD_USER_VOTES, {
+    onError: (err) => console.error(err),
+  })
+
+  const handleRating = (val, playerId) => {
+    setUserVotes((votes) => ({
+      ...votes,
+      [playerId]: {
+        ...votes[playerId],
+        rating: val,
+      },
+    }))
+  }
 
   if (!matchId) return <p>No match Id</p>
   if (loading) return <h1>Loading...</h1>
@@ -79,7 +161,23 @@ const MatchPage = () => {
           <MatchRating>Note / 10</MatchRating>
         </MatchData>
       </MatchItem>
-      <div>Players Form</div>
+      <PlayersList>
+        {match.lineup &&
+          match.lineup.map((player, i) => (
+            <PlayerItem key={player.playerId}>
+              <PlayerMain>
+                <PlayerName>{`${player.infos.firstName} ${player.infos.lastName}`}</PlayerName>
+              </PlayerMain>
+              <PlayerRating>
+                <RatingInput
+                  playerId={player.playerId}
+                  handleRating={handleRating}
+                />
+              </PlayerRating>
+            </PlayerItem>
+          ))}
+      </PlayersList>
+      <SubmitButton>VOTER</SubmitButton>
     </Container>
   )
 }
