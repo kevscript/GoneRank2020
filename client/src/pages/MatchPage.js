@@ -113,9 +113,15 @@ const ErrorMessage = styled.p`
   font-size: 12px;
 `
 
+const ConfirmMessage = styled.p`
+  color: #14387f;
+  font-size: 12px;
+`
+
 const MatchPage = ({ user }) => {
   const [userVotes, setUserVotes] = useState({})
   const [submitError, setSubmitError] = useState('')
+  const [submitComplete, setSubmitComplete] = useState('')
   const { matchId } = useParams()
 
   const { loading, error, data: { match } = {} } = useQuery(GET_MATCH, {
@@ -138,7 +144,14 @@ const MatchPage = ({ user }) => {
   })
 
   const [addUserVotes] = useMutation(ADD_USER_VOTES, {
-    onError: (err) => setSubmitError(err.message),
+    onCompleted: () => {
+      setSubmitError('')
+      setSubmitComplete('Le vote a été comptabilisé.')
+    },
+    onError: (err) => {
+      setSubmitComplete('')
+      setSubmitError(err.message)
+    },
   })
 
   const handleRating = (val, playerId) => {
@@ -199,6 +212,7 @@ const MatchPage = ({ user }) => {
       </PlayersList>
       <SubmitButton onClick={handleVoteSubmit}>VOTER</SubmitButton>
       {submitError && <ErrorMessage>{submitError}</ErrorMessage>}
+      {submitComplete && <ConfirmMessage>{submitComplete}</ConfirmMessage>}
     </Container>
   )
 }
