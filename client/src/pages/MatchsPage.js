@@ -60,7 +60,7 @@ const MatchRating = styled.span`
   font-weight: 600;
 `
 
-const MatchsPage = () => {
+const MatchsPage = ({ user }) => {
   const { loading, error, data: { matches } = {} } = useQuery(GET_MATCHES, {
     onCompleted: (res) => console.log(res),
   })

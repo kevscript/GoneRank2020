@@ -108,9 +108,16 @@ const SubmitButton = styled.button`
   border: 1px solid #14387f;
 `
 
-const MatchPage = () => {
+const ErrorMessage = styled.p`
+  color: red;
+  font-size: 12px;
+`
+
+const MatchPage = ({ user }) => {
   const [userVotes, setUserVotes] = useState({})
+  const [submitError, setSubmitError] = useState('')
   const { matchId } = useParams()
+
   const { loading, error, data: { match } = {} } = useQuery(GET_MATCH, {
     skip: !matchId,
     variables: { id: matchId },
@@ -125,14 +132,13 @@ const MatchPage = () => {
           },
         ]
       })
-
       const initVotes = Object.fromEntries(votes)
       setUserVotes(initVotes)
     },
   })
 
   const [addUserVotes] = useMutation(ADD_USER_VOTES, {
-    onError: (err) => console.error(err),
+    onError: (err) => setSubmitError(err.message),
   })
 
   const handleRating = (val, playerId) => {
@@ -143,6 +149,20 @@ const MatchPage = () => {
         rating: val,
       },
     }))
+  }
+
+  const handleVoteSubmit = () => {
+    const votes = Object.keys(userVotes).map((key, index) => ({
+      playerId: key,
+      rating: parseFloat(userVotes[key].rating),
+    }))
+    addUserVotes({
+      variables: {
+        matchId: matchId,
+        userId: user.id,
+        userVotes: votes,
+      },
+    })
   }
 
   if (!matchId) return <p>No match Id</p>
@@ -177,7 +197,8 @@ const MatchPage = () => {
             </PlayerItem>
           ))}
       </PlayersList>
-      <SubmitButton>VOTER</SubmitButton>
+      <SubmitButton onClick={handleVoteSubmit}>VOTER</SubmitButton>
+      {submitError && <ErrorMessage>{submitError}</ErrorMessage>}
     </Container>
   )
 }
