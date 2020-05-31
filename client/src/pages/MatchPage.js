@@ -4,6 +4,7 @@ import { useParams } from 'react-router-dom'
 import { useQuery, useMutation } from '@apollo/react-hooks'
 import { GET_MATCH } from '../graphql/queries/match'
 import { ADD_USER_VOTES } from '../graphql/queries/votes'
+import Loader from '../components/Loader'
 import RatingInput from '../components/RatingInput'
 
 const Container = styled.div`
@@ -19,18 +20,18 @@ const MatchItem = styled.div`
   width: 100%;
   display: flex;
   height: 50px;
-  background: #f5f5f5;
+  background: #eff4ff;
   border-bottom: 1px solid #14387f;
 `
 
 const MatchInfo = styled.div`
-  background: #dbdbdb;
+  background: #14387f;
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
   height: 100%;
-  color: #14387f;
+  color: #fff;
   width: 50px;
 `
 
@@ -86,7 +87,7 @@ const PlayerMain = styled.div`
   display: flex;
   align-items: center;
   padding: 0 1rem;
-  background: #f5f5f5;
+  background: #fff;
 `
 
 const PlayerName = styled.span`
@@ -105,6 +106,7 @@ const SubmitButton = styled.button`
   color: #14387f;
   font-weight: 600;
   text-transform: uppercase;
+  background: #eff4ff;
   border: 1px solid #14387f;
 `
 
@@ -178,15 +180,17 @@ const MatchPage = ({ user }) => {
     })
   }
 
-  if (!matchId) return <p>No match Id</p>
-  if (loading) return <h1>Loading...</h1>
+  if (!matchId) return <p>No matching Id</p>
+  if (loading) return <Loader />
   if (error) return <p>{error.message}</p>
 
   return (
     <Container>
       <MatchItem>
         <MatchInfo>
-          <MatchLocation>{match.location === 'home' ? 'H' : 'A'}</MatchLocation>
+          <MatchLocation>
+            {match.location === 'home' ? 'Dom.' : 'Ext.'}
+          </MatchLocation>
           <MatchDate>{match.date.slice(0, 5)}</MatchDate>
         </MatchInfo>
         <MatchData>

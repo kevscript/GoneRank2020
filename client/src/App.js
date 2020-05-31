@@ -1,9 +1,15 @@
 import React, { useState, useEffect } from 'react'
-import { BrowserRouter, Route, Switch, Redirect, Link } from 'react-router-dom'
+import styled from 'styled-components'
+import { BrowserRouter, Route, Switch, Redirect } from 'react-router-dom'
 import PrivateRoute from './routes/PrivateRoute'
 import GlobalStyle from './styles/global'
 import HomePage from './pages/HomePage'
 import AuthPage from './pages/AuthPage'
+
+const Container = styled.div`
+  width: 100%;
+  overflow-x: hidden;
+`
 
 const App = () => {
   const [user, setUser] = useState({ id: null, token: null, roles: [] })
@@ -42,7 +48,7 @@ const App = () => {
   }
 
   return (
-    <div>
+    <Container>
       <GlobalStyle />
       <BrowserRouter>
         <Switch>
@@ -61,7 +67,7 @@ const App = () => {
           <Route render={() => <Redirect to={{ pathname: '/' }} />} />
         </Switch>
       </BrowserRouter>
-    </div>
+    </Container>
   )
 }
 

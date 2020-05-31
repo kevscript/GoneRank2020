@@ -48,6 +48,7 @@ const FormError = styled.div`
 `
 
 const FormButton = styled.button`
+  cursor: pointer;
   width: 160px;
   height: 50px;
   background: #fff;
@@ -68,10 +69,11 @@ const FormButton = styled.button`
 `
 
 const Message = styled.p`
-  color: #acacac;
+  color: #444;
 
   span {
     color: #14387f;
+    border-bottom: 1px solid #14387f;
     cursor: pointer;
   }
 `

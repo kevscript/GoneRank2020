@@ -1,15 +1,26 @@
 import React from 'react'
 import styled from 'styled-components'
+import Loader from '../components/Loader'
 import { useQuery } from '@apollo/react-hooks'
 import { GET_PLAYERS } from '../graphql/queries/player'
 import { sortByAvg } from '../utils/sortByAvg'
 
 const Container = styled.div`
   width: 100%;
+  min-height: 100vh;
+  background: #fff;
+`
+
+const LoadingContainer = styled.div`
+  width: 100%;
+  height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 `
 
 const PlayersList = styled.div`
-  margin: 5px;
+  padding: 5px;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -19,7 +30,7 @@ const PlayerItem = styled.div`
   display: flex;
   width: 100%;
   height: 40px;
-  background: #f5f5f5;
+  background: #eff4ff;
   margin-bottom: 5px;
 `
 
@@ -39,8 +50,8 @@ const PlayerRanking = styled.div`
   align-items: center;
   width: 40px;
   height: 100%;
-  background: #dbdbdb;
-  color: #14387f;
+  background: #14387f;
+  color: #fff;
 `
 
 const PlayerName = styled.span`
@@ -48,7 +59,6 @@ const PlayerName = styled.span`
 `
 
 const PlayerAverage = styled.span`
-  color: #f5f5f5;
   font-weight: 600;
   text-align: center;
 `
@@ -56,7 +66,8 @@ const PlayerAverage = styled.span`
 const PlayerRatingContainer = styled.div`
   width: 60px;
   height: 100%;
-  background: #14387f;
+  background: #da001a;
+  color: #fff;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -67,7 +78,7 @@ const RankingPage = () => {
     onCompleted: (res) => console.log(res),
   })
 
-  if (loading) return <h1>Loading...</h1>
+  if (loading) return <Loader />
   if (error) return <p>{error.message}</p>
 
   return (

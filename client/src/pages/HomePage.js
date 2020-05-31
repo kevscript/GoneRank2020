@@ -1,6 +1,6 @@
 import React from 'react'
 import styled from 'styled-components'
-import { Link, Switch, Redirect } from 'react-router-dom'
+import { NavLink, Switch, Redirect } from 'react-router-dom'
 import PrivateRoute from '../routes/PrivateRoute'
 import RankingPage from './RankingPage'
 import MatchsPage from './MatchsPage'
@@ -11,7 +11,7 @@ const Container = styled.div`
   min-height: 100vh;
 `
 
-const Header = styled.div`
+const Menu = styled.div`
   display: flex;
   justify-content: space-between;
   align-items: center;
@@ -23,15 +23,21 @@ const Header = styled.div`
   bottom: 0;
 `
 
-const MenuLink = styled(Link)`
+const MenuNavLink = styled(NavLink)`
   text-decoration: none;
-  padding: 5px;
+  padding: 15px;
   color: #f5f5f5;
-  font-weight: 600;
+  height: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+`
 
-  &:not(:first-child) {
-    margin-left: 10px;
-  }
+const NavContainer = styled.div`
+  height: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 `
 
 const LogoutButton = styled.button`
@@ -67,13 +73,23 @@ const HomePage = ({ user, handleLogout }) => {
             component={MatchPage}
           />
         </Switch>
-        <Header>
-          <div>
-            <MenuLink to="/home/ranking">Ranking</MenuLink>
-            <MenuLink to="/home/matchs">Matchs</MenuLink>
-          </div>
+        <Menu>
+          <NavContainer>
+            <MenuNavLink
+              to="/home/ranking"
+              activeStyle={{ background: '#da001a' }}
+            >
+              Ranking
+            </MenuNavLink>
+            <MenuNavLink
+              to="/home/matchs"
+              activeStyle={{ background: '#da001a' }}
+            >
+              Matchs
+            </MenuNavLink>
+          </NavContainer>
           <LogoutButton onClick={handleLogout}>Logout</LogoutButton>
-        </Header>
+        </Menu>
       </div>
     </Container>
   )

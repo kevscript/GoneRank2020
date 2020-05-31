@@ -1,6 +1,7 @@
 import React from 'react'
 import styled from 'styled-components'
 import { Link } from 'react-router-dom'
+import Loader from '../components/Loader'
 import { useQuery } from '@apollo/react-hooks'
 import { GET_MATCHES } from '../graphql/queries/match'
 import { sortMatchesByDate } from '../utils/sortMatchesByDate'
@@ -10,7 +11,7 @@ const Container = styled.div`
 `
 
 const MatchsList = styled.div`
-  margin: 5px;
+  padding: 5px;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -21,18 +22,18 @@ const MatchItem = styled(Link)`
   display: flex;
   width: 100%;
   height: 50px;
-  background: #f5f5f5;
+  background: #eff4ff;
   margin-bottom: 5px;
 `
 
 const MatchInfo = styled.div`
-  background: #dbdbdb;
+  background: #14387f;
+  color: #fff;
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
   height: 100%;
-  color: #14387f;
   width: 50px;
 `
 
@@ -56,10 +57,10 @@ const MatchOpponent = styled.span`
 `
 
 const MatchRating = styled.div`
-  background: #14387f;
+  background: #da001a;
+  color: #fff;
   width: 60px;
   height: 100%;
-  color: #fff;
   font-weight: 600;
   display: flex;
   justify-content: center;
@@ -71,7 +72,7 @@ const MatchsPage = ({ user }) => {
     onCompleted: (res) => console.log(res),
   })
 
-  if (loading) return <h1>Loading....</h1>
+  if (loading) return <Loader />
   if (error) return <p>{error.message}</p>
   return (
     <Container>
@@ -81,12 +82,16 @@ const MatchsPage = ({ user }) => {
             <MatchItem to={`/home/matchs/id/${match.id}`} key={match.id}>
               <MatchInfo>
                 <MatchLocation>
-                  {match.location === 'home' ? 'H' : 'A'}
+                  {match.location === 'home' ? 'Dom.' : 'Ext.'}
                 </MatchLocation>
                 <MatchDate>{match.date.slice(0, 5)}</MatchDate>
               </MatchInfo>
               <MatchData>
-                <MatchOpponent>{match.opponent}</MatchOpponent>
+                <MatchOpponent>
+                  {match.location === 'home'
+                    ? `OL vs ${match.opponent}`
+                    : `${match.opponent} vs OL`}
+                </MatchOpponent>
                 <MatchRating>5</MatchRating>
               </MatchData>
             </MatchItem>

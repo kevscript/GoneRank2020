@@ -32,7 +32,7 @@ const DecrementButton = styled.div`
   cursor: pointer;
   width: 25px;
   height: 100%;
-  background: #14387f;
+  background: #da001a;
   display: flex;
   justify-content: center;
   align-items: center;
