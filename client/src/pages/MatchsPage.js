@@ -42,7 +42,7 @@ const MatchData = styled.div`
   height: 100%;
   align-items: center;
   justify-content: space-between;
-  padding: 0 1rem;
+  padding: 0 0 0 1rem;
 `
 
 const MatchLocation = styled.div`

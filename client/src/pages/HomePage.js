@@ -19,6 +19,8 @@ const Header = styled.div`
   height: 60px;
   background: #14387f;
   padding: 0 1rem;
+  position: fixed;
+  bottom: 0;
 `
 
 const MenuLink = styled(Link)`
@@ -44,13 +46,6 @@ const LogoutButton = styled.button`
 const HomePage = ({ user, handleLogout }) => {
   return (
     <Container>
-      <Header>
-        <div>
-          <MenuLink to="/home/ranking">Ranking</MenuLink>
-          <MenuLink to="/home/matchs">Matchs</MenuLink>
-        </div>
-        <LogoutButton onClick={handleLogout}>Logout</LogoutButton>
-      </Header>
       <div>
         <Switch>
           <Redirect exact from="/home" to="/home/ranking" />
@@ -72,6 +67,13 @@ const HomePage = ({ user, handleLogout }) => {
             component={MatchPage}
           />
         </Switch>
+        <Header>
+          <div>
+            <MenuLink to="/home/ranking">Ranking</MenuLink>
+            <MenuLink to="/home/matchs">Matchs</MenuLink>
+          </div>
+          <LogoutButton onClick={handleLogout}>Logout</LogoutButton>
+        </Header>
       </div>
     </Container>
   )

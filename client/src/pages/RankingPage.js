@@ -29,7 +29,7 @@ const PlayerInfo = styled.div`
   align-items: center;
   justify-content: space-between;
   height: 100%;
-  padding: 0 1rem;
+  padding: 0 0 0 1rem;
 `
 
 const PlayerRanking = styled.div`

@@ -9,18 +9,17 @@ const Container = styled.div`
   align-items: center;
   width: 100%;
   min-height: 100vh;
-  background: #f5f5f5;
-  padding-top: 50px;
 `
 
 const Title = styled.h3`
+  margin-top: 50px;
   font-size: 40px;
   color: #14387f;
 `
 
 const FormContainer = styled.div`
   width: 90%;
-  max-width: 600px;
+  max-width: 300px;
   position: fixed;
   bottom: 50px;
 `
