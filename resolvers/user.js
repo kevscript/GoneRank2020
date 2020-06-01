@@ -87,7 +87,7 @@ module.exports = {
       // check if User already voted for this match
       const alreadyVoted = user.votes.find(v => v.matchId === matchId)
       if (alreadyVoted) {
-        throw new ApolloError(`This User already voted for this match.`)
+        throw new ApolloError(`Vous avez déjà voté pour ce match.`)
       }
       // check if Match with this id exists in the DB.
       const match = await Match.findOne({ id: matchId })

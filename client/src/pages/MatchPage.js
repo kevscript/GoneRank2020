@@ -99,6 +99,17 @@ const PlayerRating = styled.div`
   border-left: 1px solid #14387f;
 `
 
+const PlayerAvg = styled.div`
+  width: 100px;
+  height: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background: #da001a;
+  color: #f5f5f5;
+  font-weight: 600;
+`
+
 const SubmitButton = styled.button`
   width: 90%;
   margin: 1rem auto;
@@ -110,8 +121,16 @@ const SubmitButton = styled.button`
   border: 1px solid #14387f;
 `
 
+const ButtonContainer = styled.div`
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 0 1rem;
+`
+
 const ErrorMessage = styled.p`
-  color: red;
+  color: #da001a;
   font-size: 12px;
 `
 
@@ -148,7 +167,7 @@ const MatchPage = ({ user }) => {
   const [addUserVotes] = useMutation(ADD_USER_VOTES, {
     onCompleted: () => {
       setSubmitError('')
-      setSubmitComplete('Le vote a été comptabilisé.')
+      setSubmitComplete('Vos votes ont été comptabilisés avec succès.')
     },
     onError: (err) => {
       setSubmitComplete('')
@@ -199,24 +218,31 @@ const MatchPage = ({ user }) => {
         </MatchData>
       </MatchItem>
       <PlayersList>
-        {match.lineup &&
-          match.lineup.map((player, i) => (
-            <PlayerItem key={player.playerId}>
-              <PlayerMain>
-                <PlayerName>{`${player.infos.firstName} ${player.infos.lastName}`}</PlayerName>
-              </PlayerMain>
-              <PlayerRating>
+        {match.lineup.map((player, i) => (
+          <PlayerItem key={player.playerId}>
+            <PlayerMain>
+              <PlayerName>{`${player.infos.firstName} ${player.infos.lastName}`}</PlayerName>
+            </PlayerMain>
+            <PlayerRating>
+              {match.active ? (
                 <RatingInput
                   playerId={player.playerId}
                   handleRating={handleRating}
                 />
-              </PlayerRating>
-            </PlayerItem>
-          ))}
+              ) : (
+                <PlayerAvg>{player.average}</PlayerAvg>
+              )}
+            </PlayerRating>
+          </PlayerItem>
+        ))}
       </PlayersList>
-      <SubmitButton onClick={handleVoteSubmit}>VOTER</SubmitButton>
-      {submitError && <ErrorMessage>{submitError}</ErrorMessage>}
-      {submitComplete && <ConfirmMessage>{submitComplete}</ConfirmMessage>}
+      {match.active && (
+        <ButtonContainer>
+          <SubmitButton onClick={handleVoteSubmit}>VOTER</SubmitButton>
+          {submitError && <ErrorMessage>{submitError}</ErrorMessage>}
+          {submitComplete && <ConfirmMessage>{submitComplete}</ConfirmMessage>}
+        </ButtonContainer>
+      )}
     </Container>
   )
 }
