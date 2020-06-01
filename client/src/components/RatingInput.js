@@ -49,7 +49,7 @@ const RatingInput = ({ startingValue = 5, handleRating, playerId }) => {
 
   useEffect(() => {
     handleRating(val, playerId)
-  }, [val])
+  }, [val, playerId, handleRating])
 
   const handleIncrement = () => {
     if (val < 10) {

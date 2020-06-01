@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useState, useCallback } from 'react'
 import styled from 'styled-components'
 import { useParams } from 'react-router-dom'
 import { useQuery, useMutation } from '@apollo/react-hooks'
@@ -175,7 +175,7 @@ const MatchPage = ({ user }) => {
     },
   })
 
-  const handleRating = (val, playerId) => {
+  const handleRating = useCallback((val, playerId) => {
     setUserVotes((votes) => ({
       ...votes,
       [playerId]: {
@@ -183,7 +183,7 @@ const MatchPage = ({ user }) => {
         rating: val,
       },
     }))
-  }
+  }, [])
 
   const handleVoteSubmit = () => {
     const votes = Object.keys(userVotes).map((key, index) => ({
