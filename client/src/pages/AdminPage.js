@@ -1,7 +1,8 @@
 import React from 'react'
 import styled from 'styled-components'
-import { NavLink, Route, Switch } from 'react-router-dom'
+import { NavLink, Switch } from 'react-router-dom'
 import AdminRoute from '../routes/AdminRoute'
+import PlayersPage from './admin/PlayersPage'
 
 const Container = styled.div`
   width: 100%;
@@ -48,7 +49,7 @@ const AdminPage = ({ user }) => {
           <AdminRoute
             path="/home/admin/players"
             user={user}
-            component={() => <div>Joueurs</div>}
+            component={PlayersPage}
           />
           <AdminRoute
             path="/home/admin/matchs"
