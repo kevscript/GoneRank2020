@@ -87,6 +87,7 @@ const FormButton = styled.button`
   background: #fff;
   border: 1px solid #14387f;
   color: #14387f;
+  font-weight: 600;
 `
 
 const FormError = styled.span`
@@ -94,7 +95,7 @@ const FormError = styled.span`
   color: #da001a;
 `
 
-const PlayersPage = () => {
+const SquadPage = () => {
   const { register, handleSubmit, reset, errors } = useForm()
 
   const { loading, error, data: { players } = {} } = useQuery(GET_PLAYERS, {
@@ -157,7 +158,7 @@ const PlayersPage = () => {
         />
         {errors.lastName && <FormError>{errors.lastName.message}</FormError>}
         <FormButton type="submit" onClick={handleSubmit(handleAddPlayer)}>
-          Add Player
+          Ajouter Joueur
         </FormButton>
       </PlayerForm>
       <PlayersList>
@@ -185,4 +186,4 @@ const PlayersPage = () => {
   )
 }
 
-export default PlayersPage
+export default SquadPage

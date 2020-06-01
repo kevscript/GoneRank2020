@@ -2,7 +2,7 @@ import React from 'react'
 import styled from 'styled-components'
 import { NavLink, Switch } from 'react-router-dom'
 import AdminRoute from '../routes/AdminRoute'
-import PlayersPage from './admin/PlayersPage'
+import SquadPage from './admin/SquadPage'
 
 const Container = styled.div`
   width: 100%;
@@ -32,29 +32,29 @@ const AdminPage = ({ user }) => {
     <Container>
       <Header>
         <MenuNavLink
-          to="/home/admin/players"
+          to="/home/admin/squad"
           activeStyle={{ background: '#d49f45', color: '#14387f' }}
         >
-          Joueurs
+          Effectif
         </MenuNavLink>
         <MenuNavLink
-          to="/home/admin/matchs"
+          to="/home/admin/calendar"
           activeStyle={{ background: '#d49f45', color: '#14387f' }}
         >
-          Matchs
+          Calendrier
         </MenuNavLink>
       </Header>
       <div>
         <Switch>
           <AdminRoute
-            path="/home/admin/players"
+            path="/home/admin/squad"
             user={user}
-            component={PlayersPage}
+            component={SquadPage}
           />
           <AdminRoute
-            path="/home/admin/matchs"
+            path="/home/admin/calendar"
             user={user}
-            component={() => <div>Matchs</div>}
+            component={() => <div>Calendrier</div>}
           />
         </Switch>
       </div>
