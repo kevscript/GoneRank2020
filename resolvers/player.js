@@ -59,6 +59,12 @@ module.exports = {
         if (!player) {
           throw new UserInputError(`Player with id ${id} doesn't exist.`)
         }
+        const matchsPromises = player.matchesPlayed.map(m => Match.findOne({ id: m.matchId }))
+        const matchs = await Promise.all(matchsPromises)
+        matchs.filter(p => p !== null).map(match => {
+          match.lineup = match.lineup.filter(p => p.playerId !== id )
+          match.save()
+        })
         return player
       } catch (err) {
         throw new ApolloError(err)

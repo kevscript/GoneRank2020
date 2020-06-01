@@ -2,7 +2,11 @@ import React from 'react'
 import styled from 'styled-components'
 import { useQuery, useMutation } from '@apollo/react-hooks'
 import { useForm } from 'react-hook-form'
-import { GET_PLAYERS, ADD_PLAYER } from '../../graphql/queries/player'
+import {
+  GET_PLAYERS,
+  ADD_PLAYER,
+  REMOVE_PLAYER,
+} from '../../graphql/queries/player'
 import Loader from '../../components/Loader'
 
 const PlayersList = styled.div`
@@ -104,12 +108,29 @@ const SquadPage = () => {
 
   const [addPlayer] = useMutation(ADD_PLAYER, {
     onCompleted: () => reset(),
+    onError: (err) => console.log(err),
     update: (cache, { data: { addPlayer } }) => {
       try {
         const { players } = cache.readQuery({ query: GET_PLAYERS })
         cache.writeQuery({
           query: GET_PLAYERS,
           data: { players: [...players, addPlayer] },
+        })
+      } catch (err) {
+        console.log(err)
+      }
+    },
+  })
+
+  const [removePlayer] = useMutation(REMOVE_PLAYER, {
+    onCompleted: (res) => console.log(res),
+    onError: (err) => console.log(err),
+    update: (cache, { data: { removePlayer } }) => {
+      try {
+        const { players } = cache.readQuery({ query: GET_PLAYERS })
+        cache.writeQuery({
+          query: GET_PLAYERS,
+          data: { players: players.filter((p) => p._id !== removePlayer._id) },
         })
       } catch (err) {
         console.log(err)
@@ -126,7 +147,12 @@ const SquadPage = () => {
   }
 
   const handleRemovePlayer = (e) => {
-    console.log(e.currentTarget.getAttribute('data-id'))
+    const playerId = e.currentTarget.getAttribute('data-id')
+    if (playerId) {
+      removePlayer({
+        variables: { id: playerId },
+      })
+    }
   }
 
   if (loading) return <Loader />
