@@ -26,68 +26,110 @@ module.exports = {
       if (!req.isAuth || !req.userRoles.includes('ADMIN')) {
         throw new ApolloError('Unauthorized Request')
       }
-      // check if a match is already planned for that date, throw an error if true
-      const matchDay = await Match.findOne({ date: date })
-      if (matchDay) {
-        throw new UserInputError(`A match is already planned for ${date}`)
+      try {
+        // check if a match is already planned for that date, throw an error if true
+        const matchDay = await Match.findOne({ date: date })
+        if (matchDay) {
+          throw new UserInputError(`A match is already planned for ${date}`)
+        }
+
+        // filter all falsy values and holes from playerIds array
+        const ids = playerIds.filter(Boolean).filter(() => true)
+        // if ids is an empty array, throw an error
+        if (ids.length === 0) {
+          throw new UserInputError(`Array of Ids is empty`)
+        }
+        // make a Set of ids to avoid repetition
+        const setOfIds = new Set(ids)
+        // turn Set back to Array of values
+        const idsArr = Array.from(setOfIds)
+        const newMatch = await generateMatch(date, opponent, location, idsArr)
+        return newMatch
+      } catch(err) {
+        throw new ApolloError(err)
       }
 
-      // filter all falsy values and holes from playerIds array
-      const ids = playerIds.filter(Boolean).filter(() => true)
-      // if ids is an empty array, throw an error
-      if (ids.length === 0) {
-        throw new UserInputError(`Array of Ids is empty`)
-      }
-      // make a Set of ids to avoid repetition
-      const setOfIds = new Set(ids)
-      // turn Set back to Array of values
-      const idsArr = Array.from(setOfIds)
-      const newMatch = await generateMatch(date, opponent, location, idsArr)
-      return newMatch
     },
     removeMatch: async (_, { id }, req) => {
       if (!req.isAuth || !req.userRoles.includes('ADMIN')) {
         throw new ApolloError('Unauthorized Request')
       }
-      const match = await Match.findOneAndDelete({ id: id })
-      if (!match) { throw new ApolloError(`Match with id ${id} not found in DB.`) }
-      if (match.lineup.length > 0) {
-        const playersPromises = match.lineup.map(player => Player.findOne({ _id: player.playerId }))
-        const players = await Promise.all(playersPromises)
-        players.filter(p => p !== null).map(player => {
-          player.matchesPlayed = player.matchesPlayed.filter(m => m.matchId !== id )
-          player.save()
-        })
+      try {
+        const match = await Match.findOneAndDelete({ id: id })
+        if (!match) { throw new ApolloError(`Match with id ${id} not found in DB.`) }
+        if (match.lineup.length > 0) {
+          const playersPromises = match.lineup.map(player => Player.findOne({ _id: player.playerId }))
+          const players = await Promise.all(playersPromises)
+          players.filter(p => p !== null).map(player => {
+            player.matchesPlayed = player.matchesPlayed.filter(m => m.matchId !== id )
+            player.save()
+          })
+        }
+        return match
+      } catch (err) {
+        throw new ApolloError(err)
       }
-      return match
+
     },
     removePlayerFromMatch: async (_, { matchId, playerId }, req) => {
       if (!req.isAuth || !req.userRoles.includes('ADMIN')) {
         throw new ApolloError('Unauthorized Request')
       }
-      const match = await Match.findOne({ id: matchId })
-      if (!match) { throw new ApolloError(`Match with id ${matchId} not found in DB.`) }
-      const player = await Player.findOne({ _id: playerId })
-      if (!player) { throw new ApolloError(`Player with id ${playerId} not found in DB.`) }
-      match.lineup = match.lineup.filter(p => p.playerId !== playerId)
-      match.save()
-      player.matchesPlayed = player.matchesPlayed.filter(m => m.matchId !== matchId)
-      player.save()
-      return player
+      try {
+        const match = await Match.findOne({ id: matchId })
+        if (!match) { throw new ApolloError(`Match with id ${matchId} not found in DB.`) }
+        const player = await Player.findOne({ _id: playerId })
+        if (!player) { throw new ApolloError(`Player with id ${playerId} not found in DB.`) }
+        match.lineup = match.lineup.filter(p => p.playerId !== playerId)
+        match.save()
+        player.matchesPlayed = player.matchesPlayed.filter(m => m.matchId !== matchId)
+        player.save()
+        return player
+      } catch (err) {
+        throw new ApolloError(err)
+      }
+
     },
     addPlayerToMatch: async (_, { matchId, playerId }, req) => {
       if (!req.isAuth || !req.userRoles.includes('ADMIN')) {
         throw new ApolloError('Unauthorized Request')
       }
-      const match = await Match.findOne({ id: matchId })
-      if (!match) { throw new ApolloError(`Match with id ${matchId} not found in DB.`) }
-      const player = await Player.findOne({ _id: playerId })
-      if (!player) { throw new ApolloError(`Player with id ${playerId} not found in DB.`) }
-      player.matchesPlayed = [...player.matchesPlayed, { matchId: match.id }]
-      player.save()
-      match.lineup = [...match.lineup, { playerId: player._id, ratings: [] }]
-      match.save()
-      return player
+      try {
+        const match = await Match.findOne({ id: matchId })
+        if (!match) { throw new ApolloError(`Match with id ${matchId} not found in DB.`) }
+        const player = await Player.findOne({ _id: playerId })
+        if (!player) { throw new ApolloError(`Player with id ${playerId} not found in DB.`) }
+        player.matchesPlayed = [...player.matchesPlayed, { matchId: match.id }]
+        player.save()
+        match.lineup = [...match.lineup, { playerId: player._id, ratings: [] }]
+        match.save()
+        return player
+      } catch (err) {
+        throw new ApolloError(err)
+      }
+
+    },
+    setMatchActive: async (_, { id }, req) => {
+      if (!req.isAuth || !req.userRoles.includes('ADMIN')) {
+        throw new ApolloError('Unauthorized Request')
+      }
+      try {
+        const currentActiveMatch = await Match.findOne({ active: true })
+        if (currentActiveMatch) { 
+          currentActiveMatch.active = false 
+          currentActiveMatch.save()
+        }
+        const newActiveMatch = await Match.findOne({ id: id })
+        if (!newActiveMatch) {
+          throw new ApolloError(`Match with id ${id} not found in DB.`)
+        }
+        newActiveMatch.active = true
+        newActiveMatch.save()
+        return newActiveMatch
+      } catch (err) {
+        throw new ApolloError(err)
+      }
+
     }
   },
   MatchLineupPlayer: {

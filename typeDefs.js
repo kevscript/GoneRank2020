@@ -82,5 +82,6 @@ module.exports = gql`
     removeMatch(id: String!): Match
     addUserVotes(matchId: String!, userId: String!, userVotes: [UserVoteInput!]!): Match
     removeUserVotes(matchId: String!, userId: String!): Match
+    setMatchActive(id: String!): Match
   }
 `
