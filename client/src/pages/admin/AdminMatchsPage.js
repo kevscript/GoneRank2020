@@ -1,8 +1,8 @@
 import React from 'react'
 import styled from 'styled-components'
-import { useQuery } from '@apollo/react-hooks'
+import { useQuery, useMutation } from '@apollo/react-hooks'
 import { Link } from 'react-router-dom'
-import { GET_MATCHES } from '../../graphql/queries/match'
+import { GET_MATCHES, SET_MATCH_ACTIVE } from '../../graphql/queries/match'
 import { sortMatchesByDate } from '../../utils/sortMatchesByDate'
 import Loader from '../../components/Loader'
 
@@ -17,8 +17,7 @@ const MatchsList = styled.div`
   align-items: center;
 `
 
-const MatchItem = styled(Link)`
-  text-decoration: none;
+const MatchItem = styled.div`
   display: flex;
   width: 100%;
   height: 50px;
@@ -52,13 +51,14 @@ const MatchLocation = styled.div`
 const MatchDate = styled.span`
   font-size: 10px;
 `
-const MatchOpponent = styled.span`
+const MatchOpponent = styled(Link)`
+  text-decoration: none;
   color: #14387f;
 `
 
-const MatchRating = styled.div`
-  background: #da001a;
-  color: #fff;
+const MatchActive = styled.div`
+  background: #eff4ff;
+  color: #da001a;
   width: 60px;
   height: 100%;
   font-weight: 600;
@@ -67,8 +67,52 @@ const MatchRating = styled.div`
   align-items: center;
 `
 
+const ActiveButton = styled.button`
+  width: 100%;
+  height: 100%;
+  background: #d49f45;
+  border: 0;
+  outline: 0;
+  cursor: pointer;
+  color: #fff;
+`
+
 const AdminMatchsPage = () => {
   const { loading, error, data: { matches } = {} } = useQuery(GET_MATCHES)
+
+  const [setMatchActive] = useMutation(SET_MATCH_ACTIVE, {
+    onError: (err) => console.log(err),
+    update: (cache, { data: { setMatchActive } }) => {
+      try {
+        const { matches } = cache.readQuery({ query: GET_MATCHES })
+        // immute matches array with all matches activity reseted to false
+        let allMatches = [...matches].map((match) => ({
+          ...match,
+          active: false,
+        }))
+        // find match we want to make active
+        let newMatch = allMatches.find((m) => m.id === setMatchActive.id)
+        newMatch.active = true
+        cache.writeQuery({
+          query: GET_MATCHES,
+          data: {
+            matches: [...allMatches],
+          },
+        })
+      } catch (err) {
+        console.log(err)
+      }
+    },
+  })
+
+  const handleMatchActivation = (e) => {
+    const matchId = e.currentTarget.getAttribute('data-id')
+    if (matchId) {
+      setMatchActive({
+        variables: { id: matchId },
+      })
+    }
+  }
 
   if (loading) return <Loader />
   if (error) return <p>{error.message}</p>
@@ -78,7 +122,7 @@ const AdminMatchsPage = () => {
       <MatchsList>
         {matches &&
           sortMatchesByDate(matches).map((match) => (
-            <MatchItem to={`/home/admin/fixtures/${match.id}`} key={match.id}>
+            <MatchItem key={match.id}>
               <MatchInfo>
                 <MatchLocation>
                   {match.location === 'home' ? 'Dom.' : 'Ext.'}
@@ -86,12 +130,23 @@ const AdminMatchsPage = () => {
                 <MatchDate>{match.date.slice(0, 5)}</MatchDate>
               </MatchInfo>
               <MatchData>
-                <MatchOpponent>
+                <MatchOpponent to={`/home/admin/fixtures/${match.id}`}>
                   {match.location === 'home'
                     ? `OL vs ${match.opponent}`
                     : `${match.opponent} vs OL`}
                 </MatchOpponent>
-                <MatchRating>5</MatchRating>
+                <MatchActive>
+                  {!match.active ? (
+                    <ActiveButton
+                      data-id={match.id}
+                      onClick={handleMatchActivation}
+                    >
+                      Activate
+                    </ActiveButton>
+                  ) : (
+                    'Live'
+                  )}
+                </MatchActive>
               </MatchData>
             </MatchItem>
           ))}
