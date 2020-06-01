@@ -3,6 +3,7 @@ import styled from 'styled-components'
 import { NavLink, Switch } from 'react-router-dom'
 import AdminRoute from '../routes/AdminRoute'
 import SquadPage from './admin/SquadPage'
+import FixturesPage from './admin/FixturesPage'
 
 const Container = styled.div`
   width: 100%;
@@ -38,10 +39,10 @@ const AdminPage = ({ user }) => {
           Effectif
         </MenuNavLink>
         <MenuNavLink
-          to="/home/admin/calendar"
+          to="/home/admin/fixtures"
           activeStyle={{ background: '#d49f45', color: '#14387f' }}
         >
-          Calendrier
+          Fixtures
         </MenuNavLink>
       </Header>
       <div>
@@ -52,9 +53,9 @@ const AdminPage = ({ user }) => {
             component={SquadPage}
           />
           <AdminRoute
-            path="/home/admin/calendar"
+            path="/home/admin/fixtures"
             user={user}
-            component={() => <div>Calendrier</div>}
+            component={FixturesPage}
           />
         </Switch>
       </div>
