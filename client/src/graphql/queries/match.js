@@ -128,7 +128,7 @@ export const REMOVE_MATCH = gql`
 
 export const SET_MATCH_ACTIVE = gql`
   mutation SetMatchActive($id: String!) {
-    setmatchActive(id: $id) {
+    setMatchActive(id: $id) {
       id
       date
       opponent
