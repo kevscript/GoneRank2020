@@ -101,3 +101,51 @@ export const ADD_PLAYER_TO_MATCH = gql`
     }
   }
 `
+
+export const REMOVE_MATCH = gql`
+  mutation RemoveMatch($id: String!) {
+    removeMatch(id: $id) {
+      id
+      date
+      opponent
+      location
+      lineup {
+        playerId
+        ratings {
+          userId
+          rating
+        }
+        average
+        infos {
+          firstName
+          lastName
+        }
+      }
+      active
+    }
+  }
+`
+
+export const SET_MATCH_ACTIVE = gql`
+  mutation SetMatchActive($id: String!) {
+    setmatchActive(id: $id) {
+      id
+      date
+      opponent
+      location
+      lineup {
+        playerId
+        ratings {
+          userId
+          rating
+        }
+        average
+        infos {
+          firstName
+          lastName
+        }
+      }
+      active
+    }
+  }
+`
