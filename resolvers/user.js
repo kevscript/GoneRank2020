@@ -1,7 +1,7 @@
 require('dotenv').config()
 const bcrypt = require('bcryptjs')
 const jwt = require('jsonwebtoken')
-const { ApolloError } = require('apollo-server-express')
+const { ApolloError, UserInputError } = require('apollo-server-express')
 const User = require('../models/user')
 const Match = require('../models/match')
 
@@ -13,7 +13,7 @@ module.exports = {
         // check if email is already used by existing user
         const userExists = await User.findOne({ email: email })
         if (userExists) {
-          throw new ApolloError('User already exists.')
+          throw new UserInputError('User already exists.')
         }
         // hash the password
         const hashedPassword = await bcrypt.hash(password, 12)
@@ -40,12 +40,12 @@ module.exports = {
         // retrieve the user associated to the email
         const user = await User.findOne({ email: email })
         if (!user) {
-          throw new ApolloError('Incorrect email or password.')
+          throw new UserInputError('Incorrect email or password.')
         }
         // compare the password to the hashed password on the user object
         const isEqualPassword = await bcrypt.compare(password, user.password)
         if (!isEqualPassword) {
-          throw new ApolloError('Incorrect password or email.')
+          throw new UserInputError('Incorrect password or email.')
         }
         // create a JWT token for authentication
         const token = jwt.sign(
@@ -82,7 +82,7 @@ module.exports = {
       const user = await User.findOne({ _id: req.userId })
 
       if (!user) { 
-        throw new ApolloError(`No User with id ${userId} found in DB.`)
+        throw new UserInputError(`No User with id ${userId} found in DB.`)
       }
       // check if User already voted for this match
       const alreadyVoted = user.votes.find(v => v.matchId === matchId)
@@ -92,7 +92,7 @@ module.exports = {
       // check if Match with this id exists in the DB.
       const match = await Match.findOne({ id: matchId })
       if (!match) {
-        throw new ApolloError(`No match found with id ${matchId} in the DB.`)
+        throw new UserInputError(`No match found with id ${matchId} in the DB.`)
       }
       // push a new object to the votes array of the User with his votes data
       user.votes = [...user.votes, { matchId: matchId, ratings: userVotes }]
@@ -120,12 +120,12 @@ module.exports = {
       // check if User with this id exists in the DB
       const user = await User.findOne({ _id: req.userId })
       if (!user) { 
-        throw new ApolloError(`No User with id ${userId} found in DB.`)
+        throw new UserInputError(`No User with id ${userId} found in DB.`)
       }
       // check if Match with this id exists in the DB.
       const match = await Match.findOne({ id: matchId })
       if (!match) {
-        throw new ApolloError(`No match found with id ${matchId} in the DB.`)
+        throw new UserInputError(`No match found with id ${matchId} in the DB.`)
       }
       // push a new object to the votes array of the User with his votes data
       user.votes = user.votes.filter(vote => vote.matchId !== matchId)

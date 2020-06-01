@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useState } from 'react'
 import styled from 'styled-components'
 import { useForm } from 'react-hook-form'
 import { useMutation } from '@apollo/react-hooks'
@@ -38,11 +38,19 @@ const FormInput = styled.input`
 `
 
 const FormError = styled.div`
+  font-size: 12px;
   margin-top: 5px;
   margin-left: 1rem;
   height: 20px;
   display: flex;
   align-items: center;
+  color: #da001a;
+  font-weight: 300;
+`
+
+const LoginError = styled.div`
+  font-size: 12px;
+  height: 20px;
   color: #da001a;
   font-weight: 300;
 `
@@ -80,16 +88,22 @@ const Message = styled.p`
 `
 
 const LoginForm = ({ handleFormStatus, handleUser }) => {
+  const [loginError, setLoginError] = useState(null)
   const { register, handleSubmit, errors } = useForm()
 
   const [loginUser] = useMutation(LOGIN_USER, {
-    onCompleted: (res) =>
+    onCompleted: (res) => {
+      setLoginError(null)
       handleUser({
         id: res.login.userId,
         token: res.login.token,
         roles: res.login.roles,
-      }),
-    onError: (err) => console.error(err),
+      })
+    },
+    onError: (err) => {
+      setLoginError(err)
+      console.log(err.graphQLErrors)
+    },
   })
 
   const handleLogin = (formData) => {
@@ -138,6 +152,12 @@ const LoginForm = ({ handleFormStatus, handleUser }) => {
       <FormButton type="submit" onClick={handleSubmit(handleLogin)}>
         se connecter
       </FormButton>
+      <LoginError>
+        {loginError &&
+          loginError.graphQLErrors.map(({ message }, i) => (
+            <span key={i}>{message}</span>
+          ))}
+      </LoginError>
       <Message>
         Pas encore de compte?{' '}
         <span onClick={() => handleFormStatus(false)}>S'inscrire</span>.
