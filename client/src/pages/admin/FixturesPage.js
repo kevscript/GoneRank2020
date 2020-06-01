@@ -2,7 +2,6 @@ import React from 'react'
 import styled from 'styled-components'
 import { Switch } from 'react-router-dom'
 import AdminRoute from '../../routes/AdminRoute'
-import Loader from '../../components/Loader'
 import AdminMatchsPage from './AdminMatchsPage'
 import AdminMatchPage from './AdminMatchPage'
 
