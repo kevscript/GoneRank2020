@@ -8,6 +8,7 @@ import { sortMatchesByDate } from '../utils/sortMatchesByDate'
 
 const Container = styled.div`
   width: 100%;
+  padding-bottom: 60px;
 `
 
 const MatchsList = styled.div`
