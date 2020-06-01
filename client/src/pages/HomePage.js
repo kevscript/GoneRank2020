@@ -2,9 +2,11 @@ import React from 'react'
 import styled from 'styled-components'
 import { NavLink, Switch, Redirect } from 'react-router-dom'
 import PrivateRoute from '../routes/PrivateRoute'
+import AdminRoute from '../routes/AdminRoute'
 import RankingPage from './RankingPage'
 import MatchsPage from './MatchsPage'
 import MatchPage from './MatchPage'
+import AdminPage from './AdminPage'
 
 const Container = styled.div`
   width: 100%;
@@ -72,6 +74,9 @@ const HomePage = ({ user, handleLogout }) => {
             user={user}
             component={MatchPage}
           />
+          {user.roles.includes('ADMIN') && (
+            <AdminRoute path="/home/admin" user={user} component={AdminPage} />
+          )}
         </Switch>
         <Menu>
           <NavContainer>
@@ -87,6 +92,14 @@ const HomePage = ({ user, handleLogout }) => {
             >
               Matchs
             </MenuNavLink>
+            {user.roles.includes('ADMIN') && (
+              <MenuNavLink
+                to="/home/admin"
+                activeStyle={{ background: '#da001a' }}
+              >
+                +
+              </MenuNavLink>
+            )}
           </NavContainer>
           <LogoutButton onClick={handleLogout}>Logout</LogoutButton>
         </Menu>
