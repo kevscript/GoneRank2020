@@ -1,13 +1,15 @@
-import React from 'react'
+import React, { useState } from 'react'
 import styled from 'styled-components'
 import { useParams, useHistory } from 'react-router-dom'
 import { useQuery, useMutation } from '@apollo/react-hooks'
 import {
   GET_MATCH,
-  REMOVE_PLAYER_FROM_MATCH,
-  REMOVE_MATCH,
   GET_MATCHES,
+  REMOVE_MATCH,
+  REMOVE_PLAYER_FROM_MATCH,
+  ADD_PLAYER_TO_MATCH,
 } from '../../graphql/queries/match'
+import { GET_PLAYERS } from '../../graphql/queries/player'
 import Loader from '../../components/Loader'
 
 const Container = styled.div`
@@ -126,13 +128,42 @@ const PlayerButtonContainer = styled.div`
   align-items: center;
 `
 
+const SelectContainer = styled.div`
+  width: 100%;
+  display: flex;
+  padding: 0 5px;
+`
+
+const PlayerSelect = styled.select`
+  padding: 0.25rem 0.5rem;
+  border: 1px solid #14387f;
+  outline-color: #14387f;
+  color: #14387f;
+  width: 100%;
+`
+
+const SelectButton = styled.button`
+  padding: 0.25rem 0.5rem;
+  background: #fff;
+  border: 1px solid #14387f;
+  color: #14387f;
+  font-weight: 600;
+`
+
 const AdminMatchPage = () => {
+  const [selectedPlayerId, setSelectedPlayerId] = useState(null)
   const { matchId } = useParams()
   const history = useHistory()
   const { loading, error, data: { match } = {} } = useQuery(GET_MATCH, {
     skip: !matchId,
     variables: { id: matchId },
+    onCompleted: (res) => console.log(res),
   })
+  const {
+    loading: playersLoading,
+    error: playersError,
+    data: { players } = {},
+  } = useQuery(GET_PLAYERS)
 
   const [removeMatch] = useMutation(REMOVE_MATCH, {
     onError: (err) => console.log(err),
@@ -176,6 +207,40 @@ const AdminMatchPage = () => {
     },
   })
 
+  const [addPlayerToMatch] = useMutation(ADD_PLAYER_TO_MATCH, {
+    onError: (err) => console.log(err),
+    onCompleted: () => setSelectedPlayerId(null),
+    update: (cache, { data: { addPlayerToMatch } }) => {
+      try {
+        const { match } = cache.readQuery({
+          query: GET_MATCH,
+          variables: { id: matchId },
+        })
+        const newMatch = { ...match }
+        newMatch.lineup = [
+          ...newMatch.lineup,
+          {
+            playerId: addPlayerToMatch._id,
+            ratings: [],
+            average: null,
+            infos: {
+              firstName: addPlayerToMatch.firstName,
+              lastName: addPlayerToMatch.lastName,
+              __typename: 'Player',
+            },
+            __typename: 'MatchLineupPlayer',
+          },
+        ]
+        cache.writeQuery({
+          query: GET_MATCH,
+          data: { match: newMatch },
+        })
+      } catch (err) {
+        console.log(err)
+      }
+    },
+  })
+
   const handleRemoveMatch = () => {
     removeMatch({ variables: { id: matchId } })
     history.push('/home/admin/fixtures')
@@ -186,6 +251,18 @@ const AdminMatchPage = () => {
     if (playerId) {
       removePlayerFromMatch({
         variables: { matchId: matchId, playerId: playerId },
+      })
+    }
+  }
+
+  const handleSelectedPlayerId = (e) => {
+    setSelectedPlayerId(e.target.value)
+  }
+
+  const handleAddPlayerToMatch = () => {
+    if (selectedPlayerId) {
+      addPlayerToMatch({
+        variables: { matchId: matchId, playerId: selectedPlayerId },
       })
     }
   }
@@ -226,6 +303,23 @@ const AdminMatchPage = () => {
           </PlayerItem>
         ))}
       </PlayersList>
+      <SelectContainer>
+        <PlayerSelect name="addPlayer" onChange={handleSelectedPlayerId}>
+          <option value={null}></option>
+          {players &&
+            players
+              .filter(
+                (p) => match.lineup.some((x) => x.playerId === p._id) === false
+              )
+              .map((p) => (
+                <option
+                  key={p._id}
+                  value={p._id}
+                >{`${p.firstName} ${p.lastName}`}</option>
+              ))}
+        </PlayerSelect>
+        <SelectButton onClick={handleAddPlayerToMatch}>Add Player</SelectButton>
+      </SelectContainer>
     </Container>
   )
 }
