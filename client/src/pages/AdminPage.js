@@ -11,7 +11,7 @@ const Container = styled.div`
 
 const Header = styled.div`
   width: 100%;
-  height: 40px;
+  height: 60px;
   background: #14387f;
   display: flex;
   justify-content: center;

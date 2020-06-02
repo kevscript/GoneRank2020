@@ -1,10 +1,12 @@
 import React from 'react'
 import styled from 'styled-components'
-import { useParams } from 'react-router-dom'
+import { useParams, useHistory } from 'react-router-dom'
 import { useQuery, useMutation } from '@apollo/react-hooks'
 import {
   GET_MATCH,
   REMOVE_PLAYER_FROM_MATCH,
+  REMOVE_MATCH,
+  GET_MATCHES,
 } from '../../graphql/queries/match'
 import Loader from '../../components/Loader'
 
@@ -59,7 +61,27 @@ const MatchOpponent = styled.span`
   color: #14387f;
 `
 
+const MatchRemove = styled.div`
+  width: 60px;
+  height: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+`
+
+const RemoveButton = styled.button`
+  width: 100%;
+  height: 100%;
+  background: #da001a;
+  opacity: 1;
+  color: #fff;
+  border: 0;
+  outline: 0;
+  cursor: pointer;
+`
+
 const PlayersList = styled.div`
+  margin-top: 1rem;
   padding: 5px;
   display: flex;
   width: 100%;
@@ -106,9 +128,26 @@ const PlayerButtonContainer = styled.div`
 
 const AdminMatchPage = () => {
   const { matchId } = useParams()
+  const history = useHistory()
   const { loading, error, data: { match } = {} } = useQuery(GET_MATCH, {
     skip: !matchId,
     variables: { id: matchId },
+  })
+
+  const [removeMatch] = useMutation(REMOVE_MATCH, {
+    onError: (err) => console.log(err),
+    update: (cache, { data: { removeMatch } }) => {
+      try {
+        const { matches } = cache.readQuery({ query: GET_MATCHES })
+        const filteredMatches = matches.filter((m) => m.id !== removeMatch.id)
+        cache.writeQuery({
+          query: GET_MATCHES,
+          data: { matches: filteredMatches },
+        })
+      } catch (err) {
+        console.log(err)
+      }
+    },
   })
 
   const [removePlayerFromMatch] = useMutation(REMOVE_PLAYER_FROM_MATCH, {
@@ -137,6 +176,11 @@ const AdminMatchPage = () => {
     },
   })
 
+  const handleRemoveMatch = () => {
+    removeMatch({ variables: { id: matchId } })
+    history.push('/home/admin/fixtures')
+  }
+
   const handleRemovePlayerFromMatch = (e) => {
     const playerId = e.currentTarget.getAttribute('data-id')
     if (playerId) {
@@ -160,6 +204,9 @@ const AdminMatchPage = () => {
         </MatchInfo>
         <MatchData>
           <MatchOpponent>{match.opponent}</MatchOpponent>
+          <MatchRemove>
+            <RemoveButton onClick={handleRemoveMatch}>X</RemoveButton>
+          </MatchRemove>
         </MatchData>
       </MatchItem>
       <PlayersList>
