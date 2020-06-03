@@ -8,10 +8,12 @@ import Loader from '../../components/Loader'
 
 const Container = styled.div`
   width: 100%;
+  display: flex;
+  flex-direction: column;
 `
 
 const MatchsList = styled.div`
-  padding: 5px;
+  padding: 0 5px;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -77,6 +79,18 @@ const ActiveButton = styled.button`
   color: #fff;
 `
 
+const NewMatchLink = styled(Link)`
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 0.5rem;
+  border: 1px solid #14387f;
+  font-weight: 600;
+  margin: 1rem 5px;
+  text-decoration: none;
+  color: #14387f;
+`
+
 const AdminMatchsPage = () => {
   const { loading, error, data: { matches } = {} } = useQuery(GET_MATCHES)
 
@@ -119,6 +133,7 @@ const AdminMatchsPage = () => {
 
   return (
     <Container>
+      <NewMatchLink to="/home/admin/fixtures/new">New Match +</NewMatchLink>
       <MatchsList>
         {matches &&
           sortMatchesByDate(matches).map((match) => (
@@ -130,7 +145,7 @@ const AdminMatchsPage = () => {
                 <MatchDate>{match.date.slice(0, 5)}</MatchDate>
               </MatchInfo>
               <MatchData>
-                <MatchOpponent to={`/home/admin/fixtures/${match.id}`}>
+                <MatchOpponent to={`/home/admin/fixtures/id/${match.id}`}>
                   {match.location === 'home'
                     ? `OL vs ${match.opponent}`
                     : `${match.opponent} vs OL`}

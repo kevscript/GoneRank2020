@@ -114,7 +114,7 @@ const PlayerDeleteButton = styled.button`
   cursor: pointer;
   width: 100%;
   height: 100%;
-  background: #da001a;
+  background: #14387f;
   color: #fff;
   border: none;
   outline: none;
@@ -132,10 +132,11 @@ const SelectContainer = styled.div`
   width: 100%;
   display: flex;
   padding: 0 5px;
+  margin-top: 1rem;
 `
 
 const PlayerSelect = styled.select`
-  padding: 0.25rem 0.5rem;
+  padding: 0.5rem;
   border: 1px solid #14387f;
   outline-color: #14387f;
   color: #14387f;
@@ -143,11 +144,19 @@ const PlayerSelect = styled.select`
 `
 
 const SelectButton = styled.button`
-  padding: 0.25rem 0.5rem;
-  background: #fff;
+  cursor: pointer;
+  padding: 0.5rem 0;
+  background: #eff4ff;
   border: 1px solid #14387f;
   color: #14387f;
   font-weight: 600;
+  width: 120px;
+  margin-left: 5px;
+
+  &:disabled {
+    opacity: 0.3;
+    cursor: default;
+  }
 `
 
 const AdminMatchPage = () => {
@@ -159,11 +168,8 @@ const AdminMatchPage = () => {
     variables: { id: matchId },
     onCompleted: (res) => console.log(res),
   })
-  const {
-    loading: playersLoading,
-    error: playersError,
-    data: { players } = {},
-  } = useQuery(GET_PLAYERS)
+
+  const { data: { players } = {} } = useQuery(GET_PLAYERS)
 
   const [removeMatch] = useMutation(REMOVE_MATCH, {
     onError: (err) => console.log(err),
@@ -318,7 +324,12 @@ const AdminMatchPage = () => {
                 >{`${p.firstName} ${p.lastName}`}</option>
               ))}
         </PlayerSelect>
-        <SelectButton onClick={handleAddPlayerToMatch}>Add Player</SelectButton>
+        <SelectButton
+          onClick={handleAddPlayerToMatch}
+          disabled={!selectedPlayerId}
+        >
+          Add Player
+        </SelectButton>
       </SelectContainer>
     </Container>
   )

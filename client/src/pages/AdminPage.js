@@ -7,6 +7,7 @@ import FixturesPage from './admin/FixturesPage'
 
 const Container = styled.div`
   width: 100%;
+  padding: 60px 0;
 `
 
 const Header = styled.div`
@@ -16,6 +17,8 @@ const Header = styled.div`
   display: flex;
   justify-content: center;
   align-items: center;
+  position: fixed;
+  top: 0;
 `
 
 const MenuNavLink = styled(NavLink)`
@@ -34,13 +37,13 @@ const AdminPage = ({ user }) => {
       <Header>
         <MenuNavLink
           to="/home/admin/squad"
-          activeStyle={{ background: '#d49f45', color: '#14387f' }}
+          activeStyle={{ background: '#d49f45' }}
         >
           Effectif
         </MenuNavLink>
         <MenuNavLink
           to="/home/admin/fixtures"
-          activeStyle={{ background: '#d49f45', color: '#14387f' }}
+          activeStyle={{ background: '#d49f45' }}
         >
           Fixtures
         </MenuNavLink>
