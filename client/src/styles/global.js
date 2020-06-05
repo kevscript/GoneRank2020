@@ -11,7 +11,7 @@ const GlobalStyle = createGlobalStyle`
     color: #222;
   }
   body {
-    font-family: "Roboto", -apple-system, BlinkMacSystemFont, "Segoe UI", "Open Sans", "Oxygen",
+    font-family: "Lato", -apple-system, BlinkMacSystemFont, "Segoe UI", "Open Sans", "Oxygen",
       "Ubuntu", "Cantarell", "Fira Sans", "Droid Sans", "Helvetica Neue",
       sans-serif;
     -webkit-font-smoothing: antialiased;
@@ -25,7 +25,7 @@ const GlobalStyle = createGlobalStyle`
     -moz-osx-font-smoothing: grayscale;
   }
   span, p, button {
-    font-family: "Roboto", -apple-system, BlinkMacSystemFont, "Segoe UI", "Open Sans", "Oxygen",
+    font-family: "Lato", -apple-system, BlinkMacSystemFont, "Segoe UI", "Open Sans", "Oxygen",
       "Ubuntu", "Cantarell", "Fira Sans", "Droid Sans", "Helvetica Neue",
       sans-serif;
     -webkit-font-smoothing: antialiased;
