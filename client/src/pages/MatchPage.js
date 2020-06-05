@@ -5,6 +5,7 @@ import { useQuery } from '@apollo/react-hooks'
 import { GET_MATCH } from '../graphql/queries/match'
 import Loader from '../components/Loader'
 import LineupList from '../components/LineupList'
+import LineupEdit from '../components/LineupEdit'
 
 const Container = styled.div`
   width: 100%;
@@ -13,7 +14,7 @@ const Container = styled.div`
   padding: 1rem;
 `
 
-const MatchPage = ({ user }) => {
+const MatchPage = ({ user, editMode }) => {
   const { matchId } = useParams()
   const { loading, error, data: { match } = {} } = useQuery(GET_MATCH, {
     skip: !matchId,
@@ -26,7 +27,11 @@ const MatchPage = ({ user }) => {
 
   return (
     <Container>
-      <LineupList match={match} user={user} />
+      {editMode ? (
+        <LineupEdit match={match} user={user} />
+      ) : (
+        <LineupList match={match} user={user} />
+      )}
     </Container>
   )
 }
