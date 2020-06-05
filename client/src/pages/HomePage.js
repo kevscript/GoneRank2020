@@ -33,6 +33,7 @@ const MenuLink = styled(Link)`
   color: #14387f;
   letter-spacing: 1px;
   text-transform: uppercase;
+  font-weight: 600;
 `
 
 const IconContainer = styled.div`
@@ -88,7 +89,7 @@ const HomePage = ({ user, handleLogout }) => {
           <NaviLink
             to="/home/ranking"
             activeStyle={{
-              color: '#14387f',
+              color: '#333',
               borderBottom: '2px solid #14387f',
             }}
           >
@@ -97,7 +98,7 @@ const HomePage = ({ user, handleLogout }) => {
           <NaviLink
             to="/home/matchs"
             activeStyle={{
-              color: '#14387f',
+              color: '#333',
               borderBottom: '2px solid #14387f',
             }}
           >
