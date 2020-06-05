@@ -6,7 +6,7 @@ import AdminRoute from '../routes/AdminRoute'
 import RankingPage from './RankingPage'
 import MatchsPage from './MatchsPage'
 import MatchPage from './MatchPage'
-import AdminPage from './AdminPage'
+import NewMatchPage from './admin/NewMatchPage'
 import EditIcon from '../assets/edit.svg'
 import UserIcon from '../assets/user.svg'
 
@@ -128,6 +128,12 @@ const HomePage = ({ user, handleLogout }) => {
             user={user}
             editMode={editMode}
             component={MatchPage}
+          />
+          <AdminRoute
+            path="/home/matchs/new"
+            user={user}
+            editMode={editMode}
+            component={NewMatchPage}
           />
         </Switch>
       </div>
