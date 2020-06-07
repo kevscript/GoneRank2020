@@ -1,8 +1,6 @@
 import React from 'react'
 import styled from 'styled-components'
 import { useForm } from 'react-hook-form'
-import { useMutation } from '@apollo/react-hooks'
-import { LOGIN_USER } from '../../graphql/queries/auth'
 
 const Form = styled.form`
   width: 100%;
