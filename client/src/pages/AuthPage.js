@@ -1,5 +1,7 @@
 import React, { useState } from 'react'
 import styled from 'styled-components'
+import { useMutation } from '@apollo/react-hooks'
+import { LOGIN_USER, REGISTER_USER } from '../graphql/queries/auth'
 import LoginForm from '../components/auth/LoginForm'
 import RegisterForm from '../components/auth/RegisterForm'
 
@@ -25,9 +27,67 @@ const FormContainer = styled.div`
   bottom: 50px;
 `
 
+const MutationError = styled.div`
+  font-size: 15px;
+  height: 20px;
+  color: #da001a;
+  font-weight: 300;
+`
+
 const AuthPage = ({ handleUser }) => {
   const [isLogin, setIsLogin] = useState(true)
-  const handleFormStatus = (bool) => setIsLogin(bool)
+  const [loginError, setLoginError] = useState(null)
+  const [registerError, setRegisterError] = useState(null)
+
+  const [loginUser] = useMutation(LOGIN_USER, {
+    onCompleted: (res) => {
+      setLoginError(null)
+      handleUser({
+        id: res.login.userId,
+        token: res.login.token,
+        roles: res.login.roles,
+      })
+    },
+    onError: (err) => {
+      setLoginError(err.message)
+      console.log(err.graphQLErrors)
+    },
+  })
+
+  const [registerUser] = useMutation(REGISTER_USER, {
+    onCompleted: (res) => {
+      setRegisterError(null)
+      setIsLogin(true)
+    },
+    onError: (err) => {
+      setRegisterError(err.message)
+      console.log(err.graphQLErrors)
+    },
+  })
+
+  const handleLogin = (formData) => {
+    loginUser({
+      variables: {
+        email: formData.email,
+        password: formData.password,
+      },
+    })
+  }
+
+  const handleRegister = (formData) => {
+    registerUser({
+      variables: {
+        email: formData.email,
+        password: formData.password,
+      },
+    })
+  }
+
+  const handleFormStatus = (bool) => {
+    setLoginError(null)
+    setRegisterError(null)
+    setIsLogin(bool)
+  }
 
   return (
     <Container>
@@ -36,14 +96,18 @@ const AuthPage = ({ handleUser }) => {
         {isLogin ? (
           <LoginForm
             handleFormStatus={handleFormStatus}
-            handleUser={handleUser}
+            handleLogin={handleLogin}
           />
         ) : (
           <RegisterForm
             handleFormStatus={handleFormStatus}
-            handleUser={handleUser}
+            handleRegister={handleRegister}
           />
         )}
+        <MutationError>
+          {loginError && <span>{loginError}</span>}
+          {registerError && <span>{registerError}</span>}
+        </MutationError>
       </FormContainer>
     </Container>
   )

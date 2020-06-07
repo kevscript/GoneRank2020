@@ -1,8 +1,6 @@
 import React from 'react'
 import styled from 'styled-components'
 import { useForm } from 'react-hook-form'
-import { useMutation } from '@apollo/react-hooks'
-import { REGISTER_USER } from '../../graphql/queries/auth'
 
 const Form = styled.form`
   width: 100%;
@@ -78,22 +76,8 @@ const Message = styled.p`
   }
 `
 
-const RegisterForm = ({ handleFormStatus }) => {
+const RegisterForm = ({ handleFormStatus, handleRegister }) => {
   const { register, handleSubmit, errors, watch } = useForm()
-
-  const [registerUser] = useMutation(REGISTER_USER, {
-    onCompleted: (res) => handleFormStatus(true),
-    onError: (err) => console.error(err),
-  })
-
-  const handleRegister = (formData) => {
-    registerUser({
-      variables: {
-        email: formData.email,
-        password: formData.password,
-      },
-    })
-  }
 
   return (
     <Form onSubmit={(e) => e.preventDefault()}>
