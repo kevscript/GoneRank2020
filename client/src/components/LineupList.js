@@ -92,7 +92,7 @@ const PlayerName = styled.span`
 
 const PlayerRating = styled.div`
   width: 100px;
-  border-left: 1px solid #14387f;
+  border-left: 1px solid #dbdbdb;
 `
 
 const PlayerAvg = styled.div`
@@ -109,7 +109,7 @@ const PlayerAvg = styled.div`
 const SubmitButton = styled.button`
   width: 100%;
   margin: 1rem auto;
-  height: 30px;
+  height: 40px;
   text-transform: uppercase;
   border: 1px solid #dbdbdb;
   background: #f5f5f5;

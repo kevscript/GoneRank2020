@@ -63,7 +63,7 @@ const RemoveButton = styled.button`
   display: flex;
   justify-content: center;
   align-items: center;
-  width: 100px;
+  width: 80px;
   height: 100%;
   background: #f5f5f5;
   border: 0;
@@ -121,9 +121,14 @@ const SelectContainer = styled.div`
 const PlayerSelect = styled.select`
   padding: 0.5rem;
   border: 1px solid #14387f;
-  outline-color: #14387f;
   color: #14387f;
   width: 100%;
+  outline: 0;
+  background: #fff;
+
+  &:focus {
+    outline: 1px solid #14387f;
+  }
 `
 
 const SelectButton = styled.button`

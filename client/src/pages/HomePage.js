@@ -21,7 +21,7 @@ const Header = styled.div`
 
 const Menu = styled.div`
   width: 100%;
-  height: 60px;
+  height: 50px;
   display: flex;
   justify-content: space-between;
   align-items: center;
@@ -53,6 +53,7 @@ const Icon = styled.img`
 const Navigation = styled.div`
   width: 100%;
   display: flex;
+  padding-top: 0.75rem;
 `
 
 const NaviLink = styled(NavLink)`

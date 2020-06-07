@@ -21,7 +21,7 @@ const InputsContainer = styled.div`
 const PlayerInput = styled.input`
   flex: 1;
   padding: 0 1rem;
-  line-height: 30px;
+  line-height: 35px;
   margin: 3px 0;
   border: 1px solid #dbdbdb;
 
@@ -35,7 +35,7 @@ const PlayerInput = styled.input`
 `
 
 const FormButton = styled.button`
-  height: 30px;
+  height: 35px;
   width: 100%;
   margin: 3px 0;
   text-transform: uppercase;

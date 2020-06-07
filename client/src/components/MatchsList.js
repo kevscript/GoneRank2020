@@ -59,7 +59,7 @@ const MatchOpponent = styled(Link)`
 `
 
 const MatchActionContainer = styled.div`
-  width: 60px;
+  width: 80px;
   height: 100%;
   background: #f5f5f5;
   color: #1f55c2;
@@ -72,11 +72,16 @@ const MatchActionContainer = styled.div`
 const ActiveButton = styled.button`
   width: 100%;
   height: 100%;
-  background: #d49f45;
+  background: #da001a;
   border: 0;
   outline: 0;
   cursor: pointer;
   color: #fff;
+`
+
+const ActiveStatus = styled.span`
+  color: #da001a;
+  text-transform: uppercase;
 `
 
 const MatchsList = ({ editMode }) => {
@@ -146,7 +151,7 @@ const MatchsList = ({ editMode }) => {
                       Go Live
                     </ActiveButton>
                   ) : (
-                    'Live'
+                    <ActiveStatus>Live</ActiveStatus>
                   )}
                 </MatchActionContainer>
               ) : (
