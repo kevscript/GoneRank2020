@@ -6,7 +6,7 @@ import AdminRoute from '../routes/AdminRoute'
 import RankingPage from './RankingPage'
 import MatchsPage from './MatchsPage'
 import MatchPage from './MatchPage'
-import NewMatchPage from './admin/NewMatchPage'
+import NewMatchPage from './NewMatchPage'
 import EditIcon from '../assets/edit.svg'
 import UserIcon from '../assets/user.svg'
 
