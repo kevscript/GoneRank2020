@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react'
+import PropTypes from 'prop-types'
 import styled from 'styled-components'
 
 const Container = styled.div`
@@ -81,6 +82,15 @@ const RatingInput = ({
       <IncrementButton onClick={handleIncrement}>+</IncrementButton>
     </Container>
   )
+}
+
+RatingInput.propTypes = {
+  step: PropTypes.number,
+  minValue: PropTypes.number,
+  maxValue: PropTypes.number,
+  startingValue: PropTypes.number,
+  handleRating: PropTypes.func,
+  playerId: PropTypes.string,
 }
 
 export default RatingInput
