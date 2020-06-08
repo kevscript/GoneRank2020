@@ -2,6 +2,7 @@ import React from 'react'
 import styled from 'styled-components'
 import { useQuery, useMutation } from '@apollo/react-hooks'
 import { GET_PLAYERS, REMOVE_PLAYER } from '../graphql/queries/player'
+import { sortByAvg } from '../utils/sortByAvg'
 import Loader from '../components/Loader'
 import PlayerForm from '../components/PlayerForm'
 import PlayersList from '../components/PlayersList'
@@ -48,7 +49,7 @@ const RankingPage = ({ editMode }) => {
       {editMode && <PlayerForm />}
       <PlayersList
         editMode={editMode}
-        players={players}
+        players={sortByAvg(players)}
         handleRemovePlayer={handleRemovePlayer}
       />
     </Container>

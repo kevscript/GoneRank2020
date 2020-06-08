@@ -1,6 +1,5 @@
 import React from 'react'
 import styled from 'styled-components'
-import { sortByAvg } from '../utils/sortByAvg'
 
 const List = styled.div`
   padding: 1rem;
@@ -9,7 +8,7 @@ const List = styled.div`
   align-items: center;
 `
 
-const PlayerItem = styled.div`
+const PlayerItem = styled.li`
   display: flex;
   width: 100%;
   height: 45px;
@@ -71,19 +70,20 @@ const PlayersList = ({ editMode, handleRemovePlayer, players }) => {
   return (
     <List>
       {players &&
-        sortByAvg(players).map((player, i) => (
-          <PlayerItem key={player._id}>
-            <PlayerRanking>
+        players.map((player, i) => (
+          <PlayerItem key={player._id} data-testid="player-item">
+            <PlayerRanking data-testid="player-ranking">
               {player.globalAverage === 0 ? '-' : `#${i + 1}`}
             </PlayerRanking>
             <PlayerInfo>
-              <PlayerName>
+              <PlayerName data-testid="player-name">
                 {player.firstName} {player.lastName}
               </PlayerName>
-              <PlayerRatingContainer>
+              <PlayerRatingContainer data-testid="player-rating">
                 {editMode ? (
                   <PlayerDeleteButton
                     data-id={player._id}
+                    data-testid="remove-button"
                     onClick={handleRemovePlayer}
                   >
                     X
