@@ -46,7 +46,7 @@ const Icon = styled.img`
 const Navigation = styled.div`
   width: 100%;
   display: flex;
-  padding-top: 0.75rem;
+  height: 35px;
 `
 
 const NaviLink = styled(NavLink)`
