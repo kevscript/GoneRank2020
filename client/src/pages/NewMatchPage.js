@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useState } from 'react'
 import styled from 'styled-components'
 import DatePicker from 'react-datepicker'
 import { useHistory } from 'react-router-dom'
@@ -11,18 +11,23 @@ import '../styles/datepicker.css'
 
 const Container = styled.div`
   width: 100%;
+  padding: 1rem;
+`
+
+const Title = styled.h3`
+  color: #14387f;
 `
 
 const Form = styled.form`
-  width: 90%;
+  width: 100%;
   display: flex;
   flex-direction: column;
   align-items: center;
-  margin: 25px auto;
 `
 
 const FormItem = styled.div`
-  margin: 15px 0 0 0;
+  margin: 0.5rem 0;
+  width: 100%;
 `
 
 const FormError = styled.span`
@@ -39,28 +44,35 @@ const LabelText = styled.span`
 `
 
 const FormButton = styled.button`
-  padding: 5px;
-  width: 80px;
+  cursor: pointer;
+  height: 40px;
+  background: #eff4ff;
+  border: 1px solid #14387f;
+  color: #14387f;
+  font-weight: 600;
+  text-transform: uppercase;
+  width: 100%;
 `
 
 const Input = styled.input`
-  padding: 5px;
-  width: 300px;
-  max-width: 100%;
+  line-height: 30px;
+  width: 100%;
+  padding: 0 0.5rem;
+  border: 1px solid #14387f;
+
+  &:focus {
+    outline: 2px solid #14387f;
+  }
 `
 
 const Select = styled.select`
-  padding: 5px;
-  width: 300px;
-  max-width: 100%;
-`
+  height: 30px;
+  width: 100%;
+  padding: 0 0.5rem;
+  border: 1px solid #14387f;
 
-const Checker = styled.input`
-  margin-right: 10px;
-  opacity: 1;
-  &:checked + span {
-    color: red;
-    font-weight: 700;
+  &:focus {
+    outline: 2px solid #14387f;
   }
 `
 
@@ -69,13 +81,15 @@ const Divider = styled.div`
   height: 25px;
 `
 
-const PlayerItem = styled.label`
+const PlayerItem = styled.span`
   display: flex;
   align-items: center;
   margin: 10px 10px 0 0;
   padding: 5px;
   cursor: pointer;
-  border: 1px solid rgba(0, 0, 0, 0.1);
+  border: 1px solid #dbdbdb;
+  font-weight: 600;
+
   &:hover {
     border: 1px solid rgba(0, 0, 0, 0.3);
   }
@@ -84,13 +98,13 @@ const PlayerItem = styled.label`
 const PlayersList = styled.div`
   display: flex;
   flex-wrap: wrap;
-  width: 300px;
-  max-width: 100%;
+  width: 100%;
 `
 
 const NewMatchPage = () => {
   const history = useHistory()
   const { register, control, handleSubmit, errors } = useForm()
+  const [lineup, setLineup] = useState([])
   const { loading, error, data: { players } = {} } = useQuery(GET_PLAYERS)
 
   const [createMatch] = useMutation(CREATE_MATCH, {
@@ -107,16 +121,32 @@ const NewMatchPage = () => {
     },
   })
 
+  const handleSelectPlayer = (e) => {
+    if (e.target.value !== '') {
+      const newLineup = [...lineup, e.target.value]
+      setLineup(newLineup)
+    }
+  }
+
+  const handleRemovePlayer = (e) => {
+    const playerId = e.currentTarget.getAttribute('data-id')
+    const newLineup = lineup.filter((id) => id !== playerId)
+    setLineup(newLineup)
+  }
+
   const handleMatchCreation = (data) => {
-    createMatch({
-      variables: {
-        date: data.date.toLocaleDateString(),
-        opponent: data.opponent,
-        location: data.location,
-        playerIds: data.playerIds,
-      },
-    })
-    history.push('/home/admin/fixtures')
+    if (lineup.length > 1) {
+      createMatch({
+        variables: {
+          date: data.date.toLocaleDateString(),
+          opponent: data.opponent,
+          location: data.location,
+          playerIds: lineup,
+        },
+      })
+    }
+
+    history.push('/home/matchs')
   }
 
   if (loading) return <h1>Loading...</h1>
@@ -124,11 +154,14 @@ const NewMatchPage = () => {
 
   return (
     <Container>
-      <h3>New Match</h3>
+      <Title>Create Match</Title>
+
+      <Divider />
+
       <Form onSubmit={(e) => e.preventDefault()} autoComplete="off">
         <FormItem>
           <Label htmlFor="opponent">
-            <LabelText>Opponent:</LabelText>
+            <LabelText>Opponent :</LabelText>
             <Input
               type="text"
               name="opponent"
@@ -143,7 +176,7 @@ const NewMatchPage = () => {
 
         <FormItem>
           <Label htmlFor="location">
-            <LabelText>Location:</LabelText>
+            <LabelText>Location :</LabelText>
             <Select
               name="location"
               ref={register({ required: 'Location is required' })}
@@ -158,7 +191,7 @@ const NewMatchPage = () => {
 
         <FormItem>
           <Label htmlFor="date">
-            <LabelText>Date:</LabelText>
+            <LabelText>Date :</LabelText>
             <Controller
               as={<DatePicker dateFormat="dd/MM/yyyy" />}
               name="date"
@@ -171,31 +204,35 @@ const NewMatchPage = () => {
           {errors.date && <FormError>{errors.date.message}</FormError>}
         </FormItem>
 
-        <Divider />
-
         <FormItem>
-          <span>Lineup:</span>
+          <Label htmlFor="lineup">
+            <LabelText>Line up :</LabelText>
+            <Select name="lineup" onChange={handleSelectPlayer}>
+              <option value=""></option>
+              {players
+                .filter((p) => !lineup.some((id) => id === p._id))
+                .map((p) => (
+                  <option key={p._id} value={p._id}>
+                    {p.firstName} {p.lastName}
+                  </option>
+                ))}
+            </Select>
+          </Label>
           <PlayersList>
-            {players.map((p) => (
-              <PlayerItem key={p._id}>
-                <Checker
-                  name="playerIds"
-                  type="checkbox"
-                  value={p._id}
-                  ref={register({
-                    required: 'You need at least 3 players',
-                    validate: (value) => value.length > 2,
-                  })}
-                />
-                <span>
-                  {p.firstName} {p.lastName}
-                </span>
-              </PlayerItem>
-            ))}
+            {lineup &&
+              lineup.map((id) => {
+                const player = players.find((p) => p._id === id)
+                return (
+                  <PlayerItem
+                    key={id}
+                    onClick={handleRemovePlayer}
+                    data-id={id}
+                  >
+                    {player.firstName} {player.lastName}
+                  </PlayerItem>
+                )
+              })}
           </PlayersList>
-          {errors.playerIds && (
-            <FormError>{errors.playerIds.message}</FormError>
-          )}
         </FormItem>
 
         <Divider />

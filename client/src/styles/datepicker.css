@@ -1,11 +1,18 @@
 /* custom */
 .react-datepicker__input-container input {
-  padding: 5px;
+  padding: 0 0.5rem;
+  line-height: 30px;
+  border: 1px solid #14387f;
+  outline: 0;
+}
+
+.react-datepicker__input-container input:focus {
+  outline: 2px solid #14387f;
 }
 
 .react-datepicker-wrapper,
 .react-datepicker__input-container,
 .react-datepicker__input-container input {
   display: block;
-  width: 300px;
+  width: 100%;
 }
