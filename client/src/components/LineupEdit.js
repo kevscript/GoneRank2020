@@ -1,7 +1,7 @@
 import React, { useState } from 'react'
 import styled from 'styled-components'
 import { useParams, useHistory } from 'react-router-dom'
-import { useQuery, useMutation } from '@apollo/react-hooks'
+import { useMutation } from '@apollo/react-hooks'
 import {
   GET_MATCH,
   GET_MATCHES,
@@ -9,7 +9,6 @@ import {
   REMOVE_PLAYER_FROM_MATCH,
   ADD_PLAYER_TO_MATCH,
 } from '../graphql/queries/match'
-import { GET_PLAYERS } from '../graphql/queries/player'
 
 const Container = styled.div`
   width: 100%;
@@ -147,12 +146,10 @@ const SelectButton = styled.button`
   }
 `
 
-const LineupEdit = ({ match, user }) => {
+const LineupEdit = ({ match, user, players }) => {
   const [selectedPlayerId, setSelectedPlayerId] = useState(null)
   const { matchId } = useParams()
   const history = useHistory()
-
-  const { data: { players } = {} } = useQuery(GET_PLAYERS)
 
   const [removeMatch] = useMutation(REMOVE_MATCH, {
     onError: (err) => console.log(err),

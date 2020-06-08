@@ -3,6 +3,7 @@ import styled from 'styled-components'
 import { useParams } from 'react-router-dom'
 import { useQuery } from '@apollo/react-hooks'
 import { GET_MATCH } from '../graphql/queries/match'
+import { GET_PLAYERS } from '../graphql/queries/player'
 import Loader from '../components/Loader'
 import LineupList from '../components/LineupList'
 import LineupEdit from '../components/LineupEdit'
@@ -21,14 +22,17 @@ const MatchPage = ({ user, editMode }) => {
     variables: { id: matchId },
   })
 
-  if (!matchId) return <p>No matching Id</p>
+  const { data: { players } = {} } = useQuery(GET_PLAYERS, {
+    skip: !editMode,
+  })
+
   if (loading) return <Loader />
   if (error) return <p>{error.message}</p>
 
   return (
     <Container>
       {editMode ? (
-        <LineupEdit match={match} user={user} />
+        <LineupEdit match={match} user={user} players={players} />
       ) : (
         <LineupList match={match} user={user} />
       )}
