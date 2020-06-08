@@ -1,8 +1,5 @@
 import React from 'react'
 import styled from 'styled-components'
-import { useQuery, useMutation } from '@apollo/react-hooks'
-import { GET_PLAYERS, REMOVE_PLAYER } from '../graphql/queries/player'
-import Loader from './Loader'
 import { sortByAvg } from '../utils/sortByAvg'
 
 const List = styled.div`
@@ -70,38 +67,7 @@ const PlayerDeleteButton = styled.button`
   outline: none;
 `
 
-const PlayersList = ({ editMode }) => {
-  const { loading, error, data: { players } = {} } = useQuery(GET_PLAYERS, {
-    onCompleted: (res) => console.log(res),
-  })
-
-  const [removePlayer] = useMutation(REMOVE_PLAYER, {
-    onCompleted: (res) => console.log(res),
-    onError: (err) => console.log(err),
-    update: (cache, { data: { removePlayer } }) => {
-      try {
-        const { players } = cache.readQuery({ query: GET_PLAYERS })
-        cache.writeQuery({
-          query: GET_PLAYERS,
-          data: { players: players.filter((p) => p._id !== removePlayer._id) },
-        })
-      } catch (err) {
-        console.log(err)
-      }
-    },
-  })
-
-  const handleRemovePlayer = (e) => {
-    const playerId = e.currentTarget.getAttribute('data-id')
-    if (playerId) {
-      removePlayer({
-        variables: { id: playerId },
-      })
-    }
-  }
-
-  if (loading) return <Loader />
-  if (error) return <p>{error.message}</p>
+const PlayersList = ({ editMode, handleRemovePlayer, players }) => {
   return (
     <List>
       {players &&
