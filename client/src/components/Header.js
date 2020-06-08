@@ -1,5 +1,6 @@
 import React from 'react'
 import styled from 'styled-components'
+import PropTypes from 'prop-types'
 import { Link, NavLink } from 'react-router-dom'
 import EditIcon from '../assets/edit.svg'
 import UserIcon from '../assets/user.svg'
@@ -96,6 +97,16 @@ const Header = ({ user, handleEditMode, handleLogout }) => {
       </Navigation>
     </HeaderContainer>
   )
+}
+
+Header.propTypes = {
+  user: PropTypes.shape({
+    id: PropTypes.string.isRequired,
+    token: PropTypes.string.isRequired,
+    roles: PropTypes.array.isRequired,
+  }).isRequired,
+  handleEditMode: PropTypes.func,
+  handleLogout: PropTypes.func,
 }
 
 export default Header
