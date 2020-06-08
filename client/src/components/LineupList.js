@@ -101,8 +101,8 @@ const PlayerAvg = styled.div`
   display: flex;
   justify-content: center;
   align-items: center;
-  background: #da001a;
-  color: #f5f5f5;
+  background: #f5f5f5;
+  color: #da001a;
   font-weight: 600;
 `
 
