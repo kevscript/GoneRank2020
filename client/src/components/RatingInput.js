@@ -17,7 +17,7 @@ const ValueContainer = styled.div`
   align-items: center;
 `
 
-const IncrementButton = styled.div`
+const IncrementButton = styled.button`
   cursor: pointer;
   width: 25px;
   height: 100%;
@@ -26,9 +26,11 @@ const IncrementButton = styled.div`
   justify-content: center;
   align-items: center;
   color: #f5f5f5;
+  outline: 0;
+  border: 0;
 `
 
-const DecrementButton = styled.div`
+const DecrementButton = styled.button`
   cursor: pointer;
   width: 25px;
   height: 100%;
@@ -37,6 +39,8 @@ const DecrementButton = styled.div`
   justify-content: center;
   align-items: center;
   color: #f5f5f5;
+  outline: 0;
+  border: 0;
 `
 
 const Value = styled.span`
@@ -44,7 +48,14 @@ const Value = styled.span`
   color: #14387f;
 `
 
-const RatingInput = ({ startingValue = 5, handleRating, playerId }) => {
+const RatingInput = ({
+  step = 0.5,
+  minValue = 1,
+  maxValue = 10,
+  startingValue = 5,
+  handleRating,
+  playerId,
+}) => {
   const [val, setVal] = useState(parseFloat(startingValue))
 
   useEffect(() => {
@@ -52,13 +63,13 @@ const RatingInput = ({ startingValue = 5, handleRating, playerId }) => {
   }, [val, playerId, handleRating])
 
   const handleIncrement = () => {
-    if (val < 10) {
-      setVal((v) => v + 0.5)
+    if (val < maxValue) {
+      setVal((v) => v + step)
     }
   }
 
   const handleDecrement = () => {
-    if (val > 1) setVal((v) => v - 0.5)
+    if (val > minValue) setVal((v) => v - step)
   }
 
   return (
