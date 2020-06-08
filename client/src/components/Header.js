@@ -25,12 +25,15 @@ const MenuLink = styled(Link)`
   font-weight: 600;
 `
 
-const IconContainer = styled.div`
+const IconButton = styled.button`
   width: 14px;
   display: flex;
   justify-content: center;
   align-items: center;
   cursor: pointer;
+  border: 0;
+  outline: 0;
+  background: transparent;
 `
 
 const Icon = styled.img`
@@ -62,14 +65,14 @@ const Header = ({ user, handleEditMode, handleLogout }) => {
     <HeaderContainer>
       <Menu>
         {user.roles.includes('ADMIN') && (
-          <IconContainer onClick={handleEditMode}>
+          <IconButton onClick={handleEditMode}>
             <Icon src={EditIcon} alt="edit mode button" />
-          </IconContainer>
+          </IconButton>
         )}
         <MenuLink to="/home">gonerank</MenuLink>
-        <IconContainer onClick={handleLogout}>
+        <IconButton onClick={handleLogout}>
           <Icon src={UserIcon} alt="logout button" />
-        </IconContainer>
+        </IconButton>
       </Menu>
       <Navigation>
         <NaviLink
