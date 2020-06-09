@@ -17,9 +17,7 @@ const Message = styled.div`
 `
 
 const RankingPage = ({ editMode }) => {
-  const { loading, error, data: { players } = {} } = useQuery(GET_PLAYERS, {
-    onCompleted: (res) => console.log(res),
-  })
+  const { loading, error, data: { players } = {} } = useQuery(GET_PLAYERS)
 
   const [removePlayer] = useMutation(REMOVE_PLAYER, {
     onError: (err) => console.log(err),
