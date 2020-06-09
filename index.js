@@ -25,8 +25,6 @@ app.use(bodyParser.json())
 // use isAuth middleware
 app.use(isAuth)
 
-server.applyMiddleware({ app, path: '/graphql' })
-
 if (process.env.NODE_ENV === 'production') {
   // Serve static files from the React frontend app
   app.use(express.static(path.join(__dirname, 'client/build')));
@@ -36,6 +34,8 @@ if (process.env.NODE_ENV === 'production') {
     res.sendFile(path.join(__dirname, 'client/build', 'index.html'));
   });
 }
+
+server.applyMiddleware({ app, path: '/graphql' })
 
 mongoose.connect(URI, { useNewUrlParser: true, useUnifiedTopology: true, useFindAndModify: false })
   .then(() => app.listen({ port: PORT }))
