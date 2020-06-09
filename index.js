@@ -1,6 +1,7 @@
 // require('dotenv').config()
 const express = require('express')
 const mongoose = require('mongoose')
+const path = require('path');
 const { ApolloServer } = require('apollo-server-express')
 const bodyParser = require('body-parser')
 const cors = require('cors')
