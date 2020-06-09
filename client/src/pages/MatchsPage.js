@@ -27,6 +27,10 @@ const MatchFormLink = styled(Link)`
   margin: 1rem;
 `
 
+const Message = styled.div`
+  margin: 1rem;
+`
+
 const MatchsPage = ({ editMode }) => {
   const { loading, error, data: { matches } = {} } = useQuery(GET_MATCHES)
 
@@ -72,11 +76,15 @@ const MatchsPage = ({ editMode }) => {
       {editMode && (
         <MatchFormLink to="/home/matchs/new">Create Match</MatchFormLink>
       )}
-      <MatchsList
-        editMode={editMode}
-        matches={matches}
-        handleMatchActivation={handleMatchActivation}
-      />
+      {matches.length > 0 ? (
+        <MatchsList
+          editMode={editMode}
+          matches={matches}
+          handleMatchActivation={handleMatchActivation}
+        />
+      ) : (
+        <Message>No Matches</Message>
+      )}
     </Container>
   )
 }

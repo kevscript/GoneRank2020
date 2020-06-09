@@ -12,6 +12,10 @@ const Container = styled.div`
   background: #fff;
 `
 
+const Message = styled.div`
+  margin: 1rem;
+`
+
 const RankingPage = ({ editMode }) => {
   const { loading, error, data: { players } = {} } = useQuery(GET_PLAYERS, {
     onCompleted: (res) => console.log(res),
@@ -47,11 +51,15 @@ const RankingPage = ({ editMode }) => {
   return (
     <Container>
       {editMode && <PlayerForm />}
-      <PlayersList
-        editMode={editMode}
-        players={sortByAvg(players)}
-        handleRemovePlayer={handleRemovePlayer}
-      />
+      {players.length > 0 ? (
+        <PlayersList
+          editMode={editMode}
+          players={sortByAvg(players)}
+          handleRemovePlayer={handleRemovePlayer}
+        />
+      ) : (
+        <Message>No Players</Message>
+      )}
     </Container>
   )
 }
