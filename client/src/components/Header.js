@@ -27,7 +27,7 @@ const MenuLink = styled(Link)`
 `
 
 const IconButton = styled.button`
-  width: 14px;
+  width: 20px;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -39,7 +39,7 @@ const IconButton = styled.button`
 
 const Icon = styled.img`
   display: block;
-  width: 100%;
+  width: 15px;
   height: auto;
 `
 
