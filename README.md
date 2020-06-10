@@ -1,9 +1,10 @@
 # GoneRank [LIVE DEMO](https://gonerank.herokuapp.com)
 
-GoneRank is a FullStack App build for OL fans desiring to rate the performances of their players during the season. 
+GoneRank is a FullStack App built for OL fans desiring to rate the performances of their players during the season. 
 
 The main Goal is to establish a realistic Performance Ranking based on opinions of true club supporters, and avoid the ones made by biased media sources.
 
+The logic can be reused for any team/sport.
 
 ### 1. Built with:
 
