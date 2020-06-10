@@ -38,7 +38,7 @@ const ConfirmButton = styled.button`
 `
 
 const ActionConfirm = ({
-  label = '',
+  label,
   action,
   btnStyle,
   direction,
