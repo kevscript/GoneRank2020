@@ -9,6 +9,7 @@ import {
   REMOVE_PLAYER_FROM_MATCH,
   ADD_PLAYER_TO_MATCH,
 } from '../graphql/queries/match'
+import ActionConfirm from './ActionConfirm'
 
 const Container = styled.div`
   width: 100%;
@@ -46,6 +47,14 @@ const MatchData = styled.div`
   font-weight: 600;
 `
 
+const MatchDel = styled.div`
+  width: 100px;
+  height: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+`
+
 const MatchLocation = styled.div`
   font-size: 10px;
 `
@@ -56,19 +65,6 @@ const MatchDate = styled.span`
 
 const MatchOpponent = styled.span`
   color: #14387f;
-`
-
-const RemoveButton = styled.button`
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  width: 80px;
-  height: 100%;
-  background: #f5f5f5;
-  border: 0;
-  border-left: 1px solid #dbdbdb;
-  outline: 0;
-  cursor: pointer;
 `
 
 const PlayersList = styled.div`
@@ -94,21 +90,15 @@ const PlayerMain = styled.div`
   background: #fff;
 `
 
-const PlayerName = styled.span`
-  color: #14387f;
-`
-
-const PlayerDeleteButton = styled.button`
-  width: 60px;
-  height: 100%;
+const PlayerDel = styled.div`
   display: flex;
   justify-content: center;
   align-items: center;
+  width: 80px;
+`
+
+const PlayerName = styled.span`
   color: #14387f;
-  background: #f5f5f5;
-  border: 0;
-  outline: 0;
-  border-left: 1px solid #dbdbdb;
 `
 
 const SelectContainer = styled.div`
@@ -145,6 +135,34 @@ const SelectButton = styled.button`
     cursor: default;
   }
 `
+
+const matchBtn = {
+  display: 'flex',
+  justifyContent: 'center',
+  alignItems: 'center',
+  width: '100%',
+  height: '100%',
+  background: '#f5f5f5',
+  border: 0,
+  borderLeft: '1px solid #dbdbdb',
+  outline: 0,
+  cursor: 'pointer',
+  color: '#da001a',
+}
+
+const playerBtn = {
+  width: '100%',
+  height: '100%',
+  display: 'flex',
+  justifyContent: 'center',
+  alignItems: 'center',
+  color: '#da001a',
+  background: '#f5f5f5',
+  border: 0,
+  outline: 0,
+  borderLeft: '1px solid #dbdbdb',
+  cursor: 'pointer',
+}
 
 const LineupEdit = ({ match, user, players }) => {
   const [selectedPlayerId, setSelectedPlayerId] = useState(null)
@@ -264,7 +282,11 @@ const LineupEdit = ({ match, user, players }) => {
         </MatchInfo>
         <MatchData>
           <MatchOpponent>{match.opponent}</MatchOpponent>
-          <RemoveButton onClick={handleRemoveMatch}>X</RemoveButton>
+          <MatchDel>
+            <ActionConfirm action={handleRemoveMatch} btnStyle={matchBtn}>
+              Delete
+            </ActionConfirm>
+          </MatchDel>
         </MatchData>
       </MatchItem>
       <PlayersList>
@@ -273,12 +295,15 @@ const LineupEdit = ({ match, user, players }) => {
             <PlayerMain>
               <PlayerName>{`${player.infos.firstName} ${player.infos.lastName}`}</PlayerName>
             </PlayerMain>
-            <PlayerDeleteButton
-              data-id={player.playerId}
-              onClick={handleRemovePlayerFromMatch}
-            >
-              X
-            </PlayerDeleteButton>
+            <PlayerDel>
+              <ActionConfirm
+                data-id={player.playerId}
+                action={handleRemovePlayerFromMatch}
+                btnStyle={playerBtn}
+              >
+                X
+              </ActionConfirm>
+            </PlayerDel>
           </PlayerItem>
         ))}
       </PlayersList>

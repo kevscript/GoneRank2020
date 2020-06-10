@@ -1,5 +1,6 @@
 import React from 'react'
 import styled from 'styled-components'
+import ActionConfirm from './ActionConfirm'
 
 const List = styled.div`
   padding: 1rem;
@@ -52,19 +53,19 @@ const PlayerRatingContainer = styled.div`
   border-left: 1px solid #dbdbdb;
 `
 
-const PlayerDeleteButton = styled.button`
-  cursor: pointer;
-  width: 60px;
-  height: 100%;
-  background: #f5f5f5;
-  color: #1f55c2;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  border: none;
-  border-left: 1px solid #dbdbdb;
-  outline: none;
-`
+const confirmBtn = {
+  cursor: 'pointer',
+  width: '60px',
+  height: '100%',
+  background: '#f5f5f5',
+  color: '#da001a',
+  display: 'flex',
+  justifyContent: 'center',
+  alignItems: 'center',
+  border: 'none',
+  borderLeft: '1px solid #dbdbdb',
+  outline: 'none',
+}
 
 const PlayersList = ({ editMode, handleRemovePlayer, players }) => {
   return (
@@ -81,13 +82,14 @@ const PlayersList = ({ editMode, handleRemovePlayer, players }) => {
               </PlayerName>
               <PlayerRatingContainer data-testid="player-rating">
                 {editMode ? (
-                  <PlayerDeleteButton
+                  <ActionConfirm
                     data-id={player._id}
                     data-testid="remove-button"
-                    onClick={handleRemovePlayer}
+                    btnStyle={confirmBtn}
+                    action={handleRemovePlayer}
                   >
-                    X
-                  </PlayerDeleteButton>
+                    Delete
+                  </ActionConfirm>
                 ) : player.globalAverage === 0 ? (
                   '-'
                 ) : (

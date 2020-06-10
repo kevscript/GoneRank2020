@@ -2,6 +2,7 @@ import React from 'react'
 import styled from 'styled-components'
 import { Link } from 'react-router-dom'
 import { sortMatchesByDate } from '../utils/sortMatchesByDate'
+import ActionConfirm from './ActionConfirm'
 
 const List = styled.div`
   padding: 1rem;
@@ -66,20 +67,20 @@ const MatchActionContainer = styled.div`
   border-left: 1px solid #dbdbdb;
 `
 
-const ActiveButton = styled.button`
-  width: 100%;
-  height: 100%;
-  background: #da001a;
-  border: 0;
-  outline: 0;
-  cursor: pointer;
-  color: #fff;
-`
-
 const ActiveStatus = styled.span`
   color: #da001a;
   text-transform: uppercase;
 `
+
+const confirmBtn = {
+  width: '100%',
+  height: '100%',
+  background: '#14387f',
+  border: 0,
+  outline: 0,
+  cursor: 'pointer',
+  color: '#fff',
+}
 
 const MatchsList = ({ editMode, matches, handleMatchActivation }) => {
   return (
@@ -100,14 +101,15 @@ const MatchsList = ({ editMode, matches, handleMatchActivation }) => {
               {editMode ? (
                 <MatchActionContainer>
                   {!match.active ? (
-                    <ActiveButton
+                    <ActionConfirm
                       data-id={match.id}
-                      onClick={handleMatchActivation}
+                      action={handleMatchActivation}
+                      btnStyle={confirmBtn}
                     >
-                      Go Live
-                    </ActiveButton>
+                      Activate
+                    </ActionConfirm>
                   ) : (
-                    <ActiveStatus>Live</ActiveStatus>
+                    <ActiveStatus>LIVE</ActiveStatus>
                   )}
                 </MatchActionContainer>
               ) : (
