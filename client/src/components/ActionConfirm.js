@@ -59,10 +59,12 @@ const ActionConfirm = ({
     <ActionContainer direction={direction}>
       {label && <span>{label}?</span>}
       <ConfirmContainer>
-        <ConfirmButton onClick={action} {...props}>
+        <ConfirmButton onClick={action} {...props} data-testid="confirmYes">
           Y
         </ConfirmButton>
-        <ConfirmButton onClick={() => setOpen(false)}>N</ConfirmButton>
+        <ConfirmButton onClick={() => setOpen(false)} data-testid="confirmNo">
+          N
+        </ConfirmButton>
       </ConfirmContainer>
     </ActionContainer>
   )

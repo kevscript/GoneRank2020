@@ -108,9 +108,31 @@ describe('PlayersList component / Edit Mode ON', () => {
     expect(buttons.length).toEqual(props.players.length)
   })
 
-  test('calls handleRemovePlayer when a remove button is clicked', () => {
+  test('clicking remove button opens confirmation buttons', () => {
     const button = screen.getAllByTestId('remove-button')[0]
     fireEvent.click(button)
+    const yesButton = screen.getByTestId('confirmYes')
+    const noButton = screen.getByTestId('confirmNo')
+    expect(yesButton).toBeInTheDocument()
+    expect(noButton).toBeInTheDocument()
+  })
+
+  test('clicking yes button calls the action handle handleRemovePlayer', () => {
+    const button = screen.getAllByTestId('remove-button')[0]
+    fireEvent.click(button)
+    const yesButton = screen.getByTestId('confirmYes')
+    fireEvent.click(yesButton)
     expect(props.handleRemovePlayer).toHaveBeenCalled()
+  })
+
+  test('clicking no button makes confirmation buttons dissapear and doesnt call handleRemovePlayer', () => {
+    const button = screen.getAllByTestId('remove-button')[0]
+    fireEvent.click(button)
+    const yesButton = screen.getByTestId('confirmYes')
+    const noButton = screen.getByTestId('confirmNo')
+    fireEvent.click(noButton)
+    expect(yesButton).not.toBeInTheDocument()
+    expect(noButton).not.toBeInTheDocument()
+    expect(props.handleRemovePlayer).not.toHaveBeenCalled()
   })
 })
