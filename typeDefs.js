@@ -50,6 +50,7 @@ module.exports = gql`
     location: String!
     lineup: [MatchLineupPlayer]!
     active: Boolean!
+    average: Float
   }
 
   type AuthData {
