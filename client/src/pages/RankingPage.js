@@ -9,6 +9,8 @@ import PlayersList from '../components/PlayersList'
 
 const Container = styled.div`
   width: 100%;
+  max-width: 800px;
+  margin: 0 auto;
   background: #fff;
 `
 
@@ -56,7 +58,7 @@ const RankingPage = ({ editMode }) => {
           handleRemovePlayer={handleRemovePlayer}
         />
       ) : (
-        <Message>No Players</Message>
+        <Message>Pas encore de joueurs.</Message>
       )}
     </Container>
   )

@@ -106,10 +106,10 @@ const MatchsList = ({ editMode, matches, handleMatchActivation }) => {
                       action={handleMatchActivation}
                       btnStyle={confirmBtn}
                     >
-                      Activate
+                      Activer
                     </ActionConfirm>
                   ) : (
-                    <ActiveStatus>LIVE</ActiveStatus>
+                    <ActiveStatus>ACTIF</ActiveStatus>
                   )}
                 </MatchActionContainer>
               ) : (

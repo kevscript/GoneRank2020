@@ -8,6 +8,10 @@ const Container = styled.div`
   min-height: 100vh;
 `
 
+const RoutingContainer = styled.div`
+  padding-top: 90px;
+`
+
 const HomePage = ({ user, handleLogout }) => {
   const [editMode, setEditMode] = useState(false)
   const handleEditMode = () => setEditMode((mode) => !mode)
@@ -19,7 +23,9 @@ const HomePage = ({ user, handleLogout }) => {
         handleEditMode={handleEditMode}
         handleLogout={handleLogout}
       />
-      <HomeRouting user={user} editMode={editMode} />
+      <RoutingContainer>
+        <HomeRouting user={user} editMode={editMode} />
+      </RoutingContainer>
     </Container>
   )
 }

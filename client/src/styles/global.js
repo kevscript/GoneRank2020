@@ -9,6 +9,7 @@ const GlobalStyle = createGlobalStyle`
   html {
     font-size: 15px;
     color: #222;
+    overflow-y: scroll;
   }
   body {
     font-family: "Lato", -apple-system, BlinkMacSystemFont, "Segoe UI", "Open Sans", "Oxygen",

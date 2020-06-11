@@ -6,11 +6,19 @@ import EditIcon from '../assets/edit.svg'
 import UserIcon from '../assets/user.svg'
 
 const HeaderContainer = styled.div`
+  position: fixed;
+  top: 0;
   width: 100%;
+  border-bottom: 2px solid #dbdbdb;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  background: #f5f5f5;
 `
 
 const Menu = styled.div`
   width: 100%;
+  max-width: 800px;
   height: 50px;
   display: flex;
   justify-content: space-between;
@@ -45,6 +53,7 @@ const Icon = styled.img`
 
 const Navigation = styled.div`
   width: 100%;
+  max-width: 800px;
   display: flex;
   height: 35px;
 `
@@ -59,6 +68,13 @@ const NaviLink = styled(NavLink)`
   font-weight: 600;
   padding-bottom: 0.75rem;
   border-bottom: 2px solid #dbdbdb;
+  margin-bottom: -2px;
+
+  &:hover {
+    transition: all 0.2s ease-in;
+    color: #333;
+    border-bottom: 2px solid #dbdbdb;
+  }
 `
 
 const Header = ({ user, handleEditMode, handleLogout }) => {
@@ -83,7 +99,7 @@ const Header = ({ user, handleEditMode, handleLogout }) => {
             borderBottom: '2px solid #14387f',
           }}
         >
-          Players
+          Joueurs
         </NaviLink>
         <NaviLink
           to="/home/matchs"
@@ -92,7 +108,7 @@ const Header = ({ user, handleEditMode, handleLogout }) => {
             borderBottom: '2px solid #14387f',
           }}
         >
-          Matches
+          Matchs
         </NaviLink>
       </Navigation>
     </HeaderContainer>

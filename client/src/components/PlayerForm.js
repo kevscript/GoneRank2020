@@ -43,6 +43,8 @@ const FormButton = styled.button`
   background: #f5f5f5;
   color: #14387f;
   font-weight: 600;
+  outline: 0;
+  cursor: pointer;
 `
 
 const FormError = styled.span`
@@ -84,11 +86,10 @@ const PlayerForm = () => {
           autoComplete="off"
           name="firstName"
           type="text"
-          placeholder="First name"
+          placeholder="Prénom"
           ref={register({
             required: true,
-            validate: (value) =>
-              value.trim().length > 0 || 'First Name not valid',
+            validate: (value) => value.trim().length > 0 || 'Prénom non valide',
           })}
         />
         {errors.firstName && <FormError>{errors.firstName.message}</FormError>}
@@ -96,17 +97,16 @@ const PlayerForm = () => {
           autoComplete="off"
           type="text"
           name="lastName"
-          placeholder="Last name"
+          placeholder="Nom"
           ref={register({
             required: true,
-            validate: (value) =>
-              value.trim().length > 0 || 'Last Name not valid',
+            validate: (value) => value.trim().length > 0 || 'Nom non valide',
           })}
         />
         {errors.lastName && <FormError>{errors.lastName.message}</FormError>}
       </InputsContainer>
       <FormButton type="submit" onClick={handleSubmit(handleAddPlayer)}>
-        Add Player
+        Ajouter Joueur
       </FormButton>
     </Form>
   )

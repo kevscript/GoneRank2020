@@ -11,6 +11,8 @@ import '../styles/datepicker.css'
 
 const Container = styled.div`
   width: 100%;
+  max-width: 800px;
+  margin: 0 auto;
   padding: 1rem;
 `
 
@@ -44,14 +46,16 @@ const LabelText = styled.span`
 `
 
 const FormButton = styled.button`
-  cursor: pointer;
-  height: 40px;
-  background: #eff4ff;
-  border: 1px solid #14387f;
+  height: 35px;
+  width: 100%;
+  margin: 3px 0;
+  text-transform: uppercase;
+  border: 1px solid #dbdbdb;
+  background: #f5f5f5;
   color: #14387f;
   font-weight: 600;
-  text-transform: uppercase;
-  width: 100%;
+  outline: 0;
+  cursor: pointer;
 `
 
 const Input = styled.input`

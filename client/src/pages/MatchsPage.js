@@ -8,6 +8,8 @@ import MatchsList from '../components/MatchsList'
 
 const Container = styled.div`
   width: 100%;
+  max-width: 800px;
+  margin: 0 auto;
   display: flex;
   flex-direction: column;
 `
@@ -25,6 +27,8 @@ const MatchFormLink = styled(Link)`
   color: #14387f;
   font-weight: 600;
   margin: 1rem;
+  outline: 0;
+  cursor: pointer;
 `
 
 const Message = styled.div`
@@ -83,7 +87,7 @@ const MatchsPage = ({ editMode }) => {
           handleMatchActivation={handleMatchActivation}
         />
       ) : (
-        <Message>No Matches</Message>
+        <Message>Pas encore de matchs.</Message>
       )}
     </Container>
   )
