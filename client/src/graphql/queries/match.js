@@ -20,6 +20,7 @@ export const GET_MATCHES = gql`
         }
       }
       active
+      average
     }
   }
 `
@@ -44,6 +45,7 @@ export const GET_MATCH = gql`
         }
       }
       active
+      average
     }
   }
 `
@@ -78,6 +80,7 @@ export const CREATE_MATCH = gql`
         }
       }
       active
+      average
     }
   }
 `
@@ -122,6 +125,7 @@ export const REMOVE_MATCH = gql`
         }
       }
       active
+      average
     }
   }
 `
@@ -146,6 +150,7 @@ export const SET_MATCH_ACTIVE = gql`
         }
       }
       active
+      average
     }
   }
 `

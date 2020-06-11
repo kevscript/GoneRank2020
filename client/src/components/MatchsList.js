@@ -113,7 +113,9 @@ const MatchsList = ({ editMode, matches, handleMatchActivation }) => {
                   )}
                 </MatchActionContainer>
               ) : (
-                <MatchActionContainer>5</MatchActionContainer>
+                <MatchActionContainer>
+                  {match.average ? match.average : '-'}
+                </MatchActionContainer>
               )}
             </MatchData>
           </MatchItem>
