@@ -86,7 +86,7 @@ const RegisterForm = ({ handleFormStatus, handleRegister }) => {
         <FormInput
           type="text"
           name="email"
-          autocapitalize="none"
+          autoCapitalize="none"
           ref={register({
             required: 'Veuiller entrer un email.',
             pattern: {
@@ -102,7 +102,7 @@ const RegisterForm = ({ handleFormStatus, handleRegister }) => {
         <FormInput
           type="password"
           name="password"
-          autocapitalize="none"
+          autoCapitalize="none"
           ref={register({
             required: 'Veuillez entrer un mot de passe.',
             minLength: {
@@ -120,7 +120,7 @@ const RegisterForm = ({ handleFormStatus, handleRegister }) => {
         <FormInput
           type="password"
           name="confirmPassword"
-          autocapitalize="none"
+          autoCapitalize="none"
           ref={register({
             required: 'Veuillez confirmer le mot de passe.',
             validate: (value) =>
