@@ -9,13 +9,14 @@ const Container = styled.div`
   display: flex;
   flex-direction: column;
   align-items: center;
+  justify-content: center;
   width: 100%;
   min-height: 100vh;
   background: #eff4ff;
 `
 
 const Title = styled.h3`
-  margin-top: 50px;
+  margin-bottom: 50px;
   font-size: 40px;
   color: #14387f;
 `
@@ -23,8 +24,6 @@ const Title = styled.h3`
 const FormContainer = styled.div`
   width: 90%;
   max-width: 300px;
-  position: fixed;
-  bottom: 50px;
 `
 
 const MutationError = styled.div`
