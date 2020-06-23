@@ -4,7 +4,7 @@ import DatePicker from 'react-datepicker'
 import { useHistory } from 'react-router-dom'
 import { useQuery, useMutation } from '@apollo/react-hooks'
 import { useForm, Controller } from 'react-hook-form'
-import { GET_PLAYERS } from '../graphql/queries/player'
+import { GET_ACTIVE_PLAYERS } from '../graphql/queries/player'
 import { CREATE_MATCH, GET_MATCHES } from '../graphql/queries/match'
 import 'react-datepicker/dist/react-datepicker.css'
 import '../styles/datepicker.css'
@@ -109,7 +109,9 @@ const NewMatchPage = () => {
   const history = useHistory()
   const { register, control, handleSubmit, errors } = useForm()
   const [lineup, setLineup] = useState([])
-  const { loading, error, data: { players } = {} } = useQuery(GET_PLAYERS)
+  const { loading, error, data: { activePlayers } = {} } = useQuery(
+    GET_ACTIVE_PLAYERS
+  )
 
   const [createMatch] = useMutation(CREATE_MATCH, {
     update: (cache, { data: { createMatch } }) => {
@@ -213,7 +215,7 @@ const NewMatchPage = () => {
             <LabelText>Line up :</LabelText>
             <Select name="lineup" onChange={handleSelectPlayer}>
               <option value=""></option>
-              {players
+              {activePlayers
                 .filter((p) => !lineup.some((id) => id === p._id))
                 .map((p) => (
                   <option key={p._id} value={p._id}>
@@ -225,7 +227,7 @@ const NewMatchPage = () => {
           <PlayersList>
             {lineup &&
               lineup.map((id) => {
-                const player = players.find((p) => p._id === id)
+                const player = activePlayers.find((p) => p._id === id)
                 return (
                   <PlayerItem
                     key={id}

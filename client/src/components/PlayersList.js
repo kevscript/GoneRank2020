@@ -71,34 +71,36 @@ const PlayersList = ({ editMode, handleRemovePlayer, players }) => {
   return (
     <List>
       {players &&
-        players.map((player, i) => (
-          <PlayerItem key={player._id} data-testid="player-item">
-            <PlayerRanking data-testid="player-ranking">
-              {player.globalAverage === 0 ? '-' : `#${i + 1}`}
-            </PlayerRanking>
-            <PlayerInfo>
-              <PlayerName data-testid="player-name">
-                {player.firstName} {player.lastName}
-              </PlayerName>
-              <PlayerRatingContainer data-testid="player-rating">
-                {editMode ? (
-                  <ActionConfirm
-                    data-id={player._id}
-                    data-testid="remove-button"
-                    btnStyle={confirmBtn}
-                    action={handleRemovePlayer}
-                  >
-                    Delete
-                  </ActionConfirm>
-                ) : player.globalAverage === 0 ? (
-                  '-'
-                ) : (
-                  player.globalAverage
-                )}
-              </PlayerRatingContainer>
-            </PlayerInfo>
-          </PlayerItem>
-        ))}
+        players
+          .filter((player) => player.isActive === true)
+          .map((player, i) => (
+            <PlayerItem key={player._id} data-testid="player-item">
+              <PlayerRanking data-testid="player-ranking">
+                {player.globalAverage === 0 ? '-' : `#${i + 1}`}
+              </PlayerRanking>
+              <PlayerInfo>
+                <PlayerName data-testid="player-name">
+                  {player.firstName} {player.lastName}
+                </PlayerName>
+                <PlayerRatingContainer data-testid="player-rating">
+                  {editMode ? (
+                    <ActionConfirm
+                      data-id={player._id}
+                      data-testid="remove-button"
+                      btnStyle={confirmBtn}
+                      action={handleRemovePlayer}
+                    >
+                      Delete
+                    </ActionConfirm>
+                  ) : player.globalAverage === 0 ? (
+                    '-'
+                  ) : (
+                    player.globalAverage
+                  )}
+                </PlayerRatingContainer>
+              </PlayerInfo>
+            </PlayerItem>
+          ))}
     </List>
   )
 }

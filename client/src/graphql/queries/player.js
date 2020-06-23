@@ -10,6 +10,37 @@ export const GET_PLAYERS = gql`
         matchId
       }
       globalAverage
+      isActive
+    }
+  }
+`
+
+export const GET_ACTIVE_PLAYERS = gql`
+  query GetActivePlayers {
+    activePlayers {
+      _id
+      firstName
+      lastName
+      matchesPlayed {
+        matchId
+      }
+      globalAverage
+      isActive
+    }
+  }
+`
+
+export const GET_INACTIVE_PLAYERS = gql`
+  query GetInactivePlayers {
+    inactivePlayers {
+      _id
+      firstName
+      lastName
+      matchesPlayed {
+        matchId
+      }
+      globalAverage
+      isActive
     }
   }
 `
