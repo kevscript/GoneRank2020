@@ -9,11 +9,11 @@ const HeaderContainer = styled.div`
   position: fixed;
   top: 0;
   width: 100%;
-  border-bottom: 2px solid #dbdbdb;
+  border-bottom: 2px solid #ccc;
   display: flex;
   flex-direction: column;
   align-items: center;
-  background: #f5f5f5;
+  background: #fff;
 `
 
 const Menu = styled.div`
@@ -60,20 +60,20 @@ const Navigation = styled.div`
 
 const NaviLink = styled(NavLink)`
   text-decoration: none;
-  color: #dbdbdb;
+  color: #ccc;
   display: flex;
   justify-content: center;
   align-items: center;
   width: 50%;
   font-weight: 600;
   padding-bottom: 0.75rem;
-  border-bottom: 2px solid #dbdbdb;
+  border-bottom: 2px solid #ccc;
   margin-bottom: -2px;
 
   &:hover {
     transition: all 0.2s ease-in;
     color: #333;
-    border-bottom: 2px solid #dbdbdb;
+    border-bottom: 2px solid #ccc;
   }
 `
 
@@ -95,7 +95,7 @@ const Header = ({ user, handleEditMode, handleLogout }) => {
         <NaviLink
           to="/home/ranking"
           activeStyle={{
-            color: '#333',
+            color: '#14387f',
             borderBottom: '2px solid #14387f',
           }}
         >
@@ -104,7 +104,7 @@ const Header = ({ user, handleEditMode, handleLogout }) => {
         <NaviLink
           to="/home/matchs"
           activeStyle={{
-            color: '#333',
+            color: '#14387f',
             borderBottom: '2px solid #14387f',
           }}
         >

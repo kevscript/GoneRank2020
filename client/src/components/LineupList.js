@@ -17,7 +17,7 @@ const MatchItem = styled.div`
   width: 100%;
   height: 45px;
   background: #fff;
-  margin: 1rem 0;
+  margin: 0 0 1rem 0;
   border: 1px solid #dbdbdb;
 `
 
