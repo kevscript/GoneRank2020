@@ -29,6 +29,27 @@ module.exports = {
         throw new ApolloError(err)
       }
     },
+    activePlayers: async (_, __, req) => {
+      if (!req.isAuth) {
+        throw new ApolloError('Unauthorized Request')
+      }
+      try {
+        const activePlayers = await Player.find({ isActive: true })
+        return activePlayers
+      } catch (err) {
+        throw new ApolloError(err)
+      }
+    },
+    inactivePlayers: async (_, __, req) => {
+      if (!req.isAuth) {
+        throw new ApolloError('Unauthorized Request')
+      }
+      try {
+        const inactivePlayers = await Player.find({ isActive: false })
+        return inactivePlayers
+      } catch (err) {
+        throw new ApolloError(err)
+      }
   },
   Mutation: {
     addPlayer: async (_, { firstName, lastName }, req) => {
