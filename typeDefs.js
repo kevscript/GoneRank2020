@@ -69,6 +69,8 @@ module.exports = gql`
   type Query {
     players: [Player]
     player(id: String!): Player
+    activePlayers: [Player]
+    inactivePlayers: [Player]
     matches: [Match]
     match(id: String!): Match
   }

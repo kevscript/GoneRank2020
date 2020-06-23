@@ -50,6 +50,7 @@ module.exports = {
       } catch (err) {
         throw new ApolloError(err)
       }
+    },
   },
   Mutation: {
     addPlayer: async (_, { firstName, lastName }, req) => {
