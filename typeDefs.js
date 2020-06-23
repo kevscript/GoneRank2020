@@ -29,6 +29,7 @@ module.exports = gql`
     lastName: String!
     matchesPlayed: [PlayerPlayedMatch]
     globalAverage: Float
+    isActive: Boolean!
   }
 
   type MatchPlayerRating {
@@ -79,10 +80,21 @@ module.exports = gql`
     removePlayer(id: String!): Player
     removePlayerFromMatch(matchId: String!, playerId: String!): Player
     addPlayerToMatch(matchId: String!, playerId: String!): Player
-    createMatch(date: String!, opponent: String!, location: String!, playerIds: [String!]!): Match
+    createMatch(
+      date: String!
+      opponent: String!
+      location: String!
+      playerIds: [String!]!
+    ): Match
     removeMatch(id: String!): Match
-    addUserVotes(matchId: String!, userId: String!, userVotes: [UserVoteInput!]!): Match
+    addUserVotes(
+      matchId: String!
+      userId: String!
+      userVotes: [UserVoteInput!]!
+    ): Match
     removeUserVotes(matchId: String!, userId: String!): Match
     setMatchActive(id: String!): Match
+    setAllPlayersActive: [Player]
+    togglePlayerActivity(id: String!): Player
   }
 `

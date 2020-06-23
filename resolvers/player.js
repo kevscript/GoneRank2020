@@ -43,7 +43,12 @@ module.exports = {
             `${firstName} ${lastName} already exists in the DB.`
           )
         }
-        const newPlayer = { firstName, lastName, matchesPlayed: [] }
+        const newPlayer = {
+          firstName,
+          lastName,
+          matchesPlayed: [],
+          isActive: true,
+        }
         const player = await new Player(newPlayer).save()
         return player
       } catch (err) {
@@ -59,12 +64,44 @@ module.exports = {
         if (!player) {
           throw new UserInputError(`Player with id ${id} doesn't exist.`)
         }
-        const matchsPromises = player.matchesPlayed.map(m => Match.findOne({ id: m.matchId }))
+        const matchsPromises = player.matchesPlayed.map((m) =>
+          Match.findOne({ id: m.matchId })
+        )
         const matchs = await Promise.all(matchsPromises)
-        matchs.filter(p => p !== null).map(match => {
-          match.lineup = match.lineup.filter(p => p.playerId !== id )
-          match.save()
+        matchs
+          .filter((p) => p !== null)
+          .map((match) => {
+            match.lineup = match.lineup.filter((p) => p.playerId !== id)
+            match.save()
+          })
+        return player
+      } catch (err) {
+        throw new ApolloError(err)
+      }
+    },
+    setAllPlayersActive: async (_, __, req) => {
+      if (!req.isAuth || !req.userRoles.includes('ADMIN')) {
+        throw new ApolloError('Unauthorized Request')
+      }
+      try {
+        const players = await Player.find()
+        players.forEach((player) => {
+          player.isActive = true
+          player.save()
         })
+        return players
+      } catch (err) {
+        throw new ApolloError(err)
+      }
+    },
+    togglePlayerActivity: async (_, { id }, req) => {
+      if (!req.isAuth || !req.userRoles.includes('ADMIN')) {
+        throw new ApolloError('Unauthorized Request')
+      }
+      try {
+        const player = await Player.findOne({ _id: id })
+        player.isActive = !player.isActive
+        player.save()
         return player
       } catch (err) {
         throw new ApolloError(err)
@@ -91,7 +128,7 @@ module.exports = {
           }
         })
         const filteredAvgs = averages.filter(
-          (avg) => (Number.isNaN(avg) === false) && (avg !== 0) 
+          (avg) => Number.isNaN(avg) === false && avg !== 0
         )
         if (filteredAvgs.length === 0) {
           return 0
