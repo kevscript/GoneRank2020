@@ -3,7 +3,7 @@ import styled from 'styled-components'
 import PropTypes from 'prop-types'
 import { Link, NavLink } from 'react-router-dom'
 import EditIcon from '../assets/edit.svg'
-import UserIcon from '../assets/user.svg'
+import LogoutIcon from '../assets/logout.svg'
 
 const HeaderContainer = styled.div`
   position: fixed;
@@ -86,7 +86,7 @@ const Header = ({ user, handleEditMode, handleLogout }) => {
         )}
         <MenuLink to="/home">gonerank</MenuLink>
         <IconButton onClick={handleLogout}>
-          <Icon src={UserIcon} alt="logout button" />
+          <Icon src={LogoutIcon} alt="logout button" />
         </IconButton>
       </Menu>
       <Navigation>
