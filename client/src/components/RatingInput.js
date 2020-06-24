@@ -22,7 +22,7 @@ const IncrementButton = styled.button`
   cursor: pointer;
   width: 25px;
   height: 100%;
-  background: #14387f;
+  background: #1d3557;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -35,7 +35,7 @@ const DecrementButton = styled.button`
   cursor: pointer;
   width: 25px;
   height: 100%;
-  background: #da001a;
+  background: #e63946;
   display: flex;
   justify-content: center;
   align-items: center;

@@ -15,7 +15,8 @@ const PlayerItem = styled.li`
   height: 45px;
   background: #fff;
   margin-bottom: 5px;
-  border: 1px solid #dbdbdb;
+  border-radius: 5px;
+  overflow: hidden;
 `
 
 const PlayerInfo = styled.div`
@@ -27,43 +28,32 @@ const PlayerInfo = styled.div`
   padding: 0 0 0 1rem;
 `
 
-const PlayerRanking = styled.div`
-  display: flex;
-  justify-content: center;
-  font-size: 10px;
-  align-items: center;
-  width: 40px;
-  height: 100%;
-  background: transparent;
-  color: #333;
-`
-
 const PlayerName = styled.span`
-  color: #14387f;
+  color: #1d3557;
 `
 
 const PlayerRatingContainer = styled.div`
-  width: 60px;
+  font-family: 'Roboto Condensed', sans-serif;
+  font-weight: 700;
+  width: 80px;
   height: 100%;
-  background: #f5f5f5;
-  color: #1f55c2;
   display: flex;
   justify-content: center;
   align-items: center;
-  border-left: 1px solid #dbdbdb;
+  color: #1d3557;
+  border-left: 2px solid #f5f5f5;
 `
 
 const confirmBtn = {
   cursor: 'pointer',
-  width: '60px',
+  width: '80px',
   height: '100%',
-  background: '#f5f5f5',
-  color: '#da001a',
+  color: '#fff',
   display: 'flex',
   justifyContent: 'center',
   alignItems: 'center',
   border: 'none',
-  borderLeft: '1px solid #dbdbdb',
+  background: '#e63946',
   outline: 'none',
 }
 
@@ -75,9 +65,6 @@ const PlayersList = ({ editMode, handleRemovePlayer, players }) => {
           .filter((player) => player.isActive === true)
           .map((player, i) => (
             <PlayerItem key={player._id} data-testid="player-item">
-              <PlayerRanking data-testid="player-ranking">
-                {player.globalAverage === 0 ? '-' : `#${i + 1}`}
-              </PlayerRanking>
               <PlayerInfo>
                 <PlayerName data-testid="player-name">
                   {player.firstName} {player.lastName}
@@ -90,12 +77,12 @@ const PlayersList = ({ editMode, handleRemovePlayer, players }) => {
                       btnStyle={confirmBtn}
                       action={handleRemovePlayer}
                     >
-                      Delete
+                      X
                     </ActionConfirm>
                   ) : player.globalAverage === 0 ? (
                     '-'
                   ) : (
-                    player.globalAverage
+                    (Math.round(player.globalAverage * 100) / 100).toFixed(2)
                   )}
                 </PlayerRatingContainer>
               </PlayerInfo>

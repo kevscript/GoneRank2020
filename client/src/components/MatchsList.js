@@ -18,18 +18,19 @@ const MatchItem = styled.div`
   height: 45px;
   background: #fff;
   margin-bottom: 5px;
-  border: 1px solid #dbdbdb;
+  border-radius: 5px;
+  overflow: hidden;
 `
 
 const MatchInfo = styled.div`
-  background: #14387f;
+  background: #1d3557;
   color: #fff;
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
   height: 100%;
-  width: 50px;
+  width: 60px;
 `
 
 const MatchData = styled.div`
@@ -52,30 +53,31 @@ const MatchOpponent = styled(Link)`
   height: 100%;
   display: flex;
   align-items: center;
-  color: #14387f;
+  color: #1d3557;
   padding-left: 1rem;
 `
 
 const MatchActionContainer = styled.div`
+  font-family: 'Roboto Condensed', sans-serif;
+  font-weight: 700;
   width: 80px;
   height: 100%;
-  background: #f5f5f5;
-  color: #1f55c2;
+  color: #1d3557;
   display: flex;
   justify-content: center;
   align-items: center;
-  border-left: 1px solid #dbdbdb;
+  border-left: 2px solid #f5f5f5;
 `
 
 const ActiveStatus = styled.span`
-  color: #da001a;
+  color: #457b9d;
   text-transform: uppercase;
 `
 
 const confirmBtn = {
   width: '100%',
   height: '100%',
-  background: '#14387f',
+  background: '#1d3557',
   border: 0,
   outline: 0,
   cursor: 'pointer',

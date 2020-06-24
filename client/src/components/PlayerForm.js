@@ -6,9 +6,10 @@ import { ADD_PLAYER, GET_PLAYERS } from '../graphql/queries/player'
 
 const Form = styled.form`
   width: 100%;
-  padding: 1rem;
+  padding: 1.5rem 1rem;
   display: flex;
   flex-direction: column;
+  border-bottom: 1px solid #ccc;
 `
 
 const InputsContainer = styled.div`
@@ -21,35 +22,37 @@ const InputsContainer = styled.div`
 const PlayerInput = styled.input`
   flex: 1;
   padding: 0 1rem;
-  line-height: 35px;
-  margin: 3px 0;
-  border: 1px solid #dbdbdb;
+  line-height: 45px;
+  margin-bottom: 5px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
 
   &:focus {
-    outline: 1px solid #14387f;
+    outline: 0;
+    border: 1px solid transparent;
+    box-shadow: 0 0 1px 1px #1d3557;
   }
 
   ::placeholder {
-    color: #dbdbdb;
+    color: #ccc;
   }
 `
 
 const FormButton = styled.button`
-  height: 35px;
+  height: 45px;
   width: 100%;
-  margin: 3px 0;
-  text-transform: uppercase;
-  border: 1px solid #dbdbdb;
-  background: #f5f5f5;
-  color: #14387f;
-  font-weight: 600;
+  background: #1d3557;
+  border: 0;
+  border-radius: 5px;
+  color: #f5f5f5;
   outline: 0;
   cursor: pointer;
+  font-weight: 500;
 `
 
 const FormError = styled.span`
   font-size: 12px;
-  color: #da001a;
+  color: #e63946;
 `
 
 const PlayerForm = () => {
@@ -106,7 +109,7 @@ const PlayerForm = () => {
         {errors.lastName && <FormError>{errors.lastName.message}</FormError>}
       </InputsContainer>
       <FormButton type="submit" onClick={handleSubmit(handleAddPlayer)}>
-        Ajouter Joueur
+        Nouveau Joueur
       </FormButton>
     </Form>
   )

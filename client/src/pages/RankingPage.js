@@ -11,7 +11,7 @@ const Container = styled.div`
   width: 100%;
   max-width: 800px;
   margin: 0 auto;
-  background: #fff;
+  background: #f5f5f5;
 `
 
 const Message = styled.div`

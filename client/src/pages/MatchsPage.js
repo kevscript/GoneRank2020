@@ -15,19 +15,17 @@ const Container = styled.div`
 `
 
 const MatchFormLink = styled(Link)`
-  display: block;
   display: flex;
   justify-content: center;
   align-items: center;
   text-decoration: none;
-  height: 40px;
-  text-transform: uppercase;
-  border: 1px solid #dbdbdb;
-  background: #f5f5f5;
-  color: #14387f;
-  font-weight: 600;
-  margin: 1rem;
+  height: 45px;
+  background: #1d3557;
+  color: #fff;
+  font-weight: 500;
+  margin: 1rem 1rem 0 1rem;
   outline: 0;
+  border-radius: 5px;
   cursor: pointer;
 `
 
@@ -78,7 +76,7 @@ const MatchsPage = ({ editMode }) => {
   return (
     <Container>
       {editMode && (
-        <MatchFormLink to="/home/matchs/new">Create Match</MatchFormLink>
+        <MatchFormLink to="/home/matchs/new">Nouveau Match</MatchFormLink>
       )}
       {matches.length > 0 ? (
         <MatchsList

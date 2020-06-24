@@ -24,19 +24,20 @@ const MatchItem = styled.div`
   width: 100%;
   height: 45px;
   background: #fff;
-  margin: 1rem 0;
-  border: 1px solid #dbdbdb;
+  margin: 0 0 1rem 0;
+  border-radius: 5px;
+  overflow: hidden;
 `
 
 const MatchInfo = styled.div`
-  background: #14387f;
+  background: #1d3557;
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
   height: 100%;
   color: #fff;
-  width: 50px;
+  width: 60px;
 `
 
 const MatchData = styled.div`
@@ -50,11 +51,13 @@ const MatchData = styled.div`
 `
 
 const MatchDel = styled.div`
-  width: 100px;
-  height: 100%;
   display: flex;
   justify-content: center;
   align-items: center;
+  width: 100px;
+  height: 100%;
+  border-left: 2px solid #f5f5f5;
+  color: #1d3557;
 `
 
 const MatchLocation = styled.div`
@@ -81,14 +84,16 @@ const PlayerItem = styled.div`
   width: 100%;
   height: 45px;
   background: #fff;
-  border: 1px solid #dbdbdb;
+  border-radius: 5px;
+  overflow: hidden;
+  margin-bottom: 5px;
 `
 
 const PlayerMain = styled.div`
   width: 100%;
   display: flex;
   align-items: center;
-  padding: 0 1rem;
+  padding: 0 0 0 1rem;
   background: #fff;
 `
 
@@ -97,6 +102,7 @@ const PlayerDel = styled.div`
   justify-content: center;
   align-items: center;
   width: 80px;
+  border-left: 2px solid #f5f5f5;
 `
 
 const PlayerName = styled.span`
@@ -111,29 +117,32 @@ const SelectContainer = styled.div`
 
 const PlayerSelect = styled.select`
   padding: 0.5rem;
-  border: 1px solid #14387f;
+  border: 1px solid #ccc;
   color: #14387f;
   width: 100%;
   outline: 0;
+  height: 45px;
   background: #fff;
 
   &:focus {
-    outline: 1px solid #14387f;
+    border: 1px solid #14387f;
   }
 `
 
 const SelectButton = styled.button`
   cursor: pointer;
   padding: 0.5rem 0;
-  background: #eff4ff;
+  background: #14387f;
   border: 1px solid #14387f;
-  color: #14387f;
+  color: #fff;
   font-weight: 600;
   width: 120px;
   margin-left: 5px;
 
   &:disabled {
-    opacity: 0.3;
+    border: 1px solid #ccc;
+    color: #ccc;
+    background: #fff;
     cursor: default;
   }
 `
@@ -144,12 +153,11 @@ const matchBtn = {
   alignItems: 'center',
   width: '100%',
   height: '100%',
-  background: '#f5f5f5',
+  background: '#e63946',
   border: 0,
-  borderLeft: '1px solid #dbdbdb',
   outline: 0,
   cursor: 'pointer',
-  color: '#da001a',
+  color: '#fff',
 }
 
 const playerBtn = {
@@ -158,11 +166,11 @@ const playerBtn = {
   display: 'flex',
   justifyContent: 'center',
   alignItems: 'center',
-  color: '#da001a',
-  background: '#f5f5f5',
+  color: '#e63946',
+  background: '#fff',
   border: 0,
+  borderLeft: '2px solid #f5f5f5',
   outline: 0,
-  borderLeft: '1px solid #dbdbdb',
   cursor: 'pointer',
 }
 
@@ -291,24 +299,6 @@ const LineupEdit = ({ match, user, players }) => {
           </MatchDel>
         </MatchData>
       </MatchItem>
-      <PlayersList>
-        {match.lineup.map((player, i) => (
-          <PlayerItem key={player.playerId}>
-            <PlayerMain>
-              <PlayerName>{`${player.infos.firstName} ${player.infos.lastName}`}</PlayerName>
-            </PlayerMain>
-            <PlayerDel>
-              <ActionConfirm
-                data-id={player.playerId}
-                action={handleRemovePlayerFromMatch}
-                btnStyle={playerBtn}
-              >
-                X
-              </ActionConfirm>
-            </PlayerDel>
-          </PlayerItem>
-        ))}
-      </PlayersList>
       <SelectContainer>
         <PlayerSelect name="addPlayer" onChange={handleSelectedPlayerId}>
           <option value={null}></option>
@@ -331,6 +321,24 @@ const LineupEdit = ({ match, user, players }) => {
           Add Player
         </SelectButton>
       </SelectContainer>
+      <PlayersList>
+        {match.lineup.map((player, i) => (
+          <PlayerItem key={player.playerId}>
+            <PlayerMain>
+              <PlayerName>{`${player.infos.firstName} ${player.infos.lastName}`}</PlayerName>
+            </PlayerMain>
+            <PlayerDel>
+              <ActionConfirm
+                data-id={player.playerId}
+                action={handleRemovePlayerFromMatch}
+                btnStyle={playerBtn}
+              >
+                X
+              </ActionConfirm>
+            </PlayerDel>
+          </PlayerItem>
+        ))}
+      </PlayersList>
     </Container>
   )
 }

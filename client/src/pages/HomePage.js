@@ -6,10 +6,12 @@ import Header from '../components/Header'
 const Container = styled.div`
   width: 100%;
   min-height: 100vh;
+  background: #f5f5f5;
 `
 
 const RoutingContainer = styled.div`
   padding-top: 90px;
+  background: #f5f5f5;
 `
 
 const HomePage = ({ user, handleLogout }) => {

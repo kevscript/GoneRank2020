@@ -6,6 +6,7 @@ import { useQuery, useMutation } from '@apollo/react-hooks'
 import { useForm, Controller } from 'react-hook-form'
 import { GET_ACTIVE_PLAYERS } from '../graphql/queries/player'
 import { CREATE_MATCH, GET_MATCHES } from '../graphql/queries/match'
+import Loader from '../components/Loader'
 import 'react-datepicker/dist/react-datepicker.css'
 import '../styles/datepicker.css'
 
@@ -16,7 +17,7 @@ const Container = styled.div`
   padding: 1rem;
 `
 
-const Title = styled.h3`
+const Title = styled.span`
   color: #14387f;
 `
 
@@ -42,41 +43,47 @@ const Label = styled.label`
 `
 
 const LabelText = styled.span`
-  margin-bottom: 5px;
+  margin: 0 0 5px 0.5rem;
 `
 
 const FormButton = styled.button`
-  height: 35px;
+  height: 45px;
   width: 100%;
-  margin: 3px 0;
   text-transform: uppercase;
-  border: 1px solid #dbdbdb;
-  background: #f5f5f5;
-  color: #14387f;
+  background: #1d3557;
+  color: #fff;
   font-weight: 600;
   outline: 0;
+  border: 0;
+  border-radius: 5px;
   cursor: pointer;
 `
 
 const Input = styled.input`
-  line-height: 30px;
+  line-height: 45px;
   width: 100%;
   padding: 0 0.5rem;
-  border: 1px solid #14387f;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  overflow: hidden;
+  outline: 0;
 
   &:focus {
-    outline: 2px solid #14387f;
+    border: 1px solid #1d3557;
   }
 `
 
 const Select = styled.select`
-  height: 30px;
+  height: 45px;
   width: 100%;
   padding: 0 0.5rem;
-  border: 1px solid #14387f;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  overflow: hidden;
+  outline: 0;
 
   &:focus {
-    outline: 2px solid #14387f;
+    border: 1px solid #1d3557;
   }
 `
 
@@ -155,15 +162,12 @@ const NewMatchPage = () => {
     history.push('/home/matchs')
   }
 
-  if (loading) return <h1>Loading...</h1>
+  if (loading) return <Loader />
   if (error) return <p>{error.message}</p>
 
   return (
     <Container>
       <Title>Create Match</Title>
-
-      <Divider />
-
       <Form onSubmit={(e) => e.preventDefault()} autoComplete="off">
         <FormItem>
           <Label htmlFor="opponent">
@@ -244,7 +248,7 @@ const NewMatchPage = () => {
         <Divider />
 
         <FormButton type="submit" onClick={handleSubmit(handleMatchCreation)}>
-          Submit
+          Ajouter Match
         </FormButton>
       </Form>
     </Container>

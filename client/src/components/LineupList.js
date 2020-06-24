@@ -18,18 +18,19 @@ const MatchItem = styled.div`
   height: 45px;
   background: #fff;
   margin: 0 0 1rem 0;
-  border: 1px solid #dbdbdb;
+  border-radius: 5px;
+  overflow: hidden;
 `
 
 const MatchInfo = styled.div`
-  background: #14387f;
+  background: #1d3557;
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
   height: 100%;
   color: #fff;
-  width: 50px;
+  width: 60px;
 `
 
 const MatchData = styled.div`
@@ -51,7 +52,7 @@ const MatchDate = styled.span`
 `
 
 const MatchOpponent = styled.span`
-  color: #14387f;
+  color: #1d3557;
 `
 
 const MatchRating = styled.div`
@@ -60,9 +61,8 @@ const MatchRating = styled.div`
   align-items: center;
   width: 100px;
   height: 100%;
-  color: #14387f;
-  background: #fff;
-  border-left: 1px solid #dbdbdb;
+  border-left: 2px solid #f5f5f5;
+  color: #1d3557;
 `
 
 const PlayersList = styled.div`
@@ -77,24 +77,26 @@ const PlayerItem = styled.div`
   width: 100%;
   height: 45px;
   background: #fff;
-  border: 1px solid #dbdbdb;
+  margin-bottom: 5px;
+  border-radius: 5px;
+  overflow: hidden;
 `
 
 const PlayerMain = styled.div`
   width: 100%;
   display: flex;
   align-items: center;
-  padding: 0 1rem;
+  padding: 0 0 0 1rem;
   background: #fff;
 `
 
 const PlayerName = styled.span`
-  color: #14387f;
+  color: #1d3557;
 `
 
 const PlayerRating = styled.div`
   width: 100px;
-  border-left: 1px solid #dbdbdb;
+  border-radius: 5px;
 `
 
 const PlayerAvg = styled.div`
@@ -104,19 +106,20 @@ const PlayerAvg = styled.div`
   justify-content: center;
   align-items: center;
   background: #f5f5f5;
-  color: #da001a;
+  color: #e63946;
   font-weight: 600;
 `
 
 const SubmitButton = styled.button`
   width: 100%;
   margin: 1rem auto;
-  height: 40px;
-  text-transform: uppercase;
-  border: 1px solid #dbdbdb;
-  background: #f5f5f5;
-  color: #14387f;
-  font-weight: 600;
+  height: 45px;
+  background: #1d3557;
+  color: #fff;
+  border-radius: 5px;
+  font-weight: 500;
+  outline: 0;
+  border: 0;
 `
 
 const ButtonContainer = styled.div`
@@ -127,12 +130,12 @@ const ButtonContainer = styled.div`
 `
 
 const ErrorMessage = styled.p`
-  color: #da001a;
+  color: #e63946;
   font-size: 12px;
 `
 
 const ConfirmMessage = styled.p`
-  color: #14387f;
+  color: #1d3557;
   font-size: 12px;
 `
 

@@ -24,16 +24,17 @@ const ConfirmContainer = styled.div`
 
 const ConfirmButton = styled.button`
   cursor: pointer;
+  border: 0;
+  outline: 0;
   height: 100%;
-  border: 1px solid #dbdbdb;
   color: #fff;
   &:first-child {
-    background: #14387f;
-    width: 40%;
+    background: #e63946;
+    width: 35%;
   }
   &:last-child {
-    background: #da001a;
-    width: 60%;
+    background: #1d3557;
+    width: 65%;
   }
 `
 
@@ -63,7 +64,7 @@ const ActionConfirm = ({
           Y
         </ConfirmButton>
         <ConfirmButton onClick={() => setOpen(false)} data-testid="confirmNo">
-          N
+          No
         </ConfirmButton>
       </ConfirmContainer>
     </ActionContainer>

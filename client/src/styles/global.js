@@ -1,6 +1,7 @@
 import { createGlobalStyle } from 'styled-components'
 
 const GlobalStyle = createGlobalStyle`
+  @import url('https://fonts.googleapis.com/css2?family=Lato:wght@400;700;900&family=Roboto+Condensed:wght@400;700&family=Roboto:wght@400;500;700;900&display=swap');
   * {
     margin: 0;
     padding: 0;
@@ -12,23 +13,17 @@ const GlobalStyle = createGlobalStyle`
     overflow-y: scroll;
   }
   body {
-    font-family: "Lato", -apple-system, BlinkMacSystemFont, "Segoe UI", "Open Sans", "Oxygen",
-      "Ubuntu", "Cantarell", "Fira Sans", "Droid Sans", "Helvetica Neue",
-      sans-serif;
+    font-family: "Lato", -apple-system, BlinkMacSystemFont, sans-serif;
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
   }
   h1, h2, h3, label {
-    font-family: "Playfair Display", -apple-system, BlinkMacSystemFont, "Segoe UI", "Open Sans", "Oxygen",
-      "Ubuntu", "Cantarell", "Fira Sans", "Droid Sans", "Helvetica Neue",
-      sans-serif;
+    font-family: "Roboto", sans-serif;
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
   }
   span, p, button {
-    font-family: "Lato", -apple-system, BlinkMacSystemFont, "Segoe UI", "Open Sans", "Oxygen",
-      "Ubuntu", "Cantarell", "Fira Sans", "Droid Sans", "Helvetica Neue",
-      sans-serif;
+    font-family: "Lato", -apple-system, BlinkMacSystemFont, sans-serif;
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
   }

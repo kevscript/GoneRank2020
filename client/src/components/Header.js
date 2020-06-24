@@ -9,7 +9,6 @@ const HeaderContainer = styled.div`
   position: fixed;
   top: 0;
   width: 100%;
-  border-bottom: 2px solid #ccc;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -19,17 +18,18 @@ const HeaderContainer = styled.div`
 const Menu = styled.div`
   width: 100%;
   max-width: 800px;
-  height: 50px;
+  height: 45px;
   display: flex;
   justify-content: space-between;
   align-items: center;
   padding: 0 1.5rem;
+  background: #fff;
+  border-bottom: 1px solid #f5f5f5;
 `
 
 const MenuLink = styled(Link)`
   text-decoration: none;
   color: #14387f;
-  letter-spacing: 1px;
   text-transform: uppercase;
   font-weight: 600;
 `
@@ -55,7 +55,8 @@ const Navigation = styled.div`
   width: 100%;
   max-width: 800px;
   display: flex;
-  height: 35px;
+  height: 45px;
+  background: #fff;
 `
 
 const NaviLink = styled(NavLink)`
@@ -65,15 +66,12 @@ const NaviLink = styled(NavLink)`
   justify-content: center;
   align-items: center;
   width: 50%;
+  padding: 0.75rem 0;
+  transition: all 0.2s ease-in-out;
   font-weight: 600;
-  padding-bottom: 0.75rem;
-  border-bottom: 2px solid #ccc;
-  margin-bottom: -2px;
 
-  &:hover {
-    transition: all 0.2s ease-in;
-    color: #333;
-    border-bottom: 2px solid #ccc;
+  &:not(:last-child) {
+    border-right: 1px solid #f5f5f5;
   }
 `
 
@@ -96,7 +94,6 @@ const Header = ({ user, handleEditMode, handleLogout }) => {
           to="/home/ranking"
           activeStyle={{
             color: '#14387f',
-            borderBottom: '2px solid #14387f',
           }}
         >
           Joueurs
@@ -105,7 +102,6 @@ const Header = ({ user, handleEditMode, handleLogout }) => {
           to="/home/matchs"
           activeStyle={{
             color: '#14387f',
-            borderBottom: '2px solid #14387f',
           }}
         >
           Matchs
