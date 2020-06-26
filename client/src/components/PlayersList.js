@@ -1,6 +1,7 @@
 import React from 'react'
 import styled from 'styled-components'
 import ActionConfirm from './ActionConfirm'
+import { filterPlayersList } from '../utils/filterPlayersList'
 
 const List = styled.div`
   padding: 1rem;
@@ -61,33 +62,31 @@ const PlayersList = ({ editMode, handleRemovePlayer, players }) => {
   return (
     <List>
       {players &&
-        players
-          .filter((player) => player.isActive === true)
-          .map((player, i) => (
-            <PlayerItem key={player._id} data-testid="player-item">
-              <PlayerInfo>
-                <PlayerName data-testid="player-name">
-                  {player.firstName} {player.lastName}
-                </PlayerName>
-                <PlayerRatingContainer data-testid="player-rating">
-                  {editMode ? (
-                    <ActionConfirm
-                      data-id={player._id}
-                      data-testid="remove-button"
-                      btnStyle={confirmBtn}
-                      action={handleRemovePlayer}
-                    >
-                      X
-                    </ActionConfirm>
-                  ) : player.globalAverage === 0 ? (
-                    '-'
-                  ) : (
-                    (Math.round(player.globalAverage * 100) / 100).toFixed(2)
-                  )}
-                </PlayerRatingContainer>
-              </PlayerInfo>
-            </PlayerItem>
-          ))}
+        filterPlayersList(players, editMode).map((player, i) => (
+          <PlayerItem key={player._id} data-testid="player-item">
+            <PlayerInfo>
+              <PlayerName data-testid="player-name">
+                {player.firstName} {player.lastName}
+              </PlayerName>
+              <PlayerRatingContainer data-testid="player-rating">
+                {editMode ? (
+                  <ActionConfirm
+                    data-id={player._id}
+                    data-testid="remove-button"
+                    btnStyle={confirmBtn}
+                    action={handleRemovePlayer}
+                  >
+                    X
+                  </ActionConfirm>
+                ) : player.globalAverage === 0 ? (
+                  '-'
+                ) : (
+                  (Math.round(player.globalAverage * 100) / 100).toFixed(2)
+                )}
+              </PlayerRatingContainer>
+            </PlayerInfo>
+          </PlayerItem>
+        ))}
     </List>
   )
 }

@@ -1,6 +1,7 @@
 import React from 'react'
 import { render, fireEvent, screen, debug } from '@testing-library/react'
 import PlayersList from '../components/PlayersList'
+import { filterPlayersList } from '../utils/filterPlayersList'
 
 describe('PlayersList component / Edit Mode OFF', () => {
   let props
@@ -16,47 +17,48 @@ describe('PlayersList component / Edit Mode OFF', () => {
           lastName: 'Messi',
           matchesPlayed: [{ matchId: 'm1' }],
           globalAverage: 7,
+          isActive: false,
         },
         {
           _id: '2',
           firstName: 'Nabil',
           lastName: 'Fekir',
-          matchesPlayed: [{ matchId: 'm1' }],
+          matchesPlayed: [{ matchId: 'm2' }],
           globalAverage: 6,
+          isActive: true,
         },
         {
           _id: '3',
           firstName: 'Rayan',
           lastName: 'Cherki',
-          matchesPlayed: [{ matchId: 'm2' }],
+          matchesPlayed: [{ matchId: 'm3' }],
           globalAverage: 8,
+          isActive: true,
         },
       ],
     }
     render(<PlayersList {...props} />)
   })
 
-  test('renders a player item for each player', () => {
+  test('renders a player item for each displayed player', () => {
     const items = screen.getAllByTestId('player-item')
-    expect(items).toHaveLength(props.players.length)
+    // filtered players list as expected in component
+    const players = filterPlayersList(props.players, props.editMode)
+    expect(items).toHaveLength(players.length)
   })
 
   test('render correct information about the player', () => {
     const items = screen.getAllByTestId('player-item')
-
+    // filtered players list as expected in component
+    const expectedPlayers = filterPlayersList(props.players, props.editMode)
     // check names
     const renderedNames = items.map((item) => {
       return item.querySelector("[data-testid='player-name']").textContent
     })
-    const passedNames = props.players.map((p) => `${p.firstName} ${p.lastName}`)
-    expect(renderedNames).toEqual(passedNames)
-
-    // check rankings
-    const renderedRankings = items.map((item) => {
-      return item.querySelector("[data-testid='player-ranking']").textContent
-    })
-    const passedRankings = props.players.map((p, i) => `#${i + 1}`)
-    expect(renderedRankings).toEqual(passedRankings)
+    const expectedNames = expectedPlayers.map(
+      (p) => `${p.firstName} ${p.lastName}`
+    )
+    expect(renderedNames).toEqual(expectedNames)
 
     // check averages
     const renderedAvgs = items.map((item) => {
@@ -64,8 +66,8 @@ describe('PlayersList component / Edit Mode OFF', () => {
         item.querySelector("[data-testid='player-rating']").textContent
       )
     })
-    const passedAvgs = props.players.map((p) => p.globalAverage)
-    expect(renderedAvgs).toEqual(passedAvgs)
+    const expectedAvgs = expectedPlayers.map((p) => p.globalAverage)
+    expect(renderedAvgs).toEqual(expectedAvgs)
   })
 })
 
@@ -83,24 +85,34 @@ describe('PlayersList component / Edit Mode ON', () => {
           lastName: 'Messi',
           matchesPlayed: [{ matchId: 'm1' }],
           globalAverage: 7,
+          isActive: true,
         },
         {
           _id: '2',
           firstName: 'Nabil',
           lastName: 'Fekir',
-          matchesPlayed: [{ matchId: 'm1' }],
+          matchesPlayed: [{ matchId: 'm2' }],
           globalAverage: 6,
+          isActive: true,
         },
         {
           _id: '3',
           firstName: 'Rayan',
           lastName: 'Cherki',
-          matchesPlayed: [{ matchId: 'm2' }],
+          matchesPlayed: [{ matchId: 'm3' }],
           globalAverage: 8,
+          isActive: false,
         },
       ],
     }
     render(<PlayersList {...props} />)
+  })
+
+  test('renders a player item for each displayed waplayer', () => {
+    const items = screen.getAllByTestId('player-item')
+    // filtered players list as expected in component
+    const players = filterPlayersList(props.players, props.editMode)
+    expect(items).toHaveLength(players.length)
   })
 
   test('renders a remove button for each player', () => {
