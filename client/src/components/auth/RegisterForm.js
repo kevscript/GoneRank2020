@@ -77,7 +77,7 @@ const Message = styled.p`
 `
 
 const RegisterForm = ({ handleFormStatus, handleRegister }) => {
-  const { register, handleSubmit, errors, watch } = useForm()
+  const { register, handleSubmit, errors, watch } = useForm({ mode: 'onBlur' })
 
   return (
     <Form onSubmit={(e) => e.preventDefault()}>
@@ -85,6 +85,7 @@ const RegisterForm = ({ handleFormStatus, handleRegister }) => {
         <FormLabel htmlFor="email">email</FormLabel>
         <FormInput
           type="text"
+          id="email"
           name="email"
           autoCapitalize="none"
           ref={register({
@@ -95,12 +96,17 @@ const RegisterForm = ({ handleFormStatus, handleRegister }) => {
             },
           })}
         />
-        <FormError>{errors.email && errors.email.message}</FormError>
+        {errors.email && (
+          <FormError data-testid="email-error">
+            {errors.email.message}
+          </FormError>
+        )}
       </FormItem>
       <FormItem>
         <FormLabel htmlFor="password">mot de passe</FormLabel>
         <FormInput
           type="password"
+          id="password"
           name="password"
           autoCapitalize="none"
           ref={register({
@@ -111,7 +117,11 @@ const RegisterForm = ({ handleFormStatus, handleRegister }) => {
             },
           })}
         />
-        <FormError>{errors.password && errors.password.message}</FormError>
+        {errors.password && (
+          <FormError data-testid="password-error">
+            {errors.password.message}
+          </FormError>
+        )}
       </FormItem>
       <FormItem>
         <FormLabel htmlFor="confirmPassword">
@@ -119,6 +129,7 @@ const RegisterForm = ({ handleFormStatus, handleRegister }) => {
         </FormLabel>
         <FormInput
           type="password"
+          id="confirmPassword"
           name="confirmPassword"
           autoCapitalize="none"
           ref={register({
@@ -127,9 +138,11 @@ const RegisterForm = ({ handleFormStatus, handleRegister }) => {
               value === watch('password') || 'Mot de passe différent.',
           })}
         />
-        <FormError>
-          {errors.confirmPassword && errors.confirmPassword.message}
-        </FormError>
+        {errors.confirmPassword && (
+          <FormError data-testid="confirm-error">
+            {errors.confirmPassword.message}
+          </FormError>
+        )}
       </FormItem>
       <FormButton type="submit" onClick={handleSubmit(handleRegister)}>
         s'inscrire
