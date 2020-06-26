@@ -11,8 +11,8 @@ describe('Header component', () => {
     }
     render(<Header {...props} />, { wrapper: MemoryRouter })
 
-    expect(screen.getByText(/players/i)).toBeInTheDocument()
-    expect(screen.getByText(/matches/i)).toBeInTheDocument()
+    expect(screen.getByText(/joueurs/i)).toBeInTheDocument()
+    expect(screen.getByText(/matchs/i)).toBeInTheDocument()
   })
 
   test('it has a button to logout user', () => {
