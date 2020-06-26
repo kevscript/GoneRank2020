@@ -35,7 +35,7 @@ const FormInput = styled.input`
   }
 `
 
-const FormError = styled.div`
+const FormError = styled.span`
   font-size: 12px;
   margin-top: 5px;
   margin-left: 1rem;
@@ -79,7 +79,7 @@ const Message = styled.p`
 `
 
 const LoginForm = ({ handleFormStatus, handleLogin }) => {
-  const { register, handleSubmit, errors } = useForm()
+  const { register, handleSubmit, errors } = useForm({ mode: 'onBlur' })
 
   return (
     <Form onSubmit={(e) => e.preventDefault()}>
@@ -87,6 +87,7 @@ const LoginForm = ({ handleFormStatus, handleLogin }) => {
         <FormLabel htmlFor="email">email</FormLabel>
         <FormInput
           type="text"
+          id="email"
           name="email"
           autoCapitalize="none"
           ref={register({
@@ -97,12 +98,17 @@ const LoginForm = ({ handleFormStatus, handleLogin }) => {
             },
           })}
         />
-        <FormError>{errors.email ? errors.email.message : null}</FormError>
+        {errors.email && (
+          <FormError data-testid="email-error">
+            {errors.email.message}
+          </FormError>
+        )}
       </FormItem>
       <FormItem>
         <FormLabel htmlFor="password">mot de passe</FormLabel>
         <FormInput
           type="password"
+          id="password"
           name="password"
           autoCapitalize="none"
           ref={register({
@@ -113,9 +119,11 @@ const LoginForm = ({ handleFormStatus, handleLogin }) => {
             },
           })}
         />
-        <FormError>
-          {errors.password ? errors.password.message : null}
-        </FormError>
+        {errors.password && (
+          <FormError data-testid="password-error">
+            {errors.password.message}
+          </FormError>
+        )}
       </FormItem>
       <FormButton type="submit" onClick={handleSubmit(handleLogin)}>
         se connecter
