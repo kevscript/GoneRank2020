@@ -89,21 +89,27 @@ const MatchsList = ({ editMode, matches, handleMatchActivation }) => {
     <List>
       {matches &&
         sortMatchesByDate(matches).map((match) => (
-          <MatchItem key={match.id}>
+          <MatchItem key={match.id} data-testid="match-item">
             <MatchInfo>
-              <MatchLocation>
+              <MatchLocation data-testid="match-location">
                 {match.location === 'home' ? 'Dom.' : 'Ext.'}
               </MatchLocation>
-              <MatchDate>{match.date.slice(0, 5)}</MatchDate>
+              <MatchDate data-testid="match-date">
+                {match.date.slice(0, 5)}
+              </MatchDate>
             </MatchInfo>
             <MatchData>
-              <MatchOpponent to={`/home/matchs/id/${match.id}`}>
+              <MatchOpponent
+                to={`/home/matchs/id/${match.id}`}
+                data-testid="match-opponent"
+              >
                 {match.opponent}
               </MatchOpponent>
               {editMode ? (
                 <MatchActionContainer>
                   {!match.active ? (
                     <ActionConfirm
+                      data-testid="activation-button"
                       data-id={match.id}
                       action={handleMatchActivation}
                       btnStyle={confirmBtn}
@@ -115,7 +121,7 @@ const MatchsList = ({ editMode, matches, handleMatchActivation }) => {
                   )}
                 </MatchActionContainer>
               ) : (
-                <MatchActionContainer>
+                <MatchActionContainer data-testid="match-average">
                   {match.average ? match.average : '-'}
                 </MatchActionContainer>
               )}
