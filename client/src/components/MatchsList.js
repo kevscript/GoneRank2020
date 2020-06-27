@@ -1,5 +1,6 @@
 import React from 'react'
 import styled from 'styled-components'
+import PropTypes from 'prop-types'
 import { Link } from 'react-router-dom'
 import { sortMatchesByDate } from '../utils/sortMatchesByDate'
 import ActionConfirm from './ActionConfirm'
@@ -130,6 +131,12 @@ const MatchsList = ({ editMode, matches, handleMatchActivation }) => {
         ))}
     </List>
   )
+}
+
+MatchsList.propTypes = {
+  editMode: PropTypes.bool,
+  matches: PropTypes.array,
+  handleMatchActivation: PropTypes.func,
 }
 
 export default MatchsList

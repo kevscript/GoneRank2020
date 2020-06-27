@@ -1,5 +1,6 @@
 import React from 'react'
 import { Switch, Redirect } from 'react-router-dom'
+import PropTypes from 'prop-types'
 import PrivateRoute from '../routes/PrivateRoute'
 import AdminRoute from '../routes/AdminRoute'
 import RankingPage from '../pages/RankingPage'
@@ -39,6 +40,11 @@ const AppRouting = ({ user, editMode }) => {
       />
     </Switch>
   )
+}
+
+AppRouting.propTypes = {
+  user: PropTypes.object,
+  editMode: PropTypes.bool,
 }
 
 export default AppRouting

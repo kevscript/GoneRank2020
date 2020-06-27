@@ -1,5 +1,6 @@
 import React, { useState, useEffect, useCallback } from 'react'
 import styled from 'styled-components'
+import PropTypes from 'prop-types'
 import { useMutation } from '@apollo/react-hooks'
 import { ADD_USER_VOTES } from '../graphql/queries/votes'
 import RatingInput from './RatingInput'
@@ -236,6 +237,11 @@ const LineupList = ({ match, user }) => {
       )}
     </Container>
   )
+}
+
+LineupList.propTypes = {
+  match: PropTypes.object,
+  user: PropTypes.object,
 }
 
 export default LineupList

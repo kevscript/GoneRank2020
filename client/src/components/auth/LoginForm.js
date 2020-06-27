@@ -1,5 +1,6 @@
 import React from 'react'
 import styled from 'styled-components'
+import PropTypes from 'prop-types'
 import { useForm } from 'react-hook-form'
 
 const Form = styled.form`
@@ -134,6 +135,11 @@ const LoginForm = ({ handleFormStatus, handleLogin }) => {
       </Message>
     </Form>
   )
+}
+
+LoginForm.propTypes = {
+  handleFormStatus: PropTypes.func,
+  handleLogin: PropTypes.func,
 }
 
 export default LoginForm

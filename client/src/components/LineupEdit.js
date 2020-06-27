@@ -1,5 +1,6 @@
 import React, { useState } from 'react'
 import styled from 'styled-components'
+import PropTypes from 'prop-types'
 import { useParams, useHistory } from 'react-router-dom'
 import { useMutation } from '@apollo/react-hooks'
 import {
@@ -341,6 +342,12 @@ const LineupEdit = ({ match, user, players }) => {
       </PlayersList>
     </Container>
   )
+}
+
+LineupEdit.propTypes = {
+  match: PropTypes.object,
+  user: PropTypes.object,
+  players: PropTypes.array,
 }
 
 export default LineupEdit

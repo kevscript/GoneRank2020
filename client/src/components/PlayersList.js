@@ -1,5 +1,6 @@
 import React from 'react'
 import styled from 'styled-components'
+import PropTypes from 'prop-types'
 import ActionConfirm from './ActionConfirm'
 import { filterPlayersList } from '../utils/filterPlayersList'
 
@@ -89,6 +90,12 @@ const PlayersList = ({ editMode, handleRemovePlayer, players }) => {
         ))}
     </List>
   )
+}
+
+PlayersList.propTypes = {
+  editMode: PropTypes.bool,
+  handleRemovePlayer: PropTypes.func,
+  players: PropTypes.array,
 }
 
 export default PlayersList

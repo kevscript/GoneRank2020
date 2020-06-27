@@ -1,5 +1,6 @@
 import React, { useState } from 'react'
 import styled from 'styled-components'
+import PropTypes from 'prop-types'
 
 const ActionContainer = styled.div`
   width: 100%;
@@ -69,6 +70,13 @@ const ActionConfirm = ({
       </ConfirmContainer>
     </ActionContainer>
   )
+}
+
+ActionConfirm.propTypes = {
+  label: PropTypes.string,
+  action: PropTypes.func,
+  btnStyle: PropTypes.object,
+  direction: PropTypes.string,
 }
 
 export default ActionConfirm

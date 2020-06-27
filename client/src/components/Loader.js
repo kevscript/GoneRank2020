@@ -1,5 +1,6 @@
 import React from 'react'
 import styled from 'styled-components'
+import PropTypes from 'prop-types'
 import MoonLoader from 'react-spinners/MoonLoader'
 
 const LoadingContainer = styled.div`
@@ -16,6 +17,10 @@ const Loader = ({ size = 100 }) => {
       <MoonLoader color={'#14387f'} size={size} />
     </LoadingContainer>
   )
+}
+
+Loader.propTypes = {
+  size: PropTypes.number,
 }
 
 export default Loader

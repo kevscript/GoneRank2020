@@ -1,5 +1,6 @@
 import React from 'react'
 import styled from 'styled-components'
+import PropTypes from 'prop-types'
 import { useForm } from 'react-hook-form'
 
 const Form = styled.form`
@@ -153,6 +154,11 @@ const RegisterForm = ({ handleFormStatus, handleRegister }) => {
       </Message>
     </Form>
   )
+}
+
+RegisterForm.propTypes = {
+  handleFormStatus: PropTypes.func,
+  handleRegister: PropTypes.func,
 }
 
 export default RegisterForm
