@@ -1,3 +1,3 @@
-export const filterPlayersList = (players, isEdit) => {
-  return isEdit ? players : players.filter((p) => p.isActive === true)
+export const filterPlayersList = (players = [], isEdit = false) => {
+  return isEdit === true ? players : players.filter((p) => p.isActive === true)
 }
