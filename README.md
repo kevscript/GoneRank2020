@@ -2,9 +2,17 @@
 
 GoneRank is a FullStack App built for OL fans desiring to rate the performances of their players during the season. 
 
+<br /><br />
+![Image of GoneRank rating form](./images/gonerank-iphone-x.png)
+![Image of GoneRank rating form](./images/gonerank-iphone-x-2.png)
+![Image of GoneRank rating form](./images/gonerank-iphone-x-1.png)
+<br /><br /><br />
+
+
 The main Goal is to establish a realistic Performance Ranking based on opinions of true club supporters, and avoid the ones made by biased media sources.
 
 The logic can be reused for any team/sport.
+
 
 ### 1. Built with:
 
@@ -20,16 +28,17 @@ The logic can be reused for any team/sport.
 - authentication flow (login & registration)
 - token encoding (JWT) & password hashing (bcrypt)
 - test suite with Jest and React Testing-Library
-- database hosted on MongoDB Atlas
 - app hosted by Heroku
 
 
-### 3. Usage:
+### 3. Usage (from root):
 
 - `yarn client-install` - installs client dependencies
 - `yarn dev` - starts app in development mode
-- `yarn server` - starts server only
-- `yarn client` - starts client only
+- `yarn start` - starts node server
+- `yarn server` - starts dev server with nodemon
+- `yarn client` - starts client app
+- `yarn heroku-postbuild` - script for heroku's deployment flow
 
 ### 4. Environment:
 
