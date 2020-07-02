@@ -106,9 +106,10 @@ const PlayerAvg = styled.div`
   display: flex;
   justify-content: center;
   align-items: center;
-  background: #f5f5f5;
-  color: #e63946;
+  background: #fff;
+  color: #1d3557;
   font-weight: 600;
+  border-left: 2px solid #f5f5f5;
 `
 
 const SubmitButton = styled.button`
