@@ -17,8 +17,12 @@ const PlayerPage = () => {
 
   return (
     <div>
-      {player.matchesPlayed &&
-        player.matchesPlayed.map((m) => <li>{m.matchId}</li>)}
+      {player.matchAverages.length > 0 &&
+        player.matchAverages.map((match) => (
+          <li key={match.matchId}>
+            {match.matchId} - {match.average}
+          </li>
+        ))}
     </div>
   )
 }

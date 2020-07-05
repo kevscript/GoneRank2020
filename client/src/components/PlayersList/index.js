@@ -4,6 +4,7 @@ import PropTypes from 'prop-types'
 import { Link } from 'react-router-dom'
 import ActionConfirm from '../ActionConfirm'
 import { filterPlayersList } from '../../utils/filterPlayersList'
+import { globalPlayerAverage } from '../../utils/globalPlayerAverage'
 
 const List = styled.div`
   padding: 1rem;
@@ -83,10 +84,10 @@ const PlayersList = ({ editMode, handleRemovePlayer, players }) => {
                   >
                     X
                   </ActionConfirm>
-                ) : player.globalAverage === 0 ? (
+                ) : player.matchAverages.length === 0 ? (
                   '-'
                 ) : (
-                  (Math.round(player.globalAverage * 100) / 100).toFixed(2)
+                  globalPlayerAverage(player.matchAverages)
                 )}
               </PlayerRatingContainer>
             </PlayerInfo>
