@@ -10,6 +10,10 @@ export const GET_PLAYERS = gql`
         matchId
       }
       globalAverage
+      matchAverages {
+        matchId
+        average
+      }
       isActive
     }
   }
@@ -25,6 +29,10 @@ export const GET_ACTIVE_PLAYERS = gql`
         matchId
       }
       globalAverage
+      matchAverages {
+        matchId
+        average
+      }
       isActive
     }
   }
@@ -40,6 +48,10 @@ export const GET_INACTIVE_PLAYERS = gql`
         matchId
       }
       globalAverage
+      matchAverages {
+        matchId
+        average
+      }
       isActive
     }
   }
@@ -55,6 +67,11 @@ export const GET_PLAYER = gql`
         matchId
       }
       globalAverage
+      matchAverages {
+        matchId
+        average
+      }
+      isActive
     }
   }
 `
@@ -69,6 +86,11 @@ export const ADD_PLAYER = gql`
         matchId
       }
       globalAverage
+      matchAverages {
+        matchId
+        average
+      }
+      isActive
     }
   }
 `
@@ -83,6 +105,11 @@ export const REMOVE_PLAYER = gql`
         matchId
       }
       globalAverage
+      matchAverages {
+        matchId
+        average
+      }
+      isActive
     }
   }
 `
