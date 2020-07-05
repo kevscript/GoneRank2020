@@ -133,7 +133,7 @@ module.exports = {
   Player: {
     matchAverages: async (player) => {
       if (player.matchesPlayed.length < 1) {
-        return 0
+        return []
       }
       try {
         const matchPromises = player.matchesPlayed.map((m) =>
