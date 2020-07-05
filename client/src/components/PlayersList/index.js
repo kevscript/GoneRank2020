@@ -1,6 +1,7 @@
 import React from 'react'
 import styled from 'styled-components'
 import PropTypes from 'prop-types'
+import { Link } from 'react-router-dom'
 import ActionConfirm from '../ActionConfirm'
 import { filterPlayersList } from '../../utils/filterPlayersList'
 
@@ -30,7 +31,7 @@ const PlayerInfo = styled.div`
   padding: 0 0 0 1rem;
 `
 
-const PlayerName = styled.span`
+const PlayerName = styled(Link)`
   color: #1d3557;
 `
 
@@ -66,7 +67,10 @@ const PlayersList = ({ editMode, handleRemovePlayer, players }) => {
         filterPlayersList(players, editMode).map((player, i) => (
           <PlayerItem key={player._id} data-testid="player-item">
             <PlayerInfo>
-              <PlayerName data-testid="player-name">
+              <PlayerName
+                to={`/home/players/id/${player._id}`}
+                data-testid="player-name"
+              >
                 {player.firstName} {player.lastName}
               </PlayerName>
               <PlayerRatingContainer data-testid="player-rating">

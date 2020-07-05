@@ -7,6 +7,7 @@ import RankingPage from '../../pages/RankingPage'
 import MatchsPage from '../../pages/MatchsPage'
 import MatchPage from '../../pages/MatchPage'
 import NewMatchPage from '../../pages/NewMatchPage'
+import PlayerPage from '../../pages/PlayerPage'
 
 const HomeRouting = ({ user, editMode }) => {
   return (
@@ -25,6 +26,12 @@ const HomeRouting = ({ user, editMode }) => {
         user={user}
         editMode={editMode}
         component={MatchsPage}
+      />
+      <PrivateRoute
+        path="/home/players/id/:playerId"
+        user={user}
+        editMode={editMode}
+        component={PlayerPage}
       />
       <PrivateRoute
         path="/home/matchs/id/:matchId"
