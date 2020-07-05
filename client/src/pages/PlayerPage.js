@@ -1,9 +1,26 @@
 import React from 'react'
 import { useParams } from 'react-router-dom'
+import { useQuery } from '@apollo/react-hooks'
+import { GET_PLAYER } from '../graphql/queries/player'
+import Loader from '../components/Loader'
 
 const PlayerPage = () => {
   const { playerId } = useParams()
-  return <div>Player Page for {playerId}</div>
+  const { loading, error, data: { player } = {} } = useQuery(GET_PLAYER, {
+    variables: {
+      id: playerId,
+    },
+  })
+
+  if (loading) return <Loader />
+  if (error) return <span>{error.message}</span>
+
+  return (
+    <div>
+      {player.matchesPlayed &&
+        player.matchesPlayed.map((m) => <li>{m.matchId}</li>)}
+    </div>
+  )
 }
 
 export default PlayerPage
