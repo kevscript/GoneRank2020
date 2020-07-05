@@ -131,6 +131,35 @@ module.exports = {
     },
   },
   Player: {
+    matchAverages: async (player) => {
+      if (player.matchesPlayed.length < 1) {
+        return 0
+      }
+      try {
+        const matchPromises = player.matchesPlayed.map((m) =>
+          Match.findOne({ id: m.matchId })
+        )
+        const matches = await Promise.all(matchPromises)
+        const averages = matches.map((m) => {
+          const him = m.lineup.find((p) => p.playerId === player.id)
+          if (him.ratings.length > 0) {
+            const sum = him.ratings.reduce((acc, curr) => acc + curr.rating, 0)
+            return {
+              matchId: m.id,
+              average: parseFloat(sum / him.ratings.length)
+            }
+          } else {
+            return {
+              matchId: m.id,
+              average: 0
+            }
+          }
+        })
+        return averages
+      } catch (err) {
+        throw new ApolloError(err)
+      }
+    },
     globalAverage: async (player) => {
       if (player.matchesPlayed.length < 1) {
         return 0
