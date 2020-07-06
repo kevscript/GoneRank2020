@@ -131,31 +131,20 @@ module.exports = {
     },
   },
   Player: {
-    matchAverages: async (player) => {
+    matches: async (player) => {
       if (player.matchesPlayed.length < 1) {
         return []
       }
       try {
-        const matchPromises = player.matchesPlayed.map((m) =>
+        const matchesPromises = player.matchesPlayed.map((m) =>
           Match.findOne({ id: m.matchId })
         )
-        const matches = await Promise.all(matchPromises)
-        const averages = matches.map((m) => {
-          const him = m.lineup.find((p) => p.playerId === player.id)
-          if (him.ratings.length > 0) {
-            const sum = him.ratings.reduce((acc, curr) => acc + curr.rating, 0)
-            return {
-              matchId: m.id,
-              average: parseFloat(sum / him.ratings.length)
-            }
-          } else {
-            return {
-              matchId: m.id,
-              average: 0
-            }
-          }
+        const matchesRes = await Promise.all(matchesPromises)
+        const matches = [...matchesRes]
+        matches.map(match => {
+          match.lineup = match.lineup.filter(p => p.playerId === String(player._id))
         })
-        return averages
+        return matches
       } catch (err) {
         throw new ApolloError(err)
       }
