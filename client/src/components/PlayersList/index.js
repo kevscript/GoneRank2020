@@ -84,7 +84,8 @@ const PlayersList = ({ editMode, handleRemovePlayer, players }) => {
                   >
                     X
                   </ActionConfirm>
-                ) : player.matchesPlayed.length === 0 ? (
+                ) : player.matchesPlayed.length === 0 ||
+                  player.matches.every((m) => m.lineup[0].average == null) ? (
                   '-'
                 ) : (
                   globalPlayerAverage(player.matches)
