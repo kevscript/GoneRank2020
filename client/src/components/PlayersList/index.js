@@ -84,10 +84,10 @@ const PlayersList = ({ editMode, handleRemovePlayer, players }) => {
                   >
                     X
                   </ActionConfirm>
-                ) : player.matchAverages.length === 0 ? (
+                ) : player.matchesPlayed.length === 0 ? (
                   '-'
                 ) : (
-                  globalPlayerAverage(player.matchAverages)
+                  globalPlayerAverage(player.matches)
                 )}
               </PlayerRatingContainer>
             </PlayerInfo>
