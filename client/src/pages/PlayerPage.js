@@ -10,6 +10,7 @@ const PlayerPage = () => {
     variables: {
       id: playerId,
     },
+    onCompleted: (data) => console.log(data.player),
   })
 
   if (loading) return <Loader />
@@ -17,10 +18,12 @@ const PlayerPage = () => {
 
   return (
     <div>
-      {player.matchAverages.length > 0 &&
-        player.matchAverages.map((match) => (
-          <li key={match.matchId}>
-            {match.matchId} - {match.average}
+      {player.matches &&
+        player.matches.length > 0 &&
+        player.matches.map((match) => (
+          <li key={match.id}>
+            <span>{match.opponent}</span>
+            <span>{match.lineup[0].average}</span>
           </li>
         ))}
     </div>
