@@ -1,5 +1,6 @@
 import React from 'react'
 import { render, fireEvent, screen, debug } from '@testing-library/react'
+import { MemoryRouter } from 'react-router-dom'
 import PlayersList from '../components/PlayersList'
 import { filterPlayersList } from '../utils/filterPlayersList'
 
@@ -16,14 +17,40 @@ describe('PlayersList component / Edit Mode OFF', () => {
           firstName: 'Leo',
           lastName: 'Messi',
           matchesPlayed: [{ matchId: 'm1' }],
+          matches: [
+            {
+              id: 'm1',
+              opponent: 'aaa',
+              date: '01/01/2020',
+              lineup: [
+                {
+                  playerId: '1',
+                  average: 7,
+                },
+              ],
+            },
+          ],
           globalAverage: 7,
-          isActive: false,
+          isActive: true,
         },
         {
           _id: '2',
           firstName: 'Nabil',
           lastName: 'Fekir',
           matchesPlayed: [{ matchId: 'm2' }],
+          matches: [
+            {
+              id: 'm2',
+              opponent: 'aaa',
+              date: '01/01/2020',
+              lineup: [
+                {
+                  playerId: '2',
+                  average: 6,
+                },
+              ],
+            },
+          ],
           globalAverage: 6,
           isActive: true,
         },
@@ -32,12 +59,25 @@ describe('PlayersList component / Edit Mode OFF', () => {
           firstName: 'Rayan',
           lastName: 'Cherki',
           matchesPlayed: [{ matchId: 'm3' }],
+          matches: [
+            {
+              id: 'm3',
+              opponent: 'aaa',
+              date: '01/01/2020',
+              lineup: [
+                {
+                  playerId: '3',
+                  average: 8,
+                },
+              ],
+            },
+          ],
           globalAverage: 8,
-          isActive: true,
+          isActive: false,
         },
       ],
     }
-    render(<PlayersList {...props} />)
+    render(<PlayersList {...props} />, { wrapper: MemoryRouter })
   })
 
   test('renders a player item for each displayed player', () => {
@@ -84,6 +124,19 @@ describe('PlayersList component / Edit Mode ON', () => {
           firstName: 'Leo',
           lastName: 'Messi',
           matchesPlayed: [{ matchId: 'm1' }],
+          matches: [
+            {
+              id: 'm1',
+              opponent: 'aaa',
+              date: '01/01/2020',
+              lineup: [
+                {
+                  playerId: '1',
+                  average: 7,
+                },
+              ],
+            },
+          ],
           globalAverage: 7,
           isActive: true,
         },
@@ -92,6 +145,19 @@ describe('PlayersList component / Edit Mode ON', () => {
           firstName: 'Nabil',
           lastName: 'Fekir',
           matchesPlayed: [{ matchId: 'm2' }],
+          matches: [
+            {
+              id: 'm2',
+              opponent: 'aaa',
+              date: '01/01/2020',
+              lineup: [
+                {
+                  playerId: '2',
+                  average: 6,
+                },
+              ],
+            },
+          ],
           globalAverage: 6,
           isActive: true,
         },
@@ -100,12 +166,25 @@ describe('PlayersList component / Edit Mode ON', () => {
           firstName: 'Rayan',
           lastName: 'Cherki',
           matchesPlayed: [{ matchId: 'm3' }],
+          matches: [
+            {
+              id: 'm3',
+              opponent: 'aaa',
+              date: '01/01/2020',
+              lineup: [
+                {
+                  playerId: '3',
+                  average: 8,
+                },
+              ],
+            },
+          ],
           globalAverage: 8,
           isActive: false,
         },
       ],
     }
-    render(<PlayersList {...props} />)
+    render(<PlayersList {...props} />, { wrapper: MemoryRouter })
   })
 
   test('renders a player item for each displayed waplayer', () => {
