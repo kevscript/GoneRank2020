@@ -9,10 +9,11 @@ export const sortByAvg = (players) => {
 
 const playerAverage = (player) => {
   if (player.matches.length === 0) {
-    return 0
+    return null
   }
+  // if array of played matches is only made of matches in which the player doesn't have a rating yet
   if (player.matches.every((m) => m.lineup[0].average == null)) {
-    return 0
+    return null
   }
   const playerAvgs = player.matches.map((m) => m.lineup[0].average)
   const filteredAvgs = playerAvgs.filter(Boolean)

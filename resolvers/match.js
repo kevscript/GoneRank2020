@@ -159,7 +159,7 @@ module.exports = {
     average: (match) => {
       if (match.lineup.length > 0) {
         const playersAvgs = match.lineup.map((player) => {
-          const playerRatingSum = player.ratings.reduce((acc, current) => acc + current.rating,0)
+          const playerRatingSum = player.ratings.reduce((acc, current) => acc + current.rating, 0)
           return parseFloat((playerRatingSum / player.ratings.length).toFixed(2))
         })
         const sumOfAvgs = playersAvgs.reduce((acc, current) => acc + current, 0)
