@@ -28,7 +28,7 @@ const Header = ({ user, handleEditMode, handleLogout }) => {
       </Menu>
       <Navigation>
         <NaviLink
-          to="/home/ranking"
+          to="/home/players"
           activeStyle={{
             color: '#14387f',
           }}

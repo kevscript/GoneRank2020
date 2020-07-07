@@ -12,10 +12,10 @@ import PlayerPage from '../../pages/PlayerPage'
 const HomeRouting = ({ user, editMode }) => {
   return (
     <Switch>
-      <Redirect exact from="/home" to="/home/ranking" />
+      <Redirect exact from="/home" to="/home/players" />
       <PrivateRoute
         exact
-        path="/home/ranking"
+        path="/home/players"
         user={user}
         editMode={editMode}
         component={RankingPage}

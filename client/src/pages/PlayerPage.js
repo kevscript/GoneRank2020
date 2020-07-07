@@ -7,6 +7,9 @@ import Loader from '../components/Loader'
 
 const Container = styled.div`
   padding: 0 1rem;
+  width: 100%;
+  margin: 0 auto;
+  max-width: 800px;
 `
 
 const List = styled.div`
@@ -88,7 +91,7 @@ const TitleMain = styled.div`
   height: 100%;
   text-decoration: none;
   padding-left: 1rem;
-  color: #14387f;
+  color: #1d3557;
 `
 
 const TitleText = styled.span`
@@ -102,14 +105,14 @@ const TitleRating = styled.div`
   display: flex;
   justify-content: center;
   align-items: center;
-  background: #14387f;
+  background: #1d3557;
   color: #fff;
   border-left: 2px solid #f5f5f5;
 `
 
 const TitleInfo = styled.div`
   border-right: 2px solid #f5f5f5;
-  background: #14387f;
+  background: #1d3557;
   color: #fff;
   display: flex;
   flex-direction: column;
