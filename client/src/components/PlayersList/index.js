@@ -7,7 +7,7 @@ import { filterPlayersList } from '../../utils/filterPlayersList'
 import { globalPlayerAverage } from '../../utils/globalPlayerAverage'
 
 const List = styled.div`
-  padding: 1rem;
+  width: 100%;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -23,16 +23,17 @@ const PlayerItem = styled.li`
   overflow: hidden;
 `
 
-const PlayerInfo = styled.div`
+const PlayerInfo = styled(Link)`
   display: flex;
   width: 100%;
   align-items: center;
   justify-content: space-between;
   height: 100%;
   padding: 0 0 0 1rem;
+  text-decoration: none;
 `
 
-const PlayerName = styled(Link)`
+const PlayerName = styled.span`
   color: #1d3557;
 `
 
@@ -46,6 +47,18 @@ const PlayerRatingContainer = styled.div`
   align-items: center;
   color: #1d3557;
   border-left: 2px solid #f5f5f5;
+`
+
+const PlayerMatches = styled.div`
+  font-family: 'Roboto Condensed', sans-serif;
+  border-right: 2px solid #f5f5f5;
+  color: #1d3557;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  height: 100%;
+  width: 80px;
 `
 
 const confirmBtn = {
@@ -67,31 +80,29 @@ const PlayersList = ({ editMode, handleRemovePlayer, players }) => {
       {players &&
         filterPlayersList(players, editMode).map((player, i) => (
           <PlayerItem key={player._id} data-testid="player-item">
-            <PlayerInfo>
-              <PlayerName
-                to={`/home/players/id/${player._id}`}
-                data-testid="player-name"
-              >
+            <PlayerMatches>{player.matchesPlayed.length}</PlayerMatches>
+            <PlayerInfo to={`/home/players/id/${player._id}`}>
+              <PlayerName data-testid="player-name">
                 {player.firstName} {player.lastName}
               </PlayerName>
-              <PlayerRatingContainer data-testid="player-rating">
-                {editMode ? (
-                  <ActionConfirm
-                    data-id={player._id}
-                    data-testid="remove-button"
-                    btnStyle={confirmBtn}
-                    action={handleRemovePlayer}
-                  >
-                    X
-                  </ActionConfirm>
-                ) : player.matchesPlayed.length === 0 ||
-                  player.matches.every((m) => m.lineup[0].average == null) ? (
-                  '-'
-                ) : (
-                  globalPlayerAverage(player.matches)
-                )}
-              </PlayerRatingContainer>
             </PlayerInfo>
+            <PlayerRatingContainer data-testid="player-rating">
+              {editMode ? (
+                <ActionConfirm
+                  data-id={player._id}
+                  data-testid="remove-button"
+                  btnStyle={confirmBtn}
+                  action={handleRemovePlayer}
+                >
+                  X
+                </ActionConfirm>
+              ) : player.matchesPlayed.length === 0 ||
+                player.matches.every((m) => m.lineup[0].average == null) ? (
+                '-'
+              ) : (
+                globalPlayerAverage(player.matches)
+              )}
+            </PlayerRatingContainer>
           </PlayerItem>
         ))}
     </List>

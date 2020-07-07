@@ -9,6 +9,7 @@ import { sortByAvg } from '../utils/sortByAvg'
 
 const Container = styled.div`
   width: 100%;
+  padding: 0 1rem;
   max-width: 800px;
   margin: 0 auto;
   background: #f5f5f5;
@@ -16,6 +17,57 @@ const Container = styled.div`
 
 const Message = styled.div`
   margin: 1rem;
+`
+
+const TitleBar = styled.li`
+  display: flex;
+  width: 100%;
+  height: 45px;
+  background: #fff;
+  margin-bottom: 5px;
+  border-radius: 5px;
+  overflow: hidden;
+  margin: 1rem 0;
+`
+
+const TitleMain = styled.div`
+  display: flex;
+  width: 100%;
+  align-items: center;
+  height: 100%;
+  text-decoration: none;
+  padding-left: 1rem;
+  color: #14387f;
+`
+
+const TitleText = styled.span`
+  font-weight: 600;
+`
+
+const TitleRating = styled.div`
+  font-size: 10px;
+  width: 80px;
+  height: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background: #14387f;
+  color: #fff;
+  border-left: 2px solid #f5f5f5;
+`
+
+const TitleMatches = styled.div`
+  border-right: 2px solid #f5f5f5;
+  background: #14387f;
+  color: #fff;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  height: 100%;
+  width: 80px;
+  font-size: 10px;
 `
 
 const RankingPage = ({ editMode }) => {
@@ -52,11 +104,20 @@ const RankingPage = ({ editMode }) => {
     <Container>
       {editMode && <PlayerForm />}
       {players.length > 0 ? (
-        <PlayersList
-          editMode={editMode}
-          players={sortByAvg(players)}
-          handleRemovePlayer={handleRemovePlayer}
-        />
+        <div>
+          <TitleBar>
+            <TitleMatches>Matches</TitleMatches>
+            <TitleMain>
+              <TitleText>Classement 2020/21</TitleText>
+            </TitleMain>
+            <TitleRating>Note/10</TitleRating>
+          </TitleBar>
+          <PlayersList
+            editMode={editMode}
+            players={sortByAvg(players)}
+            handleRemovePlayer={handleRemovePlayer}
+          />
+        </div>
       ) : (
         <Message>Pas encore de joueurs.</Message>
       )}
