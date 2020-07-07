@@ -15,7 +15,6 @@ export const GET_PLAYERS = gql`
           average
         }
       }
-      globalAverage
       isActive
     }
   }
@@ -30,7 +29,6 @@ export const GET_ACTIVE_PLAYERS = gql`
       matchesPlayed {
         matchId
       }
-      globalAverage
       isActive
     }
   }
@@ -45,7 +43,6 @@ export const GET_INACTIVE_PLAYERS = gql`
       matchesPlayed {
         matchId
       }
-      globalAverage
       isActive
     }
   }
@@ -60,7 +57,6 @@ export const GET_PLAYER = gql`
       matchesPlayed {
         matchId
       }
-      globalAverage
       matches {
         id
         opponent
@@ -84,7 +80,6 @@ export const ADD_PLAYER = gql`
       matchesPlayed {
         matchId
       }
-      globalAverage
       isActive
     }
   }
@@ -99,7 +94,6 @@ export const REMOVE_PLAYER = gql`
       matchesPlayed {
         matchId
       }
-      globalAverage
       isActive
     }
   }

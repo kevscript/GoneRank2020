@@ -80,7 +80,7 @@ const PlayersList = ({ editMode, handleRemovePlayer, players }) => {
       {players &&
         filterPlayersList(players, editMode).map((player, i) => (
           <PlayerItem key={player._id} data-testid="player-item">
-            <PlayerMatches>{player.matchesPlayed.length}</PlayerMatches>
+            <PlayerMatches>{player.matchesPlayed.length}m.</PlayerMatches>
             <PlayerInfo to={`/home/players/id/${player._id}`}>
               <PlayerName data-testid="player-name">
                 {player.firstName} {player.lastName}
