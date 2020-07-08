@@ -7,7 +7,7 @@ import { GET_PLAYER } from '../graphql/queries/player'
 import Loader from '../components/Loader'
 
 const Container = styled.div`
-  padding: 0 1rem;
+  padding: 1rem;
   width: 100%;
   margin: 0 auto;
   max-width: 800px;
@@ -66,7 +66,7 @@ const MatchOpponent = styled.span`
 const PlayerAverage = styled.div`
   font-family: 'Roboto Condensed', sans-serif;
   font-weight: 700;
-  width: 60px;
+  width: 80px;
   height: 100%;
   color: #1d3557;
   display: flex;
@@ -75,53 +75,53 @@ const PlayerAverage = styled.div`
   border-left: 2px solid #f5f5f5;
 `
 
-const TitleBar = styled.li`
+const TitleItem = styled.div`
   display: flex;
-  margin-top: 1rem;
   width: 100%;
-  height: 30px;
+  height: 45px;
+  background: #fff;
+  margin: 0 0 1rem 0;
   border-radius: 5px;
   overflow: hidden;
-  text-transform: uppercase;
-`
-
-const TitleMain = styled.div`
-  display: flex;
-  flex: 1;
-  align-items: center;
-  height: 100%;
-  text-decoration: none;
-  padding-left: 1rem;
-  color: #1d3557;
-`
-
-const TitleText = styled.span`
-  font-size: 10px;
-  color: #14387f;
-`
-
-const TitleRating = styled.div`
-  font-size: 10px;
-  width: 60px;
-  height: 100%;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  border-left: 2px solid #f5f5f5;
-  color: #14387f;
 `
 
 const TitleInfo = styled.div`
-  border-right: 2px solid #f5f5f5;
+  background: #1d3557;
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  text-align: center;
   height: 100%;
+  color: #fff;
   width: 60px;
+`
+
+const TitleData = styled.div`
+  display: flex;
+  flex: 1;
+  height: 100%;
+  align-items: center;
+  justify-content: space-between;
+  padding-left: 1rem;
+  font-weight: 600;
+`
+
+const TitleMatches = styled.div`
   font-size: 10px;
-  color: #14387f;
+`
+
+const TitleOpponent = styled.span`
+  color: #1d3557;
+`
+
+const TitleRating = styled.div`
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 80px;
+  height: 100%;
+  border-left: 2px solid #f5f5f5;
+  color: #1d3557;
 `
 
 const PlayerPage = () => {
@@ -138,15 +138,20 @@ const PlayerPage = () => {
 
   return (
     <Container>
-      <TitleBar>
-        <TitleInfo>Info</TitleInfo>
-        <TitleMain>
-          <TitleText>
+      <TitleItem>
+        <TitleInfo>
+          <TitleMatches>{player.matchesPlayed.length}</TitleMatches>
+          <TitleMatches>
+            {player.matchesPlayed.length > 1 ? 'matchs' : 'match'}
+          </TitleMatches>
+        </TitleInfo>
+        <TitleData>
+          <TitleOpponent>
             {player.firstName} {player.lastName}
-          </TitleText>
-        </TitleMain>
+          </TitleOpponent>
+        </TitleData>
         <TitleRating>Notes</TitleRating>
-      </TitleBar>
+      </TitleItem>
       <List>
         {player.matches &&
           player.matches.length > 0 &&

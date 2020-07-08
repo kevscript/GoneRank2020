@@ -53,7 +53,7 @@ const PlayerRatingContainer = styled.div`
 const PlayerMatches = styled.div`
   border-right: 2px solid #f5f5f5;
   font-weight: 600;
-  color: #ccc;
+  color: #aaa;
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -82,7 +82,7 @@ const PlayersList = ({ editMode, handleRemovePlayer, players }) => {
       {players &&
         filterPlayersList(players, editMode).map((player, i) => (
           <PlayerItem key={player._id} data-testid="player-item">
-            <PlayerMatches>{player.matchesPlayed.length}m.</PlayerMatches>
+            <PlayerMatches>{player.matchesPlayed.length} m.</PlayerMatches>
             <PlayerInfo to={`/home/players/id/${player._id}`}>
               <PlayerName data-testid="player-name">
                 {player.firstName} {player.lastName}
