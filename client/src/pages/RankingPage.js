@@ -53,11 +53,11 @@ const TitleRating = styled.div`
   align-items: center;
   background: #1d3557;
   color: #fff;
-  border-left: 2px solid #f5f5f5;
+  border-left: 2px solid #1d3557;
 `
 
 const TitleMatches = styled.div`
-  border-right: 2px solid #f5f5f5;
+  border-right: 2px solid #1d3557;
   background: #1d3557;
   color: #fff;
   display: flex;
@@ -103,21 +103,21 @@ const RankingPage = ({ editMode }) => {
   return (
     <Container>
       {editMode && <PlayerForm />}
+      {!editMode && (
+        <TitleBar>
+          <TitleMatches>Matches</TitleMatches>
+          <TitleMain>
+            <TitleText>Classement 2020/21</TitleText>
+          </TitleMain>
+          <TitleRating>Note/10</TitleRating>
+        </TitleBar>
+      )}
       {players.length > 0 ? (
-        <div>
-          <TitleBar>
-            <TitleMatches>Matches</TitleMatches>
-            <TitleMain>
-              <TitleText>Classement 2020/21</TitleText>
-            </TitleMain>
-            <TitleRating>Note/10</TitleRating>
-          </TitleBar>
-          <PlayersList
-            editMode={editMode}
-            players={sortByAvg(players)}
-            handleRemovePlayer={handleRemovePlayer}
-          />
-        </div>
+        <PlayersList
+          editMode={editMode}
+          players={sortByAvg(players)}
+          handleRemovePlayer={handleRemovePlayer}
+        />
       ) : (
         <Message>Pas encore de joueurs.</Message>
       )}

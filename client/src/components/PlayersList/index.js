@@ -8,6 +8,7 @@ import { globalPlayerAverage } from '../../utils/globalPlayerAverage'
 
 const List = styled.div`
   width: 100%;
+  margin: 1rem 0;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -50,9 +51,9 @@ const PlayerRatingContainer = styled.div`
 `
 
 const PlayerMatches = styled.div`
-  font-family: 'Roboto Condensed', sans-serif;
   border-right: 2px solid #f5f5f5;
-  color: #1d3557;
+  font-weight: 600;
+  color: #ccc;
   display: flex;
   flex-direction: column;
   justify-content: center;
