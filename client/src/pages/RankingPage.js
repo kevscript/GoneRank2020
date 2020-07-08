@@ -21,13 +21,12 @@ const Message = styled.div`
 
 const TitleBar = styled.li`
   display: flex;
+  margin-top: 1rem;
   width: 100%;
-  height: 45px;
-  background: #fff;
-  margin-bottom: 5px;
+  height: 30px;
   border-radius: 5px;
   overflow: hidden;
-  margin: 1rem 0;
+  text-transform: uppercase;
 `
 
 const TitleMain = styled.div`
@@ -41,7 +40,8 @@ const TitleMain = styled.div`
 `
 
 const TitleText = styled.span`
-  font-weight: 600;
+  font-size: 10px;
+  color: #14387f;
 `
 
 const TitleRating = styled.div`
@@ -51,15 +51,12 @@ const TitleRating = styled.div`
   display: flex;
   justify-content: center;
   align-items: center;
-  background: #1d3557;
-  color: #fff;
-  border-left: 2px solid #1d3557;
+  border-left: 2px solid #f5f5f5;
+  color: #14387f;
 `
 
 const TitleMatches = styled.div`
-  border-right: 2px solid #1d3557;
-  background: #1d3557;
-  color: #fff;
+  border-right: 2px solid #f5f5f5;
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -68,6 +65,7 @@ const TitleMatches = styled.div`
   height: 100%;
   width: 60px;
   font-size: 10px;
+  color: #14387f;
 `
 
 const RankingPage = ({ editMode }) => {
@@ -105,11 +103,11 @@ const RankingPage = ({ editMode }) => {
       {editMode && <PlayerForm />}
       {!editMode && (
         <TitleBar>
-          <TitleMatches>Matchs</TitleMatches>
+          <TitleMatches>MATCHS</TitleMatches>
           <TitleMain>
-            <TitleText>Classement 2020/21</TitleText>
+            <TitleText>CLASSEMENT 2020/21</TitleText>
           </TitleMain>
-          <TitleRating>Notes</TitleRating>
+          <TitleRating>NOTES</TitleRating>
         </TitleBar>
       )}
       {players.length > 0 ? (

@@ -6,7 +6,6 @@ import { sortMatchesByDate } from '../../utils/sortMatchesByDate'
 import ActionConfirm from '../ActionConfirm'
 
 const List = styled.div`
-  padding: 1rem;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -31,12 +30,12 @@ const MatchInfo = styled.div`
   justify-content: center;
   align-items: center;
   height: 100%;
-  width: 60px;
+  width: 50px;
 `
 
 const MatchData = styled.div`
   display: flex;
-  width: 100%;
+  flex: 1;
   height: 100%;
   align-items: center;
   justify-content: space-between;
@@ -61,7 +60,7 @@ const MatchOpponent = styled(Link)`
 const MatchActionContainer = styled.div`
   font-family: 'Roboto Condensed', sans-serif;
   font-weight: 700;
-  width: 80px;
+  width: 60px;
   height: 100%;
   color: #1d3557;
   display: flex;
@@ -106,27 +105,27 @@ const MatchsList = ({ editMode, matches, handleMatchActivation }) => {
               >
                 {match.opponent}
               </MatchOpponent>
-              {editMode ? (
-                <MatchActionContainer>
-                  {!match.active ? (
-                    <ActionConfirm
-                      data-testid="activation-button"
-                      data-id={match.id}
-                      action={handleMatchActivation}
-                      btnStyle={confirmBtn}
-                    >
-                      Activer
-                    </ActionConfirm>
-                  ) : (
-                    <ActiveStatus>ACTIF</ActiveStatus>
-                  )}
-                </MatchActionContainer>
-              ) : (
-                <MatchActionContainer data-testid="match-average">
-                  {match.average ? match.average : '-'}
-                </MatchActionContainer>
-              )}
             </MatchData>
+            {editMode ? (
+              <MatchActionContainer>
+                {!match.active ? (
+                  <ActionConfirm
+                    data-testid="activation-button"
+                    data-id={match.id}
+                    action={handleMatchActivation}
+                    btnStyle={confirmBtn}
+                  >
+                    Activer
+                  </ActionConfirm>
+                ) : (
+                  <ActiveStatus>ACTIF</ActiveStatus>
+                )}
+              </MatchActionContainer>
+            ) : (
+              <MatchActionContainer data-testid="match-average">
+                {match.average ? match.average : '-'}
+              </MatchActionContainer>
+            )}
           </MatchItem>
         ))}
     </List>
