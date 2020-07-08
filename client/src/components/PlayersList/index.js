@@ -26,11 +26,11 @@ const PlayerItem = styled.li`
 
 const PlayerInfo = styled(Link)`
   display: flex;
-  width: 100%;
+  flex: 1;
   align-items: center;
   justify-content: space-between;
   height: 100%;
-  padding: 0 0 0 1rem;
+  padding: 0 1rem;
   text-decoration: none;
 `
 
@@ -41,7 +41,7 @@ const PlayerName = styled.span`
 const PlayerRatingContainer = styled.div`
   font-family: 'Roboto Condensed', sans-serif;
   font-weight: 700;
-  width: 80px;
+  width: 60px;
   height: 100%;
   display: flex;
   justify-content: center;
@@ -59,7 +59,8 @@ const PlayerMatches = styled.div`
   justify-content: center;
   align-items: center;
   height: 100%;
-  width: 80px;
+  width: 60px;
+  font-size: 10px;
 `
 
 const confirmBtn = {

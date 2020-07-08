@@ -36,7 +36,7 @@ const MatchInfo = styled.div`
 
 const MatchData = styled.div`
   display: flex;
-  width: 100%;
+  flex: 1;
   height: 100%;
   align-items: center;
   justify-content: space-between;
@@ -84,10 +84,10 @@ const PlayerItem = styled.div`
 `
 
 const PlayerMain = styled.div`
-  width: 100%;
+  flex: 1;
   display: flex;
   align-items: center;
-  padding: 0 0 0 1rem;
+  padding: 0 1rem;
   background: #fff;
 `
 
@@ -101,7 +101,7 @@ const PlayerRating = styled.div`
 `
 
 const PlayerAvg = styled.div`
-  width: 100px;
+  width: 100%;
   height: 100%;
   display: flex;
   justify-content: center;
@@ -113,6 +113,7 @@ const PlayerAvg = styled.div`
 `
 
 const SubmitButton = styled.button`
+  cursor: pointer;
   width: 100%;
   margin: 1rem auto;
   height: 45px;
@@ -207,8 +208,8 @@ const LineupList = ({ match, user }) => {
         </MatchInfo>
         <MatchData>
           <MatchOpponent>{match.opponent}</MatchOpponent>
-          <MatchRating>Note / 10</MatchRating>
         </MatchData>
+        <MatchRating>Note / 10</MatchRating>
       </MatchItem>
       <PlayersList>
         {match.lineup.map((player, i) => (

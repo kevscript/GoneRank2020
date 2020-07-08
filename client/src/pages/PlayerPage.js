@@ -1,5 +1,6 @@
 import React from 'react'
 import styled from 'styled-components'
+import { Link } from 'react-router-dom'
 import { useParams } from 'react-router-dom'
 import { useQuery } from '@apollo/react-hooks'
 import { GET_PLAYER } from '../graphql/queries/player'
@@ -41,7 +42,8 @@ const MatchInfo = styled.div`
   border-right: 2px solid #f5f5f5;
 `
 
-const MatchData = styled.div`
+const MatchData = styled(Link)`
+  text-decoration: none;
   display: flex;
   width: 100%;
   align-items: center;
@@ -143,7 +145,7 @@ const PlayerPage = () => {
         <TitleMain>
           <TitleText>Matchs de {player.lastName}</TitleText>
         </TitleMain>
-        <TitleRating>Note/10</TitleRating>
+        <TitleRating>Notes</TitleRating>
       </TitleBar>
       <List>
         {player.matches &&
@@ -153,7 +155,7 @@ const PlayerPage = () => {
               <MatchInfo>
                 <MatchDate>{match.date.slice(0, 5)}</MatchDate>
               </MatchInfo>
-              <MatchData>
+              <MatchData to={`/home/matchs/id/${match.id}`}>
                 <MatchOpponent>{match.opponent}</MatchOpponent>
               </MatchData>
               <PlayerAverage>{match.lineup[0].average}</PlayerAverage>

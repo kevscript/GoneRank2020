@@ -32,7 +32,7 @@ const TitleBar = styled.li`
 
 const TitleMain = styled.div`
   display: flex;
-  width: 100%;
+  flex: 1;
   align-items: center;
   height: 100%;
   text-decoration: none;
@@ -46,7 +46,7 @@ const TitleText = styled.span`
 
 const TitleRating = styled.div`
   font-size: 10px;
-  width: 80px;
+  width: 60px;
   height: 100%;
   display: flex;
   justify-content: center;
@@ -66,7 +66,7 @@ const TitleMatches = styled.div`
   align-items: center;
   text-align: center;
   height: 100%;
-  width: 80px;
+  width: 60px;
   font-size: 10px;
 `
 
@@ -105,11 +105,11 @@ const RankingPage = ({ editMode }) => {
       {editMode && <PlayerForm />}
       {!editMode && (
         <TitleBar>
-          <TitleMatches>Matches</TitleMatches>
+          <TitleMatches>Matchs</TitleMatches>
           <TitleMain>
             <TitleText>Classement 2020/21</TitleText>
           </TitleMain>
-          <TitleRating>Note/10</TitleRating>
+          <TitleRating>Notes</TitleRating>
         </TitleBar>
       )}
       {players.length > 0 ? (
