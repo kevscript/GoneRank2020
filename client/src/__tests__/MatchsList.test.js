@@ -48,7 +48,7 @@ describe('MatchsList component / Edit Mode OFF', () => {
 
   test('renders correct location for each match', () => {
     const matchItems = screen.getAllByTestId('match-item')
-    const sortedMatches = sortMatchesByDate(props.matches)
+    const sortedMatches = sortMatchesByDate(props.matches, 'DESC')
 
     const expectedLocations = sortedMatches.map((match) => {
       return match.location === 'home' ? 'Dom.' : 'Ext.'
@@ -61,7 +61,7 @@ describe('MatchsList component / Edit Mode OFF', () => {
 
   test('renders correct date for each match', () => {
     const matchItems = screen.getAllByTestId('match-item')
-    const sortedMatches = sortMatchesByDate(props.matches)
+    const sortedMatches = sortMatchesByDate(props.matches, 'DESC')
 
     const expectedDates = sortedMatches.map((match) => match.date.slice(0, 5))
     const renderedDates = matchItems.map((item) => {
@@ -72,7 +72,7 @@ describe('MatchsList component / Edit Mode OFF', () => {
 
   test('renders correct opponent for each match', () => {
     const matchItems = screen.getAllByTestId('match-item')
-    const sortedMatches = sortMatchesByDate(props.matches)
+    const sortedMatches = sortMatchesByDate(props.matches, 'DESC')
 
     const expectedOpponents = sortedMatches.map((match) => match.opponent)
     const renderedOpponents = matchItems.map((item) => {
@@ -81,15 +81,19 @@ describe('MatchsList component / Edit Mode OFF', () => {
     expect(renderedOpponents).toEqual(expectedOpponents)
   })
 
-  test('renders correct location for each match', () => {
+  test('renders correct averages for each match', () => {
     const matchItems = screen.getAllByTestId('match-item')
-    const sortedMatches = sortMatchesByDate(props.matches)
+    const sortedMatches = sortMatchesByDate(props.matches, 'DESC')
 
     const expectedAvgs = sortedMatches.map((match) => {
       return match.average ? `${match.average}` : '-'
     })
     const renderedAvgs = matchItems.map((item) => {
-      return item.querySelector("[data-testid='match-average']").textContent
+      // averages are displayed as string and are toFixed(2), so we have to revert the logic
+      // "7.00" -> 7 -> "7"
+      return `${parseFloat(
+        item.querySelector("[data-testid='match-average']").textContent
+      )}`
     })
     expect(renderedAvgs).toEqual(expectedAvgs)
   })
