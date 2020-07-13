@@ -43,6 +43,7 @@ export const DecrementButton = styled.button`
 `
 
 export const Value = styled.span`
+  font-family: 'Roboto Condensed', sans-serif;
   font-weight: 600;
   color: #14387f;
 `

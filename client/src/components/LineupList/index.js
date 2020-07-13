@@ -101,6 +101,7 @@ const PlayerRating = styled.div`
 `
 
 const PlayerAvg = styled.div`
+  font-family: 'Roboto Condensed', sans-serif;
   width: 100%;
   height: 100%;
   display: flex;
@@ -209,7 +210,7 @@ const LineupList = ({ match, user }) => {
         <MatchData>
           <MatchOpponent>{match.opponent}</MatchOpponent>
         </MatchData>
-        <MatchRating>Note / 10</MatchRating>
+        <MatchRating>Notes</MatchRating>
       </MatchItem>
       <PlayersList>
         {match.lineup.map((player, i) => (
@@ -224,7 +225,9 @@ const LineupList = ({ match, user }) => {
                   handleRating={handleRating}
                 />
               ) : (
-                <PlayerAvg>{player.average}</PlayerAvg>
+                <PlayerAvg>
+                  {(Math.round(player.average * 100) / 100).toFixed(2)}
+                </PlayerAvg>
               )}
             </PlayerRating>
           </PlayerItem>

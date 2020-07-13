@@ -4,6 +4,7 @@ import PropTypes from 'prop-types'
 import { Link } from 'react-router-dom'
 import { sortMatchesByDate } from '../../utils/sortMatchesByDate'
 import ActionConfirm from '../ActionConfirm'
+import LockIcon from '../../assets/lock.svg'
 
 const List = styled.div`
   display: flex;
@@ -53,8 +54,9 @@ const MatchOpponent = styled(Link)`
   height: 100%;
   display: flex;
   align-items: center;
+  justify-content: space-between;
   color: #1d3557;
-  padding-left: 1rem;
+  padding: 0 1rem;
 `
 
 const MatchActionContainer = styled.div`
@@ -74,6 +76,11 @@ const ActiveStatus = styled.span`
   text-transform: uppercase;
 `
 
+const ActivityIcon = styled.div`
+  width: 15px;
+  height: auto;
+`
+
 const confirmBtn = {
   width: '100%',
   height: '100%',
@@ -88,7 +95,7 @@ const MatchsList = ({ editMode, matches, handleMatchActivation }) => {
   return (
     <List>
       {matches &&
-        sortMatchesByDate(matches).map((match) => (
+        sortMatchesByDate(matches, 'DESC').map((match) => (
           <MatchItem key={match.id} data-testid="match-item">
             <MatchInfo>
               <MatchLocation data-testid="match-location">
@@ -99,11 +106,13 @@ const MatchsList = ({ editMode, matches, handleMatchActivation }) => {
               </MatchDate>
             </MatchInfo>
             <MatchData>
-              <MatchOpponent
-                to={`/home/matchs/id/${match.id}`}
-                data-testid="match-opponent"
-              >
-                {match.opponent}
+              <MatchOpponent to={`/home/matchs/id/${match.id}`}>
+                <span data-testid="match-opponent">{match.opponent}</span>
+                {match.active ? (
+                  <ActivityIcon>
+                    <img src={LockIcon} alt="lock icon" />
+                  </ActivityIcon>
+                ) : null}
               </MatchOpponent>
             </MatchData>
             {editMode ? (
@@ -123,7 +132,9 @@ const MatchsList = ({ editMode, matches, handleMatchActivation }) => {
               </MatchActionContainer>
             ) : (
               <MatchActionContainer data-testid="match-average">
-                {match.average ? match.average : '-'}
+                {match.average
+                  ? (Math.round(match.average * 100) / 100).toFixed(2)
+                  : '-'}
               </MatchActionContainer>
             )}
           </MatchItem>

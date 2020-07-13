@@ -5,6 +5,7 @@ import { useParams } from 'react-router-dom'
 import { useQuery } from '@apollo/react-hooks'
 import { GET_PLAYER } from '../graphql/queries/player'
 import Loader from '../components/Loader'
+import { sortMatchesByDate } from '../utils/sortMatchesByDate'
 
 const Container = styled.div`
   padding: 1rem;
@@ -155,7 +156,7 @@ const PlayerPage = () => {
       <List>
         {player.matches &&
           player.matches.length > 0 &&
-          player.matches.map((match) => (
+          sortMatchesByDate(player.matches, 'DESC').map((match) => (
             <MatchItem key={match.id}>
               <MatchInfo>
                 <MatchDate>{match.date.slice(0, 5)}</MatchDate>
@@ -163,7 +164,9 @@ const PlayerPage = () => {
               <MatchData to={`/home/matchs/id/${match.id}`}>
                 <MatchOpponent>{match.opponent}</MatchOpponent>
               </MatchData>
-              <PlayerAverage>{match.lineup[0].average}</PlayerAverage>
+              <PlayerAverage>
+                {(Math.round(match.lineup[0].average * 100) / 100).toFixed(2)}
+              </PlayerAverage>
             </MatchItem>
           ))}
       </List>
