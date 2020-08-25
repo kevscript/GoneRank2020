@@ -45,6 +45,7 @@ const AuthPage = ({ handleUser }) => {
         id: res.login.userId,
         token: res.login.token,
         roles: res.login.roles,
+        votes: res.login.votes,
       })
     },
     onError: (err) => {

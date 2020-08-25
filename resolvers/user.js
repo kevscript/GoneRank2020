@@ -63,6 +63,7 @@ module.exports = {
           token: token,
           tokenExpiration: 1,
           roles: user.roles,
+          votes: user.votes
         }
       } catch (err) {
         throw new ApolloError(err)
@@ -81,7 +82,7 @@ module.exports = {
       // check if User with this id exists in the DB
       const user = await User.findOne({ _id: req.userId })
 
-      if (!user) { 
+      if (!user) {
         throw new UserInputError(`No User with id ${userId} found in DB.`)
       }
       // check if User already voted for this match
@@ -119,7 +120,7 @@ module.exports = {
       }
       // check if User with this id exists in the DB
       const user = await User.findOne({ _id: req.userId })
-      if (!user) { 
+      if (!user) {
         throw new UserInputError(`No User with id ${userId} found in DB.`)
       }
       // check if Match with this id exists in the DB.

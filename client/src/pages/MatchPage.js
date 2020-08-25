@@ -21,10 +21,13 @@ const MatchPage = ({ user, editMode }) => {
     skip: !matchId,
     variables: { id: matchId },
   })
-
   const { data: { players } = {} } = useQuery(GET_PLAYERS, {
     skip: !editMode,
   })
+  const userHasVoted =
+    user.votes.findIndex((vote) => vote.matchId === matchId) === -1
+      ? false
+      : true
 
   if (loading) return <Loader />
   if (error) return <p>{error.message}</p>
@@ -34,7 +37,7 @@ const MatchPage = ({ user, editMode }) => {
       {editMode ? (
         <LineupEdit match={match} user={user} players={players} />
       ) : (
-        <LineupList match={match} user={user} />
+        <LineupList match={match} user={user} userHasVoted={userHasVoted} />
       )}
     </Container>
   )

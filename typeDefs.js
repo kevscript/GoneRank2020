@@ -60,6 +60,7 @@ module.exports = gql`
     token: String!
     tokenExpiration: Int
     roles: [String]
+    votes: [UserMatchVote]
   }
 
   input UserVoteInput {

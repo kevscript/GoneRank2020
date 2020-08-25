@@ -143,7 +143,7 @@ const ConfirmMessage = styled.p`
   font-size: 12px;
 `
 
-const LineupList = ({ match, user }) => {
+const LineupList = ({ match, user, userHasVoted }) => {
   const [userVotes, setUserVotes] = useState({})
   const [submitError, setSubmitError] = useState('')
   const [submitComplete, setSubmitComplete] = useState('')
@@ -219,7 +219,7 @@ const LineupList = ({ match, user }) => {
               <PlayerName>{`${player.infos.firstName} ${player.infos.lastName}`}</PlayerName>
             </PlayerMain>
             <PlayerRating>
-              {match.active ? (
+              {match.active && !userHasVoted ? (
                 <RatingInput
                   playerId={player.playerId}
                   handleRating={handleRating}
@@ -233,11 +233,16 @@ const LineupList = ({ match, user }) => {
           </PlayerItem>
         ))}
       </PlayersList>
-      {match.active && (
+      {match.active && !userHasVoted && (
         <ButtonContainer>
           <SubmitButton onClick={handleVoteSubmit}>VOTER</SubmitButton>
           {submitError && <ErrorMessage>{submitError}</ErrorMessage>}
           {submitComplete && <ConfirmMessage>{submitComplete}</ConfirmMessage>}
+        </ButtonContainer>
+      )}
+      {userHasVoted && (
+        <ButtonContainer>
+          <ConfirmMessage>Vous avaez dejà voté pour ce match.</ConfirmMessage>
         </ButtonContainer>
       )}
     </Container>

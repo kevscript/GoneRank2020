@@ -12,7 +12,12 @@ const Container = styled.div`
 `
 
 const App = () => {
-  const [user, setUser] = useState({ id: null, token: null, roles: [] })
+  const [user, setUser] = useState({
+    id: null,
+    token: null,
+    roles: [],
+    votes: null,
+  })
 
   useEffect(() => {
     const hour = 1000 * 60 * 60 // token expiration is set to 1 hour on backend
@@ -30,13 +35,18 @@ const App = () => {
     } else {
       console.log('token is still valid')
       const user = JSON.parse(localStorage.getItem('user'))
-      setUser({ id: user.id, token: user.token, roles: user.roles })
+      setUser({
+        id: user.id,
+        token: user.token,
+        roles: user.roles,
+        votes: user.votes,
+      })
     }
   }, [])
 
-  const handleUser = ({ id, token, roles }) => {
-    setUser({ id: id, token: token, roles: roles })
-    const user = { id, token, roles }
+  const handleUser = ({ id, token, roles, votes }) => {
+    setUser({ id: id, token: token, roles: roles, votes: votes })
+    const user = { id, token, roles, votes }
     localStorage.setItem('user', JSON.stringify(user))
     const newExpireTime = new Date().getTime()
     localStorage.setItem('expireTime', newExpireTime)
@@ -44,7 +54,7 @@ const App = () => {
 
   const handleLogout = () => {
     localStorage.clear()
-    setUser({ id: null, token: null, roles: [] })
+    setUser({ id: null, token: null, roles: [], votes: null })
   }
 
   return (
