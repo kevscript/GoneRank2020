@@ -5,6 +5,7 @@ import { Link } from 'react-router-dom'
 import { GET_MATCHES, SET_MATCH_ACTIVE } from '../graphql/queries/match'
 import Loader from '../components/Loader'
 import MatchsList from '../components/MatchsList'
+import { TransitionWrapper } from '../components/TransitionWrapper'
 
 const Container = styled.div`
   width: 100%;
@@ -121,27 +122,29 @@ const MatchsPage = ({ editMode }) => {
   if (error) return <p>{error.message}</p>
 
   return (
-    <Container>
-      {editMode && (
-        <MatchFormLink to="/home/matchs/new">Nouveau Match</MatchFormLink>
-      )}
-      <TitleBar>
-        <TitleInfo>Infos</TitleInfo>
-        <TitleMain>
-          <TitleText>matchs - 2020/21</TitleText>
-        </TitleMain>
-        <TitleRating>NOTES</TitleRating>
-      </TitleBar>
-      {matches.length > 0 ? (
-        <MatchsList
-          editMode={editMode}
-          matches={matches}
-          handleMatchActivation={handleMatchActivation}
-        />
-      ) : (
-        <Message>Pas encore de matchs.</Message>
-      )}
-    </Container>
+    <TransitionWrapper>
+      <Container>
+        {editMode && (
+          <MatchFormLink to="/home/matchs/new">Nouveau Match</MatchFormLink>
+        )}
+        <TitleBar>
+          <TitleInfo>Infos</TitleInfo>
+          <TitleMain>
+            <TitleText>matchs - 2020/21</TitleText>
+          </TitleMain>
+          <TitleRating>NOTES</TitleRating>
+        </TitleBar>
+        {matches.length > 0 ? (
+          <MatchsList
+            editMode={editMode}
+            matches={matches}
+            handleMatchActivation={handleMatchActivation}
+          />
+        ) : (
+          <Message>Pas encore de matchs.</Message>
+        )}
+      </Container>
+    </TransitionWrapper>
   )
 }
 

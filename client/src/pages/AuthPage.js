@@ -4,6 +4,7 @@ import { useMutation } from '@apollo/react-hooks'
 import { LOGIN_USER, REGISTER_USER } from '../graphql/queries/auth'
 import LoginForm from '../components/auth/LoginForm'
 import RegisterForm from '../components/auth/RegisterForm'
+import { TransitionWrapper } from '../components/TransitionWrapper'
 
 const Container = styled.div`
   display: flex;
@@ -90,26 +91,28 @@ const AuthPage = ({ handleUser }) => {
   }
 
   return (
-    <Container>
-      <Title>GoneRank</Title>
-      <FormContainer>
-        {isLogin ? (
-          <LoginForm
-            handleFormStatus={handleFormStatus}
-            handleLogin={handleLogin}
-          />
-        ) : (
-          <RegisterForm
-            handleFormStatus={handleFormStatus}
-            handleRegister={handleRegister}
-          />
-        )}
-        <MutationError>
-          {loginError && <span>{loginError}</span>}
-          {registerError && <span>{registerError}</span>}
-        </MutationError>
-      </FormContainer>
-    </Container>
+    <TransitionWrapper>
+      <Container>
+        <Title>GoneRank</Title>
+        <FormContainer>
+          {isLogin ? (
+            <LoginForm
+              handleFormStatus={handleFormStatus}
+              handleLogin={handleLogin}
+            />
+          ) : (
+            <RegisterForm
+              handleFormStatus={handleFormStatus}
+              handleRegister={handleRegister}
+            />
+          )}
+          <MutationError>
+            {loginError && <span>{loginError}</span>}
+            {registerError && <span>{registerError}</span>}
+          </MutationError>
+        </FormContainer>
+      </Container>
+    </TransitionWrapper>
   )
 }
 

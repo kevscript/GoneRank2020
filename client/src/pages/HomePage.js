@@ -2,6 +2,7 @@ import React, { useState } from 'react'
 import styled from 'styled-components'
 import HomeRouting from '../components/HomeRouting'
 import Header from '../components/Header'
+import { TransitionWrapper } from '../components/TransitionWrapper'
 
 const Container = styled.div`
   width: 100%;
@@ -19,16 +20,18 @@ const HomePage = ({ user, handleLogout }) => {
   const handleEditMode = () => setEditMode((mode) => !mode)
 
   return (
-    <Container>
-      <Header
-        user={user}
-        handleEditMode={handleEditMode}
-        handleLogout={handleLogout}
-      />
-      <RoutingContainer>
-        <HomeRouting user={user} editMode={editMode} />
-      </RoutingContainer>
-    </Container>
+    <TransitionWrapper>
+      <Container>
+        <Header
+          user={user}
+          handleEditMode={handleEditMode}
+          handleLogout={handleLogout}
+        />
+        <RoutingContainer>
+          <HomeRouting user={user} editMode={editMode} />
+        </RoutingContainer>
+      </Container>
+    </TransitionWrapper>
   )
 }
 

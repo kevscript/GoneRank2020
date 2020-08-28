@@ -7,6 +7,7 @@ import { GET_PLAYERS } from '../graphql/queries/player'
 import Loader from '../components/Loader'
 import LineupList from '../components/LineupList'
 import LineupEdit from '../components/LineupEdit'
+import { TransitionWrapper } from '../components/TransitionWrapper'
 
 const Container = styled.div`
   width: 100%;
@@ -33,13 +34,15 @@ const MatchPage = ({ user, editMode }) => {
   if (error) return <p>{error.message}</p>
 
   return (
-    <Container>
-      {editMode ? (
-        <LineupEdit match={match} user={user} players={players} />
-      ) : (
-        <LineupList match={match} user={user} userHasVoted={userHasVoted} />
-      )}
-    </Container>
+    <TransitionWrapper>
+      <Container>
+        {editMode ? (
+          <LineupEdit match={match} user={user} players={players} />
+        ) : (
+          <LineupList match={match} user={user} userHasVoted={userHasVoted} />
+        )}
+      </Container>
+    </TransitionWrapper>
   )
 }
 

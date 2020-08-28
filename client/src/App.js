@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react'
 import styled from 'styled-components'
 import { BrowserRouter, Route, Switch, Redirect } from 'react-router-dom'
+import { AnimatePresence } from 'framer-motion'
 import PrivateRoute from './routes/PrivateRoute'
 import GlobalStyle from './styles/global'
 import HomePage from './pages/HomePage'
@@ -61,21 +62,23 @@ const App = () => {
     <Container>
       <GlobalStyle />
       <BrowserRouter>
-        <Switch>
-          <Redirect exact from="/" to="/home" />
-          <PrivateRoute
-            path="/home"
-            user={user}
-            handleLogout={handleLogout}
-            component={HomePage}
-          />
-          {!user.id && !user.token && (
-            <Route path="/authentication">
-              <AuthPage user={user} handleUser={handleUser} />
-            </Route>
-          )}
-          <Route render={() => <Redirect to={{ pathname: '/' }} />} />
-        </Switch>
+        <AnimatePresence>
+          <Switch>
+            <Redirect exact from="/" to="/home" />
+            <PrivateRoute
+              path="/home"
+              user={user}
+              handleLogout={handleLogout}
+              component={HomePage}
+            />
+            {!user.id && !user.token && (
+              <Route path="/authentication">
+                <AuthPage user={user} handleUser={handleUser} />
+              </Route>
+            )}
+            <Route render={() => <Redirect to={{ pathname: '/' }} />} />
+          </Switch>
+        </AnimatePresence>
       </BrowserRouter>
     </Container>
   )

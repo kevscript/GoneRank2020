@@ -6,6 +6,7 @@ import Loader from '../components/Loader'
 import PlayerForm from '../components/PlayerForm'
 import PlayersList from '../components/PlayersList'
 import { sortByAvg } from '../utils/sortByAvg'
+import { TransitionWrapper } from '../components/TransitionWrapper'
 
 const Container = styled.div`
   width: 100%;
@@ -99,27 +100,29 @@ const RankingPage = ({ editMode }) => {
   if (error) return <p>{error.message}</p>
 
   return (
-    <Container>
-      {editMode && <PlayerForm />}
-      {!editMode && (
-        <TitleBar>
-          <TitleMatches>MATCHS</TitleMatches>
-          <TitleMain>
-            <TitleText>CLASSEMENT 2020/21</TitleText>
-          </TitleMain>
-          <TitleRating>NOTES</TitleRating>
-        </TitleBar>
-      )}
-      {players.length > 0 ? (
-        <PlayersList
-          editMode={editMode}
-          players={sortByAvg(players)}
-          handleRemovePlayer={handleRemovePlayer}
-        />
-      ) : (
-        <Message>Pas encore de joueurs.</Message>
-      )}
-    </Container>
+    <TransitionWrapper>
+      <Container>
+        {editMode && <PlayerForm />}
+        {!editMode && (
+          <TitleBar>
+            <TitleMatches>MATCHS</TitleMatches>
+            <TitleMain>
+              <TitleText>CLASSEMENT 2020/21</TitleText>
+            </TitleMain>
+            <TitleRating>NOTES</TitleRating>
+          </TitleBar>
+        )}
+        {players.length > 0 ? (
+          <PlayersList
+            editMode={editMode}
+            players={sortByAvg(players)}
+            handleRemovePlayer={handleRemovePlayer}
+          />
+        ) : (
+          <Message>Pas encore de joueurs.</Message>
+        )}
+      </Container>
+    </TransitionWrapper>
   )
 }
 

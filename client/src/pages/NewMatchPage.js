@@ -7,6 +7,7 @@ import { useForm, Controller } from 'react-hook-form'
 import { GET_ACTIVE_PLAYERS } from '../graphql/queries/player'
 import { CREATE_MATCH, GET_MATCHES } from '../graphql/queries/match'
 import Loader from '../components/Loader'
+import { TransitionWrapper } from '../components/TransitionWrapper'
 import 'react-datepicker/dist/react-datepicker.css'
 import '../styles/datepicker.css'
 
@@ -166,92 +167,98 @@ const NewMatchPage = () => {
   if (error) return <p>{error.message}</p>
 
   return (
-    <Container>
-      <Title>Create Match</Title>
-      <Form onSubmit={(e) => e.preventDefault()} autoComplete="off">
-        <FormItem>
-          <Label htmlFor="opponent">
-            <LabelText>Opponent :</LabelText>
-            <Input
-              type="text"
-              name="opponent"
-              ref={register({
-                required: 'You must specify an opponent',
-                validate: (val) => val.trim() !== '',
-              })}
-            />
-          </Label>
-          {errors.opponent && <FormError>{errors.opponent.message}</FormError>}
-        </FormItem>
+    <TransitionWrapper>
+      <Container>
+        <Title>Create Match</Title>
+        <Form onSubmit={(e) => e.preventDefault()} autoComplete="off">
+          <FormItem>
+            <Label htmlFor="opponent">
+              <LabelText>Opponent :</LabelText>
+              <Input
+                type="text"
+                name="opponent"
+                ref={register({
+                  required: 'You must specify an opponent',
+                  validate: (val) => val.trim() !== '',
+                })}
+              />
+            </Label>
+            {errors.opponent && (
+              <FormError>{errors.opponent.message}</FormError>
+            )}
+          </FormItem>
 
-        <FormItem>
-          <Label htmlFor="location">
-            <LabelText>Location :</LabelText>
-            <Select
-              name="location"
-              ref={register({ required: 'Location is required' })}
-            >
-              <option value="home">Home</option>
-              <option value="away">Away</option>
-              <option value="other">Other</option>
-            </Select>
-          </Label>
-          {errors.location && <FormError>{errors.location.message}</FormError>}
-        </FormItem>
+          <FormItem>
+            <Label htmlFor="location">
+              <LabelText>Location :</LabelText>
+              <Select
+                name="location"
+                ref={register({ required: 'Location is required' })}
+              >
+                <option value="home">Home</option>
+                <option value="away">Away</option>
+                <option value="other">Other</option>
+              </Select>
+            </Label>
+            {errors.location && (
+              <FormError>{errors.location.message}</FormError>
+            )}
+          </FormItem>
 
-        <FormItem>
-          <Label htmlFor="date">
-            <LabelText>Date :</LabelText>
-            <Controller
-              as={<DatePicker dateFormat="dd/MM/yyyy" />}
-              name="date"
-              valueName="selected"
-              onChange={([selected]) => selected}
-              control={control}
-              rules={{ required: 'Date is required' }}
-            />
-          </Label>
-          {errors.date && <FormError>{errors.date.message}</FormError>}
-        </FormItem>
+          <FormItem>
+            <Label htmlFor="date">
+              <LabelText>Date :</LabelText>
+              <Controller
+                as={<DatePicker dateFormat="dd/MM/yyyy" />}
+                name="date"
+                valueName="selected"
+                onChange={([selected]) => selected}
+                control={control}
+                rules={{ required: 'Date is required' }}
+              />
+            </Label>
+            {errors.date && <FormError>{errors.date.message}</FormError>}
+          </FormItem>
 
-        <FormItem>
-          <Label htmlFor="lineup">
-            <LabelText>Line up :</LabelText>
-            <Select name="lineup" onChange={handleSelectPlayer}>
-              <option value=""></option>
-              {activePlayers
-                .filter((p) => !lineup.some((id) => id === p._id))
-                .map((p) => (
-                  <option key={p._id} value={p._id}>
-                    {p.firstName} {p.lastName}
-                  </option>
-                ))}
-            </Select>
-          </Label>
-          <PlayersList>
-            {lineup &&
-              lineup.map((id) => {
-                const player = activePlayers.find((p) => p._id === id)
-                return (
-                  <PlayerItem
-                    key={id}
-                    onClick={handleRemovePlayer}
-                    data-id={id}
-                  >
-                    {player.firstName} {player.lastName}
-                  </PlayerItem>
-                )
-              })}
-          </PlayersList>
-        </FormItem>
+          <FormItem>
+            <Label htmlFor="lineup">
+              <LabelText>Line up :</LabelText>
+              <Select name="lineup" onChange={handleSelectPlayer}>
+                <option value=""></option>
+                {activePlayers
+                  .filter((p) => !lineup.some((id) => id === p._id))
+                  .map((p) => (
+                    <option key={p._id} value={p._id}>
+                      {p.firstName} {p.lastName}
+                    </option>
+                  ))}
+              </Select>
+            </Label>
+            <PlayersList>
+              {lineup &&
+                lineup.map((id) => {
+                  const player = activePlayers.find((p) => p._id === id)
+                  return (
+                    <PlayerItem
+                      key={id}
+                      onClick={handleRemovePlayer}
+                      data-id={id}
+                    >
+                      {player.firstName} {player.lastName}
+                    </PlayerItem>
+                  )
+                })}
+            </PlayersList>
+          </FormItem>
 
-        <Divider />
+          <Divider />
 
-        <FormButton type="submit" onClick={handleSubmit(handleMatchCreation)}>
-          Ajouter Match
-        </FormButton>
-      </Form>
-    </Container>
+          <FormButton type="submit" onClick={handleSubmit(handleMatchCreation)}>
+            Ajouter Match
+          </FormButton>
+        </Form>
+      </Container>
+    </TransitionWrapper>
   )
 }
 

@@ -6,6 +6,7 @@ import { useQuery } from '@apollo/react-hooks'
 import { GET_PLAYER } from '../graphql/queries/player'
 import Loader from '../components/Loader'
 import { sortMatchesByDate } from '../utils/sortMatchesByDate'
+import { TransitionWrapper } from '../components/TransitionWrapper'
 
 const Container = styled.div`
   padding: 1rem;
@@ -138,39 +139,41 @@ const PlayerPage = () => {
   if (error) return <span>{error.message}</span>
 
   return (
-    <Container>
-      <TitleItem>
-        <TitleInfo>
-          <TitleMatches>{player.matchesPlayed.length}</TitleMatches>
-          <TitleMatches>
-            {player.matchesPlayed.length > 1 ? 'matchs' : 'match'}
-          </TitleMatches>
-        </TitleInfo>
-        <TitleData>
-          <TitleOpponent>
-            {player.firstName} {player.lastName}
-          </TitleOpponent>
-        </TitleData>
-        <TitleRating>Notes</TitleRating>
-      </TitleItem>
-      <List>
-        {player.matches &&
-          player.matches.length > 0 &&
-          sortMatchesByDate(player.matches, 'DESC').map((match) => (
-            <MatchItem key={match.id}>
-              <MatchInfo>
-                <MatchDate>{match.date.slice(0, 5)}</MatchDate>
-              </MatchInfo>
-              <MatchData to={`/home/matchs/id/${match.id}`}>
-                <MatchOpponent>{match.opponent}</MatchOpponent>
-              </MatchData>
-              <PlayerAverage>
-                {(Math.round(match.lineup[0].average * 100) / 100).toFixed(2)}
-              </PlayerAverage>
-            </MatchItem>
-          ))}
-      </List>
-    </Container>
+    <TransitionWrapper>
+      <Container>
+        <TitleItem>
+          <TitleInfo>
+            <TitleMatches>{player.matchesPlayed.length}</TitleMatches>
+            <TitleMatches>
+              {player.matchesPlayed.length > 1 ? 'matchs' : 'match'}
+            </TitleMatches>
+          </TitleInfo>
+          <TitleData>
+            <TitleOpponent>
+              {player.firstName} {player.lastName}
+            </TitleOpponent>
+          </TitleData>
+          <TitleRating>Notes</TitleRating>
+        </TitleItem>
+        <List>
+          {player.matches &&
+            player.matches.length > 0 &&
+            sortMatchesByDate(player.matches, 'DESC').map((match) => (
+              <MatchItem key={match.id}>
+                <MatchInfo>
+                  <MatchDate>{match.date.slice(0, 5)}</MatchDate>
+                </MatchInfo>
+                <MatchData to={`/home/matchs/id/${match.id}`}>
+                  <MatchOpponent>{match.opponent}</MatchOpponent>
+                </MatchData>
+                <PlayerAverage>
+                  {(Math.round(match.lineup[0].average * 100) / 100).toFixed(2)}
+                </PlayerAverage>
+              </MatchItem>
+            ))}
+        </List>
+      </Container>
+    </TransitionWrapper>
   )
 }
 
