@@ -13,7 +13,7 @@
   "author": "Kevin Ostafinski <kevscripted@gmail.com>",
   "license": "MIT",
   "dependencies": {
-    "apollo-server-express": "^2.13.1",
+    "apollo-server-express": "^2.14.2",
     "bcryptjs": "^2.4.3",
     "body-parser": "^1.19.0",
     "concurrently": "^5.2.0",
