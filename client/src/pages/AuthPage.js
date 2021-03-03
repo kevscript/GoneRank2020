@@ -78,7 +78,7 @@ const AuthPage = ({ handleUser }) => {
   const handleRegister = (formData) => {
     registerUser({
       variables: {
-        email: formData.email.toLowercase(),
+        email: formData.email.toLowerCase(),
         password: formData.password,
       },
     })
